@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="/css/styles.css" />
 </head>
 <body>
-<h1>Logowanie</h1>
+<h1>Rejestracja</h1>
 <form:form method="post" modelAttribute="userDetails">
     <div class="form-group">
         <form:hidden path="id" />

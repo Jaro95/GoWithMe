@@ -1,4 +1,4 @@
-package pl.coderslab;
+package pl.coderslab.configuration;
 
 
 import org.springframework.context.annotation.Bean;
@@ -30,7 +30,6 @@ public class SecurityConfig {
                 .and().formLogin().loginPage("/login")
                 .and().logout().logoutSuccessUrl("/")
                 .permitAll()
-
                 .and().exceptionHandling().accessDeniedPage("/403");
         return http.build();
     }

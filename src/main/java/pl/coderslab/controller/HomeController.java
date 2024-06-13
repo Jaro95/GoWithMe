@@ -27,19 +27,19 @@ public class HomeController {
 
     @GetMapping("/alluser")
     public String allUser(Model model) {
-        model.addAttribute("users", userDetailsRepository.findAll());
+        model.addAttribute("userDetails", userDetailsRepository.findAll());
         return "/home/userList";
     }
 
 
     @GetMapping("/registration")
     public String getAddUser(Model model) {
-        model.addAttribute("user", new UserDetails());
+        model.addAttribute("userDetails", new UserDetails());
         return "/home/registration";
     }
 
     @PostMapping("/registration")
-    public String postAddUser(Model model, UserDetails userDetails) {
+    public String postAddUser(UserDetails userDetails) {
         userDetailsRepository.save(userDetails);
         return "redirect:/gowithme/home/alluser";
     }
@@ -52,12 +52,12 @@ public class HomeController {
 
     @GetMapping("/update")
     public String getUpdateUser(Model model,@RequestParam long id) {
-        model.addAttribute("user", userDetailsRepository.findById(id).get());
+        model.addAttribute("userDetails", userDetailsRepository.findById(id).get());
         return "/home/update";
     }
 
     @PostMapping("/update")
-    public String postUpdateUser(Model model, UserDetails userDetails) {
+    public String postUpdateUser(UserDetails userDetails) {
         userDetailsRepository.save(userDetails);
         return "redirect:/gowithme/home/alluser";
     }

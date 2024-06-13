@@ -24,5 +24,7 @@ public class UserDetails {
     private City city;
     private int age;
     private String description;
+//    @ManyToMany
+//    private List<Activies> activies;
 
 }

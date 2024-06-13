@@ -16,7 +16,7 @@
 <body>
 <h1>User list</h1>
 <div>
-    Add new userDetails
+    Add new user details:
     <button class="btn" onclick="location.href='/gowithme/home/registration'">Dodaj</button>
 </div>
 <div>
@@ -32,17 +32,17 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${users}" var="userDetails">
+        <c:forEach items="${userDetails}" var="userDetail">
             <tr>
-                <td>${userDetails.id}</td>
-                <td>${userDetails.firstName}</td>
-                <td>${userDetails.lastName}</td>
-                <td>${userDetails.age}</td>
-                <td>${userDetails.description}</td>
+                <td>${userDetail.id}</td>
+                <td>${userDetail.firstName}</td>
+                <td>${userDetail.lastName}</td>
+                <td>${userDetail.age}</td>
+                <td>${userDetail.description}</td>
 
                 <td>
-                    <button class="btn" onclick="location.href='/gowithme/home/update?id=${userDetails.id}'">Edytuj</button>
-                    <a class="btn confirm-delete" href="${pageContext.request.contextPath}/gowithme/home/delete?id=${userDetails.id}">Usuń</a>
+                    <button class="btn" onclick="location.href='/gowithme/home/update?id=${userDetail.id}'">Edytuj</button>
+                    <a class="btn confirm-delete" href="${pageContext.request.contextPath}/gowithme/home/delete?id=${userDetail.id}">Usuń</a>
                 </td>
             </tr>
         </c:forEach>
