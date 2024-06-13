@@ -16,7 +16,8 @@
     <link rel="stylesheet" type="text/css" href="/css/styles.css" />
 </head>
 <body>
-<form:form action="post" modelAttribute="user">
+<h1>Logowanie</h1>
+<form:form method="post" modelAttribute="user">
     <div class="form-group">
         <form:hidden path="id" />
     </div>
@@ -49,6 +50,7 @@
         <form:input path="description"/>
         <form:errors path="description" cssClass="error" />
     </div>
+    <input type="submit"/>
 </form:form>
 </body>
 </html>
