@@ -23,13 +23,13 @@
 <header>
 <div class="w3-top">
     <div class="w3-bar w3-white w3-card" id="myNavbar">
-        <a href="#home" class="w3-bar-item w3-button w3-wide">LOGO</a>
+        <a href="/gowithme/home" class="w3-bar-item w3-button w3-wide">GoWithME</a>
         <!-- Right-sided navbar links -->
         <div class="w3-right w3-hide-small">
-            <a href="#about" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Home</a>
-            <a href="#team" class="w3-bar-item w3-button"><i class="fa fa-phone"></i> Kontakt</a>
-            <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Logowanie</a>
-            <a href="#pricing" class="w3-bar-item w3-button"><i class="fa fa-pencil"></i> Rejestracja</a>
+            <a href="/gowithme/home" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Home</a>
+            <a href="/gowithme/contact" class="w3-bar-item w3-button"><i class="fa fa-phone"></i> Kontakt</a>
+            <a href="/gowithme/login" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Logowanie</a>
+            <a href="/gowithme/registration" class="w3-bar-item w3-button"><i class="fa fa-pencil"></i> Rejestracja</a>
         </div>
         <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
@@ -42,10 +42,10 @@
 <!-- Sidebar on small screens when clicking the menu icon -->
 <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
-    <a href="#about" onclick="w3_close()" class="fa fa-user w3-button">Home</a>
-    <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">Kontakt</a>
-    <a href="#work" onclick="w3_close()" class="fa fa-user w3-button">Logowanie</a>
-    <a href="#pricing" onclick="w3_close()" class="w3-bar-item w3-button">Rejestracja</a>
+    <a href="/gowithme/home" onclick="w3_close()" class="fa fa-user w3-button">Home</a>
+    <a href="/gowithme/contact" onclick="w3_close()" class="w3-bar-item w3-button">Kontakt</a>
+    <a href="/gowithme/login" onclick="w3_close()" class="fa fa-user w3-button">Logowanie</a>
+    <a href="/gowithme/registration" onclick="w3_close()" class="w3-bar-item w3-button">Rejestracja</a>
 
 </nav>
 

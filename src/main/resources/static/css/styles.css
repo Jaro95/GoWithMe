@@ -16,3 +16,26 @@ body, html {
 .w3-bar .w3-button {
     padding: 16px;
 }
+
+.contact {
+    height: 100%;
+}
+
+.cantact-info {
+    margin-top: 50px;
+}
+.contact-details {
+    margin: 25px;
+    border-collapse: collapse;
+}
+
+.input-contact {
+    padding: 8px;
+
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 30%;
+    resize: none;
+}
+
+
