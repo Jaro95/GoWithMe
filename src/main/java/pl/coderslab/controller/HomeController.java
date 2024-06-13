@@ -19,12 +19,11 @@ public class HomeController {
         this.userDetailsRepository = userDetailsRepository;
     }
 
-    @GetMapping("")
-    public String hello() {
-        Faker faker = new Faker(new Locale("pl"));
-        return "hey";
-    }
 
+    @GetMapping("")
+    public String main(Model model) {
+        return "/home/main";
+    }
     @GetMapping("/alluser")
     public String allUser(Model model) {
         model.addAttribute("userDetails", userDetailsRepository.findAll());
