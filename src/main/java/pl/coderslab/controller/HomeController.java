@@ -49,7 +49,7 @@ public class HomeController {
     @GetMapping("/registration")
     public String getAddUser(Model model) {
         model.addAttribute("userDetails", new UserDetails());
-        return "application/registration";
+        return "home/registration";
     }
 
     @PostMapping("/registration")
