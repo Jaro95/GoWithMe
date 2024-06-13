@@ -17,5 +17,5 @@ public class City {
     private long id;
     private String name;
     @OneToMany
-    private List<User> users;
+    private List<UserDetails> userDetails;
 }

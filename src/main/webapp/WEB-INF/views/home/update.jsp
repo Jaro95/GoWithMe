@@ -17,7 +17,7 @@
 </head>
 <body>
 <h1>Aktualizacja danych</h1>
-<form:form method="post" modelAttribute="user">
+<form:form method="post" modelAttribute="userDetails">
     <div class="form-group">
         <form:hidden path="id" />
     </div>
