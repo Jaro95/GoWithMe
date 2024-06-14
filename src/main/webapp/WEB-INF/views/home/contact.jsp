@@ -16,7 +16,7 @@
         <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>Phone: +48 ${phone}</p>
         <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Email: ${email}</p>
         <br>
-        <form:form method="post" target="_blank" class="cantact-details" modelAttribute="messageContact">
+        <form:form method="post" class="cantact-details" modelAttribute="messageContact">
             <p><form:input class="input-contact w3-border" type="text" placeholder="Name" path="name"/></p>
             <p><form:input class="input-contact w3-border" type="email" placeholder="Email" path="email"/></p>
             <p><form:input class="input-contact w3-border" type="text" placeholder="Subject" path="subject"/></p>

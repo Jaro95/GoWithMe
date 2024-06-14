@@ -11,7 +11,7 @@
 <div class="w3-display-container w3-light-grey contact" id="contact">
     <p class="w3-center w3-jumbo cantact-info">Rejestracja</p>
     <div class="w3-center cantact-info">
-        <form:form method="post" target="_blank" class="cantact-details"  modelAttribute="registrationWrapper">
+        <form:form method="post" class="cantact-details"  modelAttribute="registrationWrapper">
             <p><form:input class="input-contact w3-border" type="text" placeholder="Imę" path="userDetails.firstName"/></p>
             <p><form:input class="input-contact w3-border" type="text" placeholder="Nazwisko" path="userDetails.lastName"/></p>
             <p><form:input class="input-contact w3-border" type="text" placeholder="Miejscowość" path="userDetails.city.name"/></p>

@@ -7,8 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="w3-display-bottomleft w3-text-grey w3-large" style="padding:24px 48px">
-    <a href="https://github.com/Jaro95"><i class="fa fa-github w3-hover-opacity"></i></a>
-    <a href="https://pl.linkedin.com/"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
+    <a href="https://github.com/Jaro95" target="_blank"><i class="fa fa-github w3-hover-opacity"></i></a>
+    <a href="https://pl.linkedin.com/" target="_blank"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
 </div>
 </section>
 </body>

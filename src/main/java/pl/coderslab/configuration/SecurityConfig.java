@@ -26,9 +26,9 @@ public class SecurityConfig {
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                // .antMatchers("/gowithme/home/**").permitAll()
-                .antMatchers("/admingo/**").hasAnyRole("USER","ADMIN")
+                .antMatchers("/gowithme/app/**").hasAnyRole("USER","ADMIN")
                 .and().formLogin().loginPage("/gowithme/login")
-                .and().logout().logoutSuccessUrl("/")
+                .and().logout().logoutSuccessUrl("/gowithme/app")
                 .permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");
         return http.build();

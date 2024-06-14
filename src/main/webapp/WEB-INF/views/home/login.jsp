@@ -11,7 +11,7 @@
 
     <p class="w3-center w3-jumbo cantact-info">Logowanie</p>
     <div class="w3-center cantact-info">
-        <form method="post" target="_blank" class="cantact-details">
+        <form method="post" class="cantact-details">
             <p><input class="input-contact w3-border" type="email" placeholder="email" name="username"></p>
             <p><input class="input-contact w3-border" type="password" placeholder="password"  name="password"></p>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

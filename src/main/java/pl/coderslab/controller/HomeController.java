@@ -61,10 +61,10 @@ public class HomeController {
             model.addAttribute("phone",contact.getPhoneNumber());
             model.addAttribute("email", contact.getEmail());
             model.addAttribute("messageContact", new MessageContact());
-            return "/home/contact";
+            return "/gowithme/contact";
         }
         messageContactRepository.save(messageContact);
-        return "redirect:/home/contact";
+        return "redirect:/gowithme/contact";
     }
 
     @GetMapping("/alluser")
@@ -83,30 +83,31 @@ public class HomeController {
     @PostMapping("/registration")
     public String postAddUser(@Valid RegistrationWrapper wrapper, BindingResult result, Model model) {
         if(result.hasErrors()){
-
+            model.addAttribute("registrationWrapper", wrapper);
+            return "home/registration";
         }
         userDetailsRepository.save(wrapper.getUserDetails());
         wrapper.getUser().setUserDetails(wrapper.getUserDetails());
         userService.saveUser(wrapper.getUser());
-        return "redirect:/gowithme/home/alluser";
+        return "redirect:/gowithme/login";
     }
 
-    @GetMapping("/delete")
-    public String postAddUser(@RequestParam long id) {
-        userDetailsRepository.delete(userDetailsRepository.findById(id).get());
-        return "redirect:/gowithme/home/alluser";
-    }
-
-    @GetMapping("/update")
-    public String getUpdateUser(Model model,@RequestParam long id) {
-        model.addAttribute("userDetails", userDetailsRepository.findById(id).get());
-        return "application/update";
-    }
-
-    @PostMapping("/update")
-    public String postUpdateUser(UserDetails userDetails) {
-        userDetailsRepository.save(userDetails);
-        return "redirect:/gowithme/home/alluser";
-    }
+//    @GetMapping("/delete")
+//    public String postAddUser(@RequestParam long id) {
+//        userDetailsRepository.delete(userDetailsRepository.findById(id).get());
+//        return "redirect:/gowithme/home/alluser";
+//    }
+//
+//    @GetMapping("/update")
+//    public String getUpdateUser(Model model,@RequestParam long id) {
+//        model.addAttribute("userDetails", userDetailsRepository.findById(id).get());
+//        return "application/update";
+//    }
+//
+//    @PostMapping("/update")
+//    public String postUpdateUser(UserDetails userDetails) {
+//        userDetailsRepository.save(userDetails);
+//        return "redirect:/gowithme/home/alluser";
+//    }
 
 }
