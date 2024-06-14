@@ -14,10 +14,10 @@
         <form:form method="post" class="cantact-details"  modelAttribute="registrationWrapper">
             <p><form:input class="input-contact w3-border" type="text" placeholder="Imę" path="userDetails.firstName"/></p>
             <p><form:input class="input-contact w3-border" type="text" placeholder="Nazwisko" path="userDetails.lastName"/></p>
-            <p><form:input class="input-contact w3-border" type="text" placeholder="Miejscowość" path="userDetails.city.name"/></p>
+            <p><form:input class="input-contact w3-border" type="text" placeholder="Miejscowość" path="city.name"/></p>
             <p><form:input class="input-contact w3-border" type="email" placeholder="Email" path="user.email"/></p>
             <p><form:input class="input-contact w3-border" type="password" placeholder="Hasło" path="user.password"/></p>
-            <p><input class="input-contact w3-border" type="password" placeholder="Powtórz hasło" required name="repeatPassword"></p>
+            <p><form:input class="input-contact w3-border" type="password" placeholder="Powtórz hasło" path="repeatPassword"/></p>
                 <button class="w3-button w3-black" type="submit">
                     <i class="fa fa-plus"></i> Utwórz konto
                 </button>

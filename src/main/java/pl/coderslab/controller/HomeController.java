@@ -11,6 +11,7 @@ import pl.coderslab.model.Contact;
 import pl.coderslab.model.MessageContact;
 import pl.coderslab.model.User;
 import pl.coderslab.model.UserDetails;
+import pl.coderslab.repository.CityRepository;
 import pl.coderslab.repository.ContactRepository;
 import pl.coderslab.repository.MessageContactRepository;
 import pl.coderslab.repository.UserDetailsRepository;
@@ -25,12 +26,14 @@ public class HomeController {
     private final ContactRepository contactRepository;
     private final UserService userService;
     private final MessageContactRepository messageContactRepository;
+    private final CityRepository cityRepository;
 
-    public HomeController(UserDetailsRepository userDetailsRepository, ContactRepository contactRepository, UserService userService, MessageContactRepository messageContactRepository) {
+    public HomeController(UserDetailsRepository userDetailsRepository, ContactRepository contactRepository, UserService userService, MessageContactRepository messageContactRepository, CityRepository cityRepository) {
         this.userDetailsRepository = userDetailsRepository;
         this.contactRepository = contactRepository;
         this.userService = userService;
         this.messageContactRepository = messageContactRepository;
+        this.cityRepository = cityRepository;
     }
 
 
@@ -79,13 +82,22 @@ public class HomeController {
         model.addAttribute("registrationWrapper", new RegistrationWrapper());
         return "home/registration";
     }
-
+/**
+    *Leater must make create token and verification
+ */
     @PostMapping("/registration")
     public String postAddUser(@Valid RegistrationWrapper wrapper, BindingResult result, Model model) {
+        if(!wrapper.getUser().getPassword().equals(wrapper.getRepeatPassword())) {
+            model.addAttribute("registrationWrapper", wrapper);
+            return "home/registration";
+        }
+
         if(result.hasErrors()){
             model.addAttribute("registrationWrapper", wrapper);
             return "home/registration";
         }
+        cityRepository.save(wrapper.getCity());
+        wrapper.getUserDetails().setCity(wrapper.getCity());
         userDetailsRepository.save(wrapper.getUserDetails());
         wrapper.getUser().setUserDetails(wrapper.getUserDetails());
         userService.saveUser(wrapper.getUser());
