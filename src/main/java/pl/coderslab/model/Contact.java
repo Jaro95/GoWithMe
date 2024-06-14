@@ -21,6 +21,7 @@ public class Contact {
     private long id;
     @NotBlank
     private String address;
+    @NotBlank
     @Email
     private String email;
     @NotBlank

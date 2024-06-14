@@ -3,6 +3,8 @@ package pl.coderslab.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Getter
@@ -15,7 +17,10 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotBlank
+    @Size(max = 50)
     private String name;
     @OneToMany
+    @NotBlank
     private List<UserDetails> userDetails;
 }
