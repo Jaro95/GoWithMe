@@ -32,3 +32,27 @@ function w3_open() {
 function w3_close() {
     mySidebar.style.display = "none";
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a.confirm-delete-user').forEach(link => {
+        link.addEventListener('click', event => {
+            if (!confirm('Czy na pewno chcesz usunąć użytkownika?')) {
+                event.preventDefault();
+            }
+        });
+    });
+});
+
+
+
+$(document).ready(function() {
+    var table = $('#activityTable').DataTable({
+        "paging": true,
+        "ordering": true,
+        "info": true
+    });
+
+    $('#searchBox').on('keyup', function() {
+        table.search(this.value).draw();
+    });
+});

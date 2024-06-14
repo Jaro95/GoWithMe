@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.Service.RegistrationWrapper;
 import pl.coderslab.Service.UserService;
 import pl.coderslab.model.Contact;
-import pl.coderslab.model.MessageContact;
-import pl.coderslab.model.User;
-import pl.coderslab.model.UserDetails;
+import pl.coderslab.model.ContactForm;
 import pl.coderslab.repository.CityRepository;
 import pl.coderslab.repository.ContactRepository;
-import pl.coderslab.repository.MessageContactRepository;
+import pl.coderslab.repository.ContactFormRepository;
 import pl.coderslab.repository.UserDetailsRepository;
 
 import javax.validation.Valid;
@@ -25,20 +23,19 @@ public class HomeController {
     private final UserDetailsRepository userDetailsRepository;
     private final ContactRepository contactRepository;
     private final UserService userService;
-    private final MessageContactRepository messageContactRepository;
+    private final ContactFormRepository contactFormRepository;
     private final CityRepository cityRepository;
 
-    public HomeController(UserDetailsRepository userDetailsRepository, ContactRepository contactRepository, UserService userService, MessageContactRepository messageContactRepository, CityRepository cityRepository) {
+    public HomeController(UserDetailsRepository userDetailsRepository, ContactRepository contactRepository, UserService userService, ContactFormRepository contactFormRepository, CityRepository cityRepository) {
         this.userDetailsRepository = userDetailsRepository;
         this.contactRepository = contactRepository;
         this.userService = userService;
-        this.messageContactRepository = messageContactRepository;
+        this.contactFormRepository = contactFormRepository;
         this.cityRepository = cityRepository;
     }
 
-
     @GetMapping("/home")
-    public String main(Model model) {
+    public String main() {
         return "/home/main";
     }
 
@@ -46,34 +43,29 @@ public class HomeController {
 //    public String login() {
 //        return "/home/login";
 //    }
+
     @GetMapping("/contact")
     public String login(Model model) {
         Contact contact = contactRepository.findAll().get(0);
         model.addAttribute("address", contact.getAddress());
         model.addAttribute("phone",contact.getPhoneNumber());
         model.addAttribute("email", contact.getEmail());
-        model.addAttribute("messageContact", new MessageContact());
+        model.addAttribute("contactForm", new ContactForm());
         return "/home/contact";
     }
 
     @PostMapping("/contact")
-    public String login(MessageContact messageContact, BindingResult bindingResult,Model model ) {
+    public String login(ContactForm contactForm, BindingResult bindingResult, Model model ) {
         if(bindingResult.hasErrors()) {
             Contact contact = contactRepository.findAll().get(0);
             model.addAttribute("address", contact.getAddress());
             model.addAttribute("phone",contact.getPhoneNumber());
             model.addAttribute("email", contact.getEmail());
-            model.addAttribute("messageContact", new MessageContact());
+            model.addAttribute("messageContact", new ContactForm());
             return "/gowithme/contact";
         }
-        messageContactRepository.save(messageContact);
+        contactFormRepository.save(contactForm);
         return "redirect:/gowithme/contact";
-    }
-
-    @GetMapping("/alluser")
-    public String allUser(Model model) {
-        model.addAttribute("userDetails", userDetailsRepository.findAll());
-        return "application/userList";
     }
 
 
@@ -104,22 +96,5 @@ public class HomeController {
         return "redirect:/gowithme/login";
     }
 
-//    @GetMapping("/delete")
-//    public String postAddUser(@RequestParam long id) {
-//        userDetailsRepository.delete(userDetailsRepository.findById(id).get());
-//        return "redirect:/gowithme/home/alluser";
-//    }
-//
-//    @GetMapping("/update")
-//    public String getUpdateUser(Model model,@RequestParam long id) {
-//        model.addAttribute("userDetails", userDetailsRepository.findById(id).get());
-//        return "application/update";
-//    }
-//
-//    @PostMapping("/update")
-//    public String postUpdateUser(UserDetails userDetails) {
-//        userDetailsRepository.save(userDetails);
-//        return "redirect:/gowithme/home/alluser";
-//    }
 
 }
