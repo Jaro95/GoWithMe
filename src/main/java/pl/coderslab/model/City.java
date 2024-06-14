@@ -1,8 +1,8 @@
 package pl.coderslab.model;
-
-import jakarta.persistence.*;
+;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
@@ -17,5 +17,5 @@ public class City {
     private long id;
     private String name;
     @OneToMany
-    private List<User> users;
+    private List<UserDetails> userDetails;
 }

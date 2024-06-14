@@ -1,81 +1,163 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+
+body, html {
+    height: 100%;
+    line-height: 1.8;
+    overflow: hidden;
+}
+
+/*Full height image header */
+.bgimg-1 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("/images/mainPeople.jpg");
+    min-height: 100%;
+}
+
+.w3-bar .w3-button {
+    padding: 16px;
+}
+
+.contact {
+    height: 100%;
+}
+
+.cantact-info {
+    margin-top: 50px;
+}
+.contact-details {
+    margin: 25px;
+    border-collapse: collapse;
+}
+
+.input-contact {
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 30%;
+    resize: none;
+}
+
+.container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
+.centered-block {
+    width: 50%; /* lub dowolna inna szerokość */
+    margin: 0 auto;
+    background-color: lightgrey; /* dla lepszej widoczności */
+}
+
+.form-grid {
+    display: grid;
+    position: relative;
+    gap: 15px;
+    vertical-align: middle;
+
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+}
+
+label {
+    margin-right: 5px;
+}
+
 .container {
-    background-color: #fff;
+    background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    max-width: 400px;
+    width: 100%;
 }
+
 h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-input[type="text"],
-textarea,
-select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
+.registration-form {
+    display: grid;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-input[type="radio"],
-input[type="checkbox"] {
-    margin-right: 10px;
-}
-.form-group {
-    margin-bottom: 15px;
-}
-.form-actions {
-    text-align: center;
-}
-.form-actions input[type="submit"] {
-    background-color: #4CAF50;
+
+button {
+    padding: 10px;
+    background-color: #28a745;
     color: white;
     border: none;
-    padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-}
-.form-actions input[type="submit"]:hover {
-    background-color: #45a049;
-}
-.error {
-    color: red;
+    font-size: 16px;
 }
 
-table {
+button:hover {
+    background-color: #218838;
+}
+
+.main-h3 {
+    color: white;
+    padding:30px;
+}
+.main-registration {
+    margin-top: 120px;
+    padding:48px
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    z-index: 1000;
 }
 
-thead {
-    background-color: #009879;
-    color: #ffffff;
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
 }
 
-th, td {
-    padding: 12px 15px;
-    border: 1px solid #dddddd;
-    text-align: left;
+.navbar ul li {
+    margin: 0 15px;
 }
 
-tbody tr:nth-child(even) {
-    background-color: #f3f3f3;
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-tbody tr:hover {
-    background-color: #f1f1f1;
+.content {
+    padding-top: 60px; /* Dodaj odpowiednią ilość paddingu, aby uwzględnić wysokość nawigacji */
+    text-align: center;
+}
+
+main {
+    padding: 20px;
 }

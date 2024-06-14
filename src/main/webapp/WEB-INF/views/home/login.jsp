@@ -1,54 +1,32 @@
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
-  Date: 09.06.2024
-  Time: 21:45
+  Date: 13.06.2024
+  Time: 22:58
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<jsp:include page="header.jsp" />--%>
-<html>
-<head>
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
-</head>
-<body>
-<form:form action="post" modelAttribute="user">
-    <div class="form-group">
-        <form:hidden path="id" />
-    </div>
+<jsp:include page="header.jsp"/>
+<div class="w3-display-container w3-light-grey contact" id="login">
 
-    <div class="form-group">
-        First name:
-        <form:input path="firstName"/>
-        <form:errors path="firstName" cssClass="error" />
+    <p class="w3-center w3-jumbo cantact-info">Logowanie</p>
+    <div class="w3-center cantact-info">
+        <form method="post" class="cantact-details">
+            <p><input class="input-contact w3-border" type="email" placeholder="email" name="username"></p>
+            <p><input class="input-contact w3-border" type="password" placeholder="password"  name="password"></p>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <div><input class="w3-button w3-black" type="submit" value="Sign In"/></div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </p>
+        </form>
     </div>
+</div>
+        <jsp:include page="footer.jsp"/>
 
-    <div class="form-group">
-        Last name:
-        <form:input path="lastName"/>
-        <form:errors path="lastName" cssClass="error" />
-    </div>
-<%--    <div class="form-group">--%>
-<%--        Publishers:--%>
-<%--        <div>--%>
-<%--            <form:select path="city.id" items="${cities}" itemLabel="name" itemValue="id"/>--%>
-<%--            <form:errors path="city.id" cssClass="error" />--%>
-<%--        </div>--%>
-<%--    </div>--%>
-    <div class="form-group">
-        Age:
-        <form:input path="age"/>
-        <form:errors path="age" cssClass="error" />
-    </div>
-    <div class="form-group">
-        Description:
-        <form:input path="description"/>
-        <form:errors path="description" cssClass="error" />
-    </div>
-</form:form>
-</body>
-</html>
+<%--<form method="post">--%>
+<%--    <div><label> Email : <input type="text" name="username"/> </label></div>--%>
+<%--    <div><label> Password: <input type="password" name="password"/> </label></div>--%>
+<%--    <div><input type="submit" value="Sign In"/></div>--%>
+<%--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+<%--</form>--%>
+

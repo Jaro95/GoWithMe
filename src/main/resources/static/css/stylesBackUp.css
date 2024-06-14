@@ -1,5 +1,7 @@
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 body {
-    font-family: Arial, sans-serif;
+    height: 100%;
+    line-height: 1.8;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
@@ -7,7 +9,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 .container {
     background-color: #fff;
@@ -78,4 +79,32 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
     background-color: #f1f1f1;
+}
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 10px;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.bgimg-1 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("../images/mainPeople2.jpg");
+    min-height: 100%;
+}
+
+.w3-bar .w3-button {
+    padding: 16px;
 }
