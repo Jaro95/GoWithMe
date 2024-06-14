@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -8,21 +9,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp"/>
 <div class="w3-display-container w3-light-grey contact" id="contact">
-    <h3 class="w3-center"></h3>
     <p class="w3-center w3-jumbo cantact-info">Rejestracja</p>
     <div class="w3-center cantact-info">
-        <form method="post" target="_blank" class="cantact-details">
-            <p><input class="input-contact w3-border" type="text" placeholder="Imę" required name="firstName"></p>
-            <p><input class="input-contact w3-border" type="text" placeholder="Nazwisko" required name="lastName"></p>
-            <p><input class="input-contact w3-border" type="text" placeholder="Miejscowość" required name="city"></p>
-            <p><input class="input-contact w3-border" type="email" placeholder="Email" required name="email"></p>
-            <p><input class="input-contact w3-border" type="password" placeholder="Hasło" required name="password"></p>
+        <form:form method="post" target="_blank" class="cantact-details"  modelAttribute="registrationWrapper">
+            <p><form:input class="input-contact w3-border" type="text" placeholder="Imę" path="userDetails.firstName"/></p>
+            <p><form:input class="input-contact w3-border" type="text" placeholder="Nazwisko" path="userDetails.lastName"/></p>
+            <p><form:input class="input-contact w3-border" type="text" placeholder="Miejscowość" path="userDetails.city.name"/></p>
+            <p><form:input class="input-contact w3-border" type="email" placeholder="Email" path="user.email"/></p>
+            <p><form:input class="input-contact w3-border" type="password" placeholder="Hasło" path="user.password"/></p>
             <p><input class="input-contact w3-border" type="password" placeholder="Powtórz hasło" required name="repeatPassword"></p>
                 <button class="w3-button w3-black" type="submit">
                     <i class="fa fa-plus"></i> Utwórz konto
                 </button>
             </p>
-        </form>
+        </form:form>
     </div>
 </div>
     <jsp:include page="footer.jsp"/>

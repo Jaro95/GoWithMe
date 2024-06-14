@@ -119,4 +119,45 @@ button:hover {
 
 .main-h3 {
     color: white;
+    padding:30px;
+}
+.main-registration {
+    margin-top: 120px;
+    padding:48px
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    z-index: 1000;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar ul li {
+    margin: 0 15px;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.content {
+    padding-top: 60px; /* Dodaj odpowiednią ilość paddingu, aby uwzględnić wysokość nawigacji */
+    text-align: center;
+}
+
+main {
+    padding: 20px;
 }

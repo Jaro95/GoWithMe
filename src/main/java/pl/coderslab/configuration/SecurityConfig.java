@@ -25,9 +25,9 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/gowithme/home/**").permitAll()
-                .antMatchers("/admin/**").hasAnyRole("USER","ADMIN")
-                .and().formLogin().loginPage("/login")
+               // .antMatchers("/gowithme/home/**").permitAll()
+                .antMatchers("/admingo/**").hasAnyRole("USER","ADMIN")
+                .and().formLogin().loginPage("/gowithme/login")
                 .and().logout().logoutSuccessUrl("/")
                 .permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");

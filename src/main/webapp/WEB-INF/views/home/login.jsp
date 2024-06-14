@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp"/>
 <div class="w3-display-container w3-light-grey contact" id="login">
-    <h3 class="w3-center"></h3>
+
     <p class="w3-center w3-jumbo cantact-info">Logowanie</p>
     <div class="w3-center cantact-info">
         <form method="post" target="_blank" class="cantact-details">
