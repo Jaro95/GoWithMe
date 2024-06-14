@@ -7,53 +7,22 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp"/>
-<section>
-
-    <div class="form-bg">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-offset-3 col-md-6">
-                    <div class="form-container">
-                        <h3 class="title">Register</h3>
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label>User Name</label>
-                                <input type="text" class="form-control" placeholder="User Name">
-                            </div>
-                            <div class="form-group">
-                                <label>Email ID</label>
-                                <input type="email" class="form-control" placeholder="Email Address">
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control" placeholder="Password">
-                            </div>
-                            <div class="form-group">
-                                <label>Confirm Password</label>
-                                <input type="password" class="form-control" placeholder="Confirm Password">
-                            </div>
-                            <h4 class="sub-title">Personal Information</h4>
-                            <div class="form-group">
-                                <label>Phone No.</label>
-                                <input type="text" class="form-control" placeholder="Phone Number">
-                            </div>
-                            <div class="form-group">
-                                <label>City</label>
-                                <select class="form-control">
-                                    <option value="paris">Paris</option>
-                                    <option value="new york">New York</option>
-                                </select>
-                            </div>
-                            <div class="check-terms">
-                                <input type="checkbox" class="checkbox">
-                                <span class="check-label">I agree to the terms</span>
-                            </div>
-                            <span class="signin-link">Already have an account? Click here to <a href="">Login</a></span>
-                            <button class="btn signup">Create Account</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="w3-display-container w3-light-grey contact" id="contact">
+    <h3 class="w3-center"></h3>
+    <p class="w3-center w3-jumbo cantact-info">Rejestracja</p>
+    <div class="w3-center cantact-info">
+        <form method="post" target="_blank" class="cantact-details">
+            <p><input class="input-contact w3-border" type="text" placeholder="Imę" required name="firstName"></p>
+            <p><input class="input-contact w3-border" type="text" placeholder="Nazwisko" required name="lastName"></p>
+            <p><input class="input-contact w3-border" type="text" placeholder="Miejscowość" required name="city"></p>
+            <p><input class="input-contact w3-border" type="email" placeholder="Email" required name="email"></p>
+            <p><input class="input-contact w3-border" type="password" placeholder="Hasło" required name="password"></p>
+            <p><input class="input-contact w3-border" type="password" placeholder="Powtórz hasło" required name="repeatPassword"></p>
+                <button class="w3-button w3-black" type="submit">
+                    <i class="fa fa-plus"></i> Utwórz konto
+                </button>
+            </p>
+        </form>
     </div>
+</div>
     <jsp:include page="footer.jsp"/>

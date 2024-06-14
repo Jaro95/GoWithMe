@@ -7,19 +7,26 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp"/>
-<section class="w3-display-container w3-light-grey contact"  id="contact">
+<div class="w3-display-container w3-light-grey contact" id="login">
     <h3 class="w3-center"></h3>
     <p class="w3-center w3-jumbo cantact-info">Logowanie</p>
     <div class="w3-center cantact-info">
-
-        <form action="/send_contact" target="_blank" class="cantact-details">
-            <p><input class="input-contact w3-border" type="text" placeholder="Email" required name="name"></p>
-            <p><input class="input-contact w3-border" type="email" placeholder="Password" required name="email"></p>
-            <p>
-                <button class="w3-button w3-black" type="submit">
-                    <i class="fa fa-paper-plane"></i> Wyślij
-                </button>
+        <form method="post" target="_blank" class="cantact-details">
+            <p><input class="input-contact w3-border" type="email" placeholder="email" name="username"></p>
+            <p><input class="input-contact w3-border" type="password" placeholder="password"  name="password"></p>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <div><input class="w3-button w3-black" type="submit" value="Sign In"/></div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </p>
         </form>
     </div>
+</div>
         <jsp:include page="footer.jsp"/>
+
+<%--<form method="post">--%>
+<%--    <div><label> Email : <input type="text" name="username"/> </label></div>--%>
+<%--    <div><label> Password: <input type="password" name="password"/> </label></div>--%>
+<%--    <div><input type="submit" value="Sign In"/></div>--%>
+<%--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+<%--</form>--%>
+

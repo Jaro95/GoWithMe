@@ -3,7 +3,9 @@ package pl.coderslab.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.Service.UserService;
 import pl.coderslab.model.Contact;
+import pl.coderslab.model.User;
 import pl.coderslab.model.UserDetails;
 import pl.coderslab.repository.ContactRepository;
 import pl.coderslab.repository.UserDetailsRepository;
@@ -14,10 +16,12 @@ public class HomeController {
 
     private final UserDetailsRepository userDetailsRepository;
     private final ContactRepository contactRepository;
+    private final UserService userService;
 
-    public HomeController(UserDetailsRepository userDetailsRepository, ContactRepository contactRepository) {
+    public HomeController(UserDetailsRepository userDetailsRepository, ContactRepository contactRepository, UserService userService) {
         this.userDetailsRepository = userDetailsRepository;
         this.contactRepository = contactRepository;
+        this.userService = userService;
     }
 
 
@@ -53,8 +57,10 @@ public class HomeController {
     }
 
     @PostMapping("/registration")
-    public String postAddUser(UserDetails userDetails) {
+    public String postAddUser(UserDetails userDetails, User user) {
         userDetailsRepository.save(userDetails);
+        user.setUserDetails(userDetails);
+        userService.saveUser(user);
         return "redirect:/gowithme/home/alluser";
     }
 
@@ -75,6 +81,5 @@ public class HomeController {
         userDetailsRepository.save(userDetails);
         return "redirect:/gowithme/home/alluser";
     }
-
 
 }
