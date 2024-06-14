@@ -25,7 +25,7 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-               // .antMatchers("/gowithme/home/**").permitAll()
+                .antMatchers("/gowithme/**").permitAll()
                 .antMatchers("/gowithme/app/**").hasAnyRole("USER","ADMIN")
                 .and().formLogin().loginPage("/gowithme/login")
                 .and().logout().logoutSuccessUrl("/gowithme/app")

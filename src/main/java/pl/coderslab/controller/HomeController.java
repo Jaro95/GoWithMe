@@ -34,9 +34,8 @@ public class HomeController {
         this.cityRepository = cityRepository;
     }
 
-
     @GetMapping("/home")
-    public String main(Model model) {
+    public String main() {
         return "/home/main";
     }
 
@@ -44,13 +43,14 @@ public class HomeController {
 //    public String login() {
 //        return "/home/login";
 //    }
+
     @GetMapping("/contact")
     public String login(Model model) {
         Contact contact = contactRepository.findAll().get(0);
         model.addAttribute("address", contact.getAddress());
         model.addAttribute("phone",contact.getPhoneNumber());
         model.addAttribute("email", contact.getEmail());
-        model.addAttribute("messageContact", new ContactForm());
+        model.addAttribute("contactForm", new ContactForm());
         return "/home/contact";
     }
 
@@ -66,12 +66,6 @@ public class HomeController {
         }
         contactFormRepository.save(contactForm);
         return "redirect:/gowithme/contact";
-    }
-
-    @GetMapping("/alluser")
-    public String allUser(Model model) {
-        model.addAttribute("userDetails", userDetailsRepository.findAll());
-        return "application/userList";
     }
 
 
@@ -102,22 +96,5 @@ public class HomeController {
         return "redirect:/gowithme/login";
     }
 
-//    @GetMapping("/delete")
-//    public String postAddUser(@RequestParam long id) {
-//        userDetailsRepository.delete(userDetailsRepository.findById(id).get());
-//        return "redirect:/gowithme/home/alluser";
-//    }
-//
-//    @GetMapping("/update")
-//    public String getUpdateUser(Model model,@RequestParam long id) {
-//        model.addAttribute("userDetails", userDetailsRepository.findById(id).get());
-//        return "application/update";
-//    }
-//
-//    @PostMapping("/update")
-//    public String postUpdateUser(UserDetails userDetails) {
-//        userDetailsRepository.save(userDetails);
-//        return "redirect:/gowithme/home/alluser";
-//    }
 
 }

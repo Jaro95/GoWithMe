@@ -16,7 +16,6 @@
             <p><input class="input-contact w3-border" type="password" placeholder="password"  name="password"></p>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <div><input class="w3-button w3-black" type="submit" value="Sign In"/></div>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </p>
         </form>
     </div>

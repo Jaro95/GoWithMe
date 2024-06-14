@@ -1,13 +1,11 @@
 package pl.coderslab.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 
 @Getter
@@ -15,6 +13,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class UserDetails {
 
     @Id
@@ -32,6 +31,6 @@ public class UserDetails {
     private int age;
     private String description;
     @ManyToMany
-    private List<Activies> activies;
+    private List<ActivitiesPlan> activitiesPlans;
 
 }

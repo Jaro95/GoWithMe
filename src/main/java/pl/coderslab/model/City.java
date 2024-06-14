@@ -21,6 +21,5 @@ public class City {
     @Size(max = 50)
     private String name;
     @OneToMany
-    @NotBlank
     private List<UserDetails> userDetails;
 }
