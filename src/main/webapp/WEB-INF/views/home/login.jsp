@@ -7,33 +7,19 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp"/>
-<section>
-    <form>
-        <h1>Login Form</h1>
-        <div>
-            <input type="text" class="form-control" placeholder="Username" required="">
-        </div>
-        <div>
-            <input type="password" class="form-control" placeholder="Password" required="">
-        </div>
-        <div>
-            <a class="btn btn-default submit" href="index.html">Log in</a>
-            <a class="reset_pass" href="#">Lost your password?</a>
-        </div>
+<section class="w3-display-container w3-light-grey contact"  id="contact">
+    <h3 class="w3-center"></h3>
+    <p class="w3-center w3-jumbo cantact-info">Logowanie</p>
+    <div class="w3-center cantact-info">
 
-        <div class="clearfix"></div>
-
-        <div class="separator">
-            <p class="change_link">New to site?
-                <a href="#signup" class="to_register"> Create Account </a>
+        <form action="/send_contact" target="_blank" class="cantact-details">
+            <p><input class="input-contact w3-border" type="text" placeholder="Email" required name="name"></p>
+            <p><input class="input-contact w3-border" type="email" placeholder="Password" required name="email"></p>
+            <p>
+                <button class="w3-button w3-black" type="submit">
+                    <i class="fa fa-paper-plane"></i> Wyślij
+                </button>
             </p>
-
-            <div class="clearfix"></div>
-            <div>
-                <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
-            </div>
-        </div>
-    </form>
-
+        </form>
+    </div>
         <jsp:include page="footer.jsp"/>

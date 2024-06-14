@@ -9,7 +9,7 @@
 <jsp:include page="header.jsp"/>
 
     <section class="w3-display-container w3-light-grey contact"  id="contact">
-        <h3 class="w3-center">KONTAKT</h3>
+        <h3 class="w3-center"></h3>
         <p class="w3-center w3-jumbo cantact-info">Napisz do nas:</p>
         <div class="w3-center cantact-info">
             <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>${address}</p>
