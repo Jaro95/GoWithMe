@@ -22,7 +22,7 @@ public class ActivitiesPlan {
     private long id;
     @NotBlank
     @ManyToOne
-    private Activity activity;
+    private Category category;
     @NotBlank
     @Size(max=300)
     private String description;

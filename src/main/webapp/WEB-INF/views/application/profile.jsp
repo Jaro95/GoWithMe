@@ -13,7 +13,7 @@
     <table id="activitiesTable" class="display">
         <thead>
         <tr>
-            <th>Kategoria</th>
+            <th>Aktywność</th>
             <th>Opis</th>
             <th>Miasto</th>
             <th>Dokładna lokalizacja</th>
@@ -25,7 +25,7 @@
         <tbody>
         <c:forEach var="activity" items="${activities}">
             <tr>
-                <td>${activity.category.name}</td>
+                <td>${activity.activity.activity}</td>
                 <td>${activity.description}</td>
                 <td>${activity.city}</td>
                 <td>${activity.location}</td>

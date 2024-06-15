@@ -18,13 +18,13 @@
         </div>
     </c:if>
     <div class="w3-center cantact-info">
-        <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>${address}</p>
-        <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>Phone: +48 ${phone}</p>
-        <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Email: ${email}</p>
+        <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>Addres: ${address}</p>
+        <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>Telefon: +48 ${phone}</p>
+        <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"></i>Email: ${email}</p>
         <br>
         <form:form method="post" class="cantact-details" modelAttribute="contactForm">
             <p>
-                <form:input class="input-contact w3-border" type="text" placeholder="Name" path="name"/>
+                <form:input class="input-contact w3-border" type="text" placeholder="Imię" path="name"/>
                 <p><form:errors path="name" cssClass="alert alert-error"/></p>
             </p>
             <p>
@@ -32,11 +32,11 @@
                 <p><form:errors path="email" cssClass="alert alert-error"/></p>
             </p>
             <p>
-                <form:input class="input-contact w3-border" type="text" placeholder="Subject" path="subject"/>
+                <form:input class="input-contact w3-border" type="text" placeholder="Temat" path="subject"/>
                 <p><form:errors path="subject" cssClass="alert alert-error"/></p>
             </p>
             <p>
-                <form:textarea rows="4" class="input-contact w3-border" placeholder="Message" path="message"></form:textarea>
+                <form:textarea rows="4" class="input-contact w3-border" placeholder="Wiadomość" path="message"></form:textarea>
                 <p><form:errors path="message" cssClass="alert alert-error"/></p>
             </p>
 
