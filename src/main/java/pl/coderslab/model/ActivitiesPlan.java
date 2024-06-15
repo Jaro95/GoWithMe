@@ -27,14 +27,13 @@ public class ActivitiesPlan {
     @Size(max=300)
     private String description;
     @NotBlank
-    @OneToOne
-    private City city;
+    private String city;
     @NotBlank
     @Size(max = 100)
     private String location;
     @OneToMany
+    @JoinTable(name = "activites_joined_people")
     private List<UserDetails> userDetails;
     @OneToOne
-    @NotBlank
-    private User user;
+    private UserDetails user;
 }

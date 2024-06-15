@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -10,31 +11,36 @@
 <jsp:include page="header.jsp"/>
 <div class="w3-display-container w3-light-grey contact" id="contact">
     <p class="w3-center w3-jumbo cantact-info">Rejestracja</p>
+    <c:if test="${not empty message}">
+        <div class="alert alert-success">
+                ${message}
+        </div>
+    </c:if>
     <div class="w3-center cantact-info">
         <form:form method="post" class="cantact-details"  modelAttribute="registrationWrapper">
             <p>
                 <form:input class="input-contact w3-border" type="text" placeholder="Imę" path="userDetails.firstName"/>
-                <form:errors path="userDetails.firstName" cssClass="error"/>
+            <p><form:errors path="userDetails.firstName" cssClass="alert alert-error"/></p>
             </p>
             <p>
                 <form:input class="input-contact w3-border" type="text" placeholder="Nazwisko" path="userDetails.lastName"/>
-                <form:errors path="userDetails.lastName" cssClass="error"/>
+            <p><form:errors path="userDetails.lastName" cssClass="alert alert-error"/></p>
             </p>
             <p>
-                <form:input class="input-contact w3-border" type="text" placeholder="Miejscowość" path="city.name"/>
-                <form:errors path="city.name" cssClass="error"/>
+                <form:input class="input-contact w3-border" type="text" placeholder="Miejscowość" path="userDetails.city"/>
+            <p><form:errors path="userDetails.city" cssClass="alert alert-error"/></p>
             </p>
             <p>
                 <form:input class="input-contact w3-border" type="email" placeholder="Email" path="user.email"/>
-                <form:errors path="user.email" cssClass="error"/>
+            <p><form:errors path="user.email" cssClass="alert alert-error"/></p>
             </p>
             <p>
                 <form:input class="input-contact w3-border" type="password" placeholder="Hasło" path="user.password"/>
-                <form:errors path="user.password" cssClass="error"/>
+            <p><form:errors path="user.password" cssClass="alert alert-error"/></p>
             </p>
             <p>
                 <form:input class="input-contact w3-border" type="password" placeholder="Powtórz hasło" path="repeatPassword"/>
-                <form:errors path="repeatPassword" cssClass="error"/>
+            </p><form:errors path="repeatPassword" cssClass="alert alert-error"/>
             </p>
                 <button class="w3-button w3-black" type="submit">
                     <i class="fa fa-plus"></i> Utwórz konto

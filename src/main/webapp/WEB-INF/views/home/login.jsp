@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -10,6 +11,11 @@
 <div class="w3-display-container w3-light-grey contact" id="login">
 
     <p class="w3-center w3-jumbo cantact-info">Logowanie</p>
+    <c:if test="${not empty message}">
+        <div class="alert alert-error">
+                ${message}
+        </div>
+    </c:if>
     <div class="w3-center cantact-info">
         <form method="post" class="cantact-details">
             <p><input class="input-contact w3-border" type="email" placeholder="email" name="username"></p>

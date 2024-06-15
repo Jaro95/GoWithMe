@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="d" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -17,6 +18,7 @@
 </head>
 <body>
 <h1>Rejestracja</h1>
+
 <form:form method="post" modelAttribute="userDetails">
     <div class="form-group">
         <form:hidden path="id" />

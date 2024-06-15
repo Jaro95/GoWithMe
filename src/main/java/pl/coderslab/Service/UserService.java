@@ -9,4 +9,6 @@ public interface UserService {
     void saveUser(User user);
 
     void saveAdmin(User user);
+
+    void saveGod(User user);
 }

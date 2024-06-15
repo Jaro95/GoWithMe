@@ -44,15 +44,38 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// $(document).ready(function () {
+//     var table = $('#activityTable').DataTable({
+//         "paging": true,
+//         "ordering": true,
+//         "info": true
+//     });
+//
+//     $('#searchBox').on('keyup', function () {
+//         table.search(this.value).draw();
+//     });
+// });
 
-$(document).ready(function() {
-    var table = $('#activityTable').DataTable({
+$(document).ready(function () {
+    var table = $('#adminTable').DataTable({
         "paging": true,
         "ordering": true,
         "info": true
     });
 
-    $('#searchBox').on('keyup', function() {
+    $('#searchBox').on('keyup', function () {
+        table.search(this.value).draw();
+    });
+});
+
+$(document).ready(function () {
+    var table = $('#activitiesTable').DataTable({
+        "paging": true,
+        "ordering": true,
+        "info": true
+    });
+
+    $('#searchBox').on('keyup', function () {
         table.search(this.value).draw();
     });
 });
