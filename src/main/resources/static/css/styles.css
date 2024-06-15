@@ -245,3 +245,8 @@ table.dataTable tbody td {
 a {
     text-decoration: none;
 }
+.social-icon {
+    position: fixed;
+    bottom: 20px;
+    left: 20px; /
+}

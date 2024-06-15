@@ -8,8 +8,26 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp"/>
+
+<div class="w3-container w3-light-grey" >
+    <div class="w3-row-padding">
+        <div class="w3-col m6" style="padding:128px 200px">
+            <img class="w3-image w3-round-large" src="/images/mainPeoplePedro.gif" alt="Buildings" width="350" height="200">
+        </div>
+        <div class="w3-col m6" style="padding:128px 200px">
+            <h3>Full name</h3>
+            <p>Miejscowość</p>
+            <p>Wiek: </p>
+            <p>Kilka słów o mnie: </p>
+            <p> </p>
+            <p><a href="/gowithme/app/profile/edit" class="w3-button w3-black"><i class="fa fa-square-pen"></i> Edycja</a></p>
+        </div>
+
+    </div>
+</div>
+
 <div class="w3-display-container w3-light-grey contact" id="appMain">
-    <p class="w3-center w3-jumbo cantact-info">Co w trawie piszczy</p>
+    <div class="w3-center w3-xlarge ">Twoje aktywności</div>
     <table id="activitiesTable" class="display">
         <thead>
         <tr>
@@ -18,7 +36,6 @@
             <th>Miasto</th>
             <th>Dokładna lokalizacja</th>
             <th>Chętne osoby</th>
-            <th>Dodał</th>
             <th>Brzmi spoko</th>
         </tr>
         </thead>
@@ -34,7 +51,6 @@
                            <p>${user.firstName} ${user.lastName}</p>
                        </c:forEach>
                 </td>
-                <td>${activity.user.firstName} ${activity.user.lastName}</td>
                 <td>
                     <button class="w3-button w3-black"
                             onclick="location.href='/gowithme/app/activity?id=${activity.id}'">
