@@ -9,9 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp"/>
 <div class="w3-display-container w3-light-grey contact" id="appMain">
-
     <p class="w3-center w3-jumbo cantact-info">Co w trawie piszczy</p>
-    <table id="activityTable" class="display">
+    <table id="s" class="display">
         <thead>
         <tr>
             <th>Aktywność</th>

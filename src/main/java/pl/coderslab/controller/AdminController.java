@@ -82,7 +82,7 @@ public class AdminController {
     @GetMapping("")
     public String allUser(Model model) {
         model.addAttribute("userDetails", userDetailsRepository.findAll());
-        return "admin/adminPanel";
+        return "admin/adminPanel2";
     }
 
     @GetMapping("/delete")
