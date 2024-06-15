@@ -32,8 +32,8 @@ public class ActivitiesPlan {
     @Size(max = 100)
     private String location;
     @OneToMany
+    @JoinTable(name = "activites_joined_people")
     private List<UserDetails> userDetails;
     @OneToOne
-    @NotBlank
-    private User user;
+    private UserDetails user;
 }

@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.Service.UserService;
 import pl.coderslab.model.Contact;
 import pl.coderslab.model.Role;
@@ -82,7 +81,7 @@ public class AdminController {
     @GetMapping("")
     public String allUser(Model model) {
         model.addAttribute("userDetails", userDetailsRepository.findAll());
-        return "admin/adminPanel2";
+        return "admin/adminPanel";
     }
 
     @GetMapping("/delete")

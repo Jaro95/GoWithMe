@@ -10,7 +10,7 @@
 <jsp:include page="header.jsp"/>
 <div class="w3-display-container w3-light-grey contact" id="appMain">
     <p class="w3-center w3-jumbo cantact-info">Co w trawie piszczy</p>
-    <table id="s" class="display">
+    <table id="activitiesTable" class="display">
         <thead>
         <tr>
             <th>Aktywność</th>
@@ -25,16 +25,21 @@
         <tbody>
         <c:forEach var="activity" items="${activities}">
             <tr>
-                <td>${activity.activity}</td>
+                <td>${activity.activity.activity}</td>
                 <td>${activity.description}</td>
                 <td>${activity.city}</td>
                 <td>${activity.location}</td>
-                <td>${activity.userDetails}</td>
-                <td>${activity.user}</td>
                 <td>
+                       <c:forEach var="user" items="${activity.userDetails}">
+                           <p>${user.firstName} ${user.lastName}</p>
+                       </c:forEach>
+                </td>
+                <td>${activity.user.firstName} ${activity.user.lastName}</td>
                 <td>
-                    <button class="w3-button w3-black" onclick="location.href='/gowithme/app/activity?id=${activity.id}'">
-                        <i class="fa fa-right-to-bracket"></i>Szczegóły</button>
+                    <button class="w3-button w3-black"
+                            onclick="location.href='/gowithme/app/activity?id=${activity.id}'">
+                        <i class="fa fa-right-to-bracket"></i>Szczegóły
+                    </button>
                 </td>
                 </td>
             </tr>
