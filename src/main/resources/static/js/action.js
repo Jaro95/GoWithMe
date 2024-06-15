@@ -56,3 +56,15 @@ $(document).ready(function() {
         table.search(this.value).draw();
     });
 });
+
+$(document).ready(function() {
+    var table = $('#adminPanel').DataTable({
+        "paging": true,
+        "ordering": true,
+        "info": true
+    });
+
+    $('#searchBox').on('keyup', function() {
+        table.search(this.value).draw();
+    });
+});
