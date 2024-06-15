@@ -32,10 +32,16 @@
         <!-- Right-sided navbar links -->
         <div class="w3-right w3-hide-small">
 
-            <a href="/gowithme/app/search" class="w3-bar-item w3-button"><i class="fa fa-magnifying-glass"></i> Szukaj</a>
+            <a href="/gowithme/app/main" class="w3-bar-item w3-button"><i class="fa fa-magnifying-glass"></i> Szukaj</a>
             <a href="/gowithme/app/add_activity" class="w3-bar-item w3-button"><i class="fa fa-person-running"></i> Dodaj aktywność</a>
             <a href="/gowithme/app/random" class="w3-bar-item w3-button"><i class="fa fa-dice"></i> Wybierz za mnie</a>
-            <a href="/gowithme/app/profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Profil</a>
+            <a  class="w3-bar-item w3-button " id = "user-icon"><i class="fa fa-user" ></i> <i class="fa fa-list"></i></a>
+                <div class="dropdown-menu" id="dropdown-menu">
+                    <a href="/gowithme/app/profile"><div class="dropdown-item">Profil</div></a>
+                    <a href="/gowithme/app/logout"><div class="dropdown-item">Wyloguj</div></a>
+                </div>
+
+
         </div>
         <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
@@ -50,7 +56,7 @@
 <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium " style="display:none"
      id="mySidebar">
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
-    <a href="/gowithme/app/search" onclick="w3_close()" class="fa fa-user w3-button">Szukaj</a>
+    <a href="/gowithme/app/main" onclick="w3_close()" class="fa fa-user w3-button">Szukaj</a>
     <a href="/gowithme/app/add_activity" onclick="w3_close()" class="w3-bar-item w3-button">Dodaj aktywność</a>
     <a href="/gowithme/app/random" onclick="w3_close()" class="fa fa-user w3-button">Wybierz za mnie</a>
     <a href="/gowithme/app/profile" onclick="w3_close()" class="w3-bar-item w3-button">Profil</a>

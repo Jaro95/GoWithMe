@@ -28,16 +28,34 @@ public class ApplicationController {
         return "application/appMain";
     }
 
-    @GetMapping("/update")
-    public String getUpdateUser(Model model, @RequestParam long id) {
-        model.addAttribute("userDetails", userDetailsRepository.findById(id).get());
-        return "application/update";
+    @GetMapping("/add_activity")
+    public String getAddActivity(Model model) {
+        model.addAttribute("activities",activitiesPlanRepository.findAll());
+        return "application/addActivity";
     }
 
-    @PostMapping("/update")
+    @GetMapping("/profile")
+    public String getProfile(Model model) {
+        model.addAttribute("activities",activitiesPlanRepository.findAll());
+        return "application/profile";
+    }
+
+    @GetMapping("/random")
+    public String getRandom(Model model) {
+        model.addAttribute("activities",activitiesPlanRepository.findAll());
+        return "application/random";
+    }
+
+    @GetMapping("/profile/edit")
+    public String getProfileEdit(Model model) {
+       // model.addAttribute("userDetails", userDetailsRepository.findById(id).get());
+        return "application/profileEdit";
+    }
+
+    @PostMapping("/profile/edit")
     public String postUpdateUser(UserDetails userDetails) {
         userDetailsRepository.save(userDetails);
-        return "redirect:/gowithme/home/alluser";
+        return "redirect:/gowithme/app/profile";
     }
 }
 
