@@ -25,12 +25,13 @@ public class UserDetails {
     @NotBlank
     @Size(max = 50)
     private String lastName;
-    @ManyToOne
     @NotBlank
-    private City city;
+    private String city;
     private int age;
     private String description;
     @ManyToMany
     private List<ActivitiesPlan> activitiesPlans;
+    @OneToOne
+    private User user;
 
 }

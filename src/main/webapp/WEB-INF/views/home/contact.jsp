@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -11,6 +12,11 @@
 
 <div class="w3-display-container w3-light-grey contact" id="contact">
     <p class="w3-center w3-jumbo cantact-info">Napisz do nas:</p>
+    <c:if test="${not empty message}">
+        <div class="alert alert-success">
+                ${message}
+        </div>
+    </c:if>
     <div class="w3-center cantact-info">
         <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>${address}</p>
         <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>Phone: +48 ${phone}</p>
@@ -19,19 +25,19 @@
         <form:form method="post" class="cantact-details" modelAttribute="contactForm">
             <p>
                 <form:input class="input-contact w3-border" type="text" placeholder="Name" path="name"/>
-                <form:errors path="name" cssClass="error"/>
+                <p><form:errors path="name" cssClass="alert alert-error"/></p>
             </p>
             <p>
                 <form:input class="input-contact w3-border" type="email" placeholder="Email" path="email"/>
-                <form:errors path="email" cssClass="error"/>
+                <p><form:errors path="email" cssClass="alert alert-error"/></p>
             </p>
             <p>
                 <form:input class="input-contact w3-border" type="text" placeholder="Subject" path="subject"/>
-                <form:errors path="subject" cssClass="error"/>
+                <p><form:errors path="subject" cssClass="alert alert-error"/></p>
             </p>
             <p>
                 <form:textarea rows="4" class="input-contact w3-border" placeholder="Message" path="message"></form:textarea>
-                <form:errors path="message" cssClass="error"/>
+                <p><form:errors path="message" cssClass="alert alert-error"/></p>
             </p>
 
             <p>
