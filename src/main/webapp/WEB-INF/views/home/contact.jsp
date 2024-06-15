@@ -17,10 +17,23 @@
         <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Email: ${email}</p>
         <br>
         <form:form method="post" class="cantact-details" modelAttribute="contactForm">
-            <p><form:input class="input-contact w3-border" type="text" placeholder="Name" path="name"/></p>
-            <p><form:input class="input-contact w3-border" type="email" placeholder="Email" path="email"/></p>
-            <p><form:input class="input-contact w3-border" type="text" placeholder="Subject" path="subject"/></p>
-            <p><form:textarea rows="4" class="input-contact w3-border" placeholder="Message" path="message"></form:textarea></p>
+            <p>
+                <form:input class="input-contact w3-border" type="text" placeholder="Name" path="name"/>
+                <form:errors path="name" cssClass="error"/>
+            </p>
+            <p>
+                <form:input class="input-contact w3-border" type="email" placeholder="Email" path="email"/>
+                <form:errors path="email" cssClass="error"/>
+            </p>
+            <p>
+                <form:input class="input-contact w3-border" type="text" placeholder="Subject" path="subject"/>
+                <form:errors path="subject" cssClass="error"/>
+            </p>
+            <p>
+                <form:textarea rows="4" class="input-contact w3-border" placeholder="Message" path="message"></form:textarea>
+                <form:errors path="message" cssClass="error"/>
+            </p>
+
             <p>
                 <button class="w3-button w3-black" type="submit">
                     <i class="fa fa-paper-plane"></i> Wyślij

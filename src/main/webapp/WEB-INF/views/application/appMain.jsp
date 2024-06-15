@@ -10,16 +10,17 @@
 <jsp:include page="header.jsp"/>
 <div class="w3-display-container w3-light-grey contact" id="appMain">
 
-    <p class="w3-center w3-jumbo cantact-info">Activity Table</p>
+    <p class="w3-center w3-jumbo cantact-info">Co w trawie piszczy</p>
     <table id="activityTable" class="display">
         <thead>
         <tr>
-            <th>Activity</th>
-            <th>Description</th>
-            <th>City</th>
-            <th>Location</th>
-            <th>User Details</th>
-            <th>User</th>
+            <th>Aktywność</th>
+            <th>Opis</th>
+            <th>Miasto</th>
+            <th>Dokładna lokalizacja</th>
+            <th>Chętne osoby</th>
+            <th>Dodał</th>
+            <th>Brzmi spoko</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +32,12 @@
                 <td>${activity.location}</td>
                 <td>${activity.userDetails}</td>
                 <td>${activity.user}</td>
+                <td>
+                <td>
+                    <button class="w3-button w3-black" onclick="location.href='/gowithme/app/activity?id=${activity.id}'">
+                        <i class="fa fa-right-to-bracket"></i>Szczegóły</button>
+                </td>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

@@ -53,16 +53,19 @@ public class HomeController {
         model.addAttribute("contactForm", new ContactForm());
         return "/home/contact";
     }
-
+/**
+ * add information send successfully
+ */
     @PostMapping("/contact")
-    public String login(ContactForm contactForm, BindingResult bindingResult, Model model ) {
+    public String login(@Valid ContactForm contactForm, BindingResult bindingResult, Model model ) {
         if(bindingResult.hasErrors()) {
             Contact contact = contactRepository.findAll().get(0);
             model.addAttribute("address", contact.getAddress());
             model.addAttribute("phone",contact.getPhoneNumber());
             model.addAttribute("email", contact.getEmail());
-            model.addAttribute("messageContact", new ContactForm());
-            return "/gowithme/contact";
+            model.addAttribute("messageContact", contactForm);
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "/home/contact";
         }
         contactFormRepository.save(contactForm);
         return "redirect:/gowithme/contact";
