@@ -101,7 +101,7 @@ public class HomeController {
             return "home/registration";
         }
         userService.saveUser(wrapper.getUser());
-        wrapper.setUser(userRepository.findByEmail(wrapper.getUser().getEmail()));
+        wrapper.getUserDetails().setUser(userRepository.findByEmail(wrapper.getUser().getEmail()));
         userDetailsRepository.save(wrapper.getUserDetails());
         redirectAttributes.addFlashAttribute("message","Rejestracja przebiegła pomyślnie");
         return "redirect:/gowithme/login";
