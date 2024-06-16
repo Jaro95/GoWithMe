@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -9,18 +10,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp"/>
 
-<div class="w3-container w3-light-grey" >
+<div class="w3-container w3-light-grey">
     <div class="w3-row-padding">
         <div class="w3-col m6" style="padding:128px 200px">
-            <img class="w3-image w3-round-large" src="/images/mainPeoplePedro.gif" alt="Buildings" width="350" height="200">
+            <img class="w3-image w3-round-large" src="/images/mainPeoplePedro.gif" alt="Buildings" width="350"
+                 height="200">
         </div>
         <div class="w3-col m6" style="padding:128px 200px">
-            <h3>Full name</h3>
-            <p>Miejscowość</p>
-            <p>Wiek: </p>
-            <p>Kilka słów o mnie: </p>
-            <p> </p>
-            <p><a href="/gowithme/app/profile/edit" class="w3-button w3-black"><i class="fa fa-square-pen"></i> Edycja</a></p>
+
+                <h3>${firstName} ${lastName}</h3>
+                <p>${city}</p>
+                <p>Wiek: ${age}</p>
+                <p style="text ">Kilka słów o mnie: </p>
+                <p>${description}</p>
+                <p><a href="/gowithme/app/profile/edit" class="w3-button w3-black">
+                    <i class="fa fa-user-pen"></i> Edycja</a></p>
         </div>
 
     </div>
@@ -36,7 +40,7 @@
             <th>Miasto</th>
             <th>Dokładna lokalizacja</th>
             <th>Chętne osoby</th>
-            <th>Brzmi spoko</th>
+            <th>Akcje</th>
         </tr>
         </thead>
         <tbody>
@@ -47,14 +51,22 @@
                 <td>${activity.city}</td>
                 <td>${activity.location}</td>
                 <td>
-                       <c:forEach var="user" items="${activity.userDetails}">
-                           <p>${user.firstName} ${user.lastName}</p>
-                       </c:forEach>
+                    <c:forEach var="user" items="${activity.userDetails}">
+                        <p>${user.firstName} ${user.lastName}</p>
+                    </c:forEach>
                 </td>
                 <td>
                     <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity?id=${activity.id}'">
-                        <i class="fa fa-right-to-bracket"></i>Szczegóły
+                            onclick="location.href='/gowithme/app/activity/add_users?id=${activity.id}'">
+                        <i class="fa fa-right-to-bracket"></i>Przypisz
+                    </button>
+                    <button class="w3-button w3-black"
+                            onclick="location.href='/gowithme/app/activity/edit?id=${activity.id}'">
+                        <i class="fa fa-right-to-bracket"></i>Edycja
+                    </button>
+                    <button class="w3-button w3-black"
+                            onclick="location.href='/gowithme/app/activity/delete?id=${activity.id}'">
+                        <i class="fa fa-right-to-bracket"></i>Usuń
                     </button>
                 </td>
                 </td>

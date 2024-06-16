@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
         dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
     });
 
-// Opcjonalnie, zamknij menu rozwijane, gdy użytkownik kliknie poza nim
     document.addEventListener('click', function(event) {
         const dropdownMenu = document.getElementById('dropdown-menu');
         const userIcon = document.getElementById('user-icon');

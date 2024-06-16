@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.coderslab.Service.UserService;
+import pl.coderslab.Service.UserServiceImpl;
 import pl.coderslab.model.UserDetails;
 import pl.coderslab.repository.ActivitiesPlanRepository;
 import pl.coderslab.repository.UserDetailsRepository;
@@ -16,10 +18,12 @@ public class ApplicationController {
 
     private final UserDetailsRepository userDetailsRepository;
     private final ActivitiesPlanRepository activitiesPlanRepository;
+    private final UserService userService;
 
-    public ApplicationController(UserDetailsRepository userDetailsRepository, ActivitiesPlanRepository activitiesPlanRepository) {
+    public ApplicationController(UserDetailsRepository userDetailsRepository, ActivitiesPlanRepository activitiesPlanRepository, UserService userService) {
         this.userDetailsRepository = userDetailsRepository;
         this.activitiesPlanRepository = activitiesPlanRepository;
+        this.userService = userService;
     }
 
     @GetMapping("/main")
@@ -36,7 +40,12 @@ public class ApplicationController {
 
     @GetMapping("/profile")
     public String getProfile(Model model) {
-        model.addAttribute("activities",activitiesPlanRepository.findAll());
+        UserDetails userDetails = userDetailsRepository.findByUserId(2);
+        model.addAttribute("firstName", userDetails.getFirstName());
+        model.addAttribute("lastName",userDetails.getLastName());
+        model.addAttribute("city",userDetails.getCity());
+        model.addAttribute("age",userDetails.getAge());
+        model.addAttribute("description",userDetails.getDescription());
         return "application/profile";
     }
 
