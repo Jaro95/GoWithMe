@@ -28,11 +28,11 @@
 
 <div class="w3-top">
     <div class="w3-bar w3-white w3-card" id="myNavbar">
-        <a href="/gowithme/app/main" class="w3-bar-item w3-button w3-wide">GoWithME</a>
+        <a href="/gowithme/app" class="w3-bar-item w3-button w3-wide">GoWithME</a>
         <!-- Right-sided navbar links -->
         <div class="w3-right w3-hide-small">
 
-            <a href="/gowithme/app/main" class="w3-bar-item w3-button"><i class="fa fa-magnifying-glass"></i> Szukaj</a>
+            <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-magnifying-glass"></i> Szukaj</a>
             <a href="/gowithme/app/add_activity" class="w3-bar-item w3-button"><i class="fa fa-person-running"></i> Dodaj aktywność</a>
             <a href="/gowithme/app/random" class="w3-bar-item w3-button"><i class="fa fa-dice"></i> Wybierz za mnie</a>
             <a  class="w3-bar-item w3-button " id = "user-icon"><i class="fa fa-user" ></i> <i class="fa fa-list"></i></a>
