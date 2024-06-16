@@ -26,10 +26,10 @@ public class SecurityConfig {
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 //.antMatchers("/gowithme/**").permitAll()
-                .antMatchers("/gowithme/app/**").hasAnyRole("USER","ADMIN")
+                .antMatchers("/gowithme/app/**").hasAnyRole("USER","ADMIN","GOD")
                 .and().formLogin().loginPage("/gowithme/login")
-                .defaultSuccessUrl("/gowithme/app/main", true)
-                .and().logout().logoutSuccessUrl("/gowithme/app/main")
+                .defaultSuccessUrl("/gowithme/app", true)
+                .and().logout().logoutSuccessUrl("/gowithme/app")
                 .permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");
         return http.build();

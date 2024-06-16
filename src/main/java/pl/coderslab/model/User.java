@@ -26,7 +26,7 @@ public class User {
     @NotBlank
     @Size(min = 5)
     private String password;
-    private int enabled;
+    private boolean enabled;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
 }

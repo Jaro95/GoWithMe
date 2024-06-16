@@ -36,4 +36,6 @@ public class ActivitiesPlan {
     private List<UserDetails> userDetails;
     @OneToOne
     private UserDetails user;
+    @NotBlank
+    private boolean enabled;
 }

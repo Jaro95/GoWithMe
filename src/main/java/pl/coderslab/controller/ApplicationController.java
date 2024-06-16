@@ -13,7 +13,7 @@ import pl.coderslab.repository.ActivitiesPlanRepository;
 import pl.coderslab.repository.UserDetailsRepository;
 
 @Controller
-@RequestMapping("/gowithme/app/")
+@RequestMapping("/gowithme/app")
 public class ApplicationController {
 
     private final UserDetailsRepository userDetailsRepository;
@@ -26,7 +26,7 @@ public class ApplicationController {
         this.userService = userService;
     }
 
-    @GetMapping("/main")
+    @GetMapping("")
     public String main(Model model) {
         model.addAttribute("activities",activitiesPlanRepository.findAll());
         return "application/appMain";
