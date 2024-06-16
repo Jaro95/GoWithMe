@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -38,7 +39,7 @@
             <a  class="w3-bar-item w3-button " id = "user-icon"><i class="fa fa-user" ></i> <i class="fa fa-list"></i></a>
                 <div class="dropdown-menu" id="dropdown-menu">
                     <a href="/gowithme/app/profile"><div class="dropdown-item">Profil</div></a>
-                    <a href="/gowithme/app/logout"><div class="dropdown-item">Wyloguj</div></a>
+                    <a href="<c:url value='/gowithme/app/logout'/>"><div class="dropdown-item">Wyloguj</div></a>
                 </div>
 
 

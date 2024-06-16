@@ -71,6 +71,8 @@ public class ApplicationController {
         userDetailsRepository.save(userDetails);
         return "redirect:/gowithme/app/profile";
     }
+
+
 }
 
 

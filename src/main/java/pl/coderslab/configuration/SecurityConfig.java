@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import pl.coderslab.Service.CustomUserDetailsService;
 
 @Configuration
@@ -40,10 +41,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 //.antMatchers("/gowithme/**").permitAll()
                 .antMatchers("/gowithme/app/**").hasAnyRole("USER","ADMIN","GOD")
-                .and().formLogin().loginPage("/gowithme/login")
+                .and()
+                .formLogin().loginPage("/gowithme/login")
                 .defaultSuccessUrl("/gowithme/app", true)
-                .and().logout().logoutSuccessUrl("/gowithme/app")
+                .and()
+                .logout().logoutUrl("/gowithme/app/logout").logoutSuccessUrl("/gowithme/home")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .permitAll()
-                .and().exceptionHandling().accessDeniedPage("/403");
+                .logoutRequestMatcher(new AntPathRequestMatcher("/gowithme/app/logout", "GET"));
+
+        //.and().exceptionHandling().accessDeniedPage("/403");
     }
 }
