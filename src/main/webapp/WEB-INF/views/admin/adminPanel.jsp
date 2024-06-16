@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -41,9 +42,12 @@
                             onclick="location.href='/gowithme/admin/update?id=${userDetail.user.id}'">
                         <i class="fa fa-pencil"></i> Edytuj
                     </button>
-                    <a class="w3-button w3-black confirm-delete-user"
-                       href="${pageContext.request.contextPath}/gowithme/admin/delete?id=${userDetail.user.id}">
-                        <i class="fa fa-trash"></i>Usuń</a>
+                    <sec:authorize access="hasRole('GOD')">
+                        <a class="w3-button w3-black confirm-delete-user"
+                           href="${pageContext.request.contextPath}/gowithme/admin/delete?id=${userDetail.user.id}">
+                            <i class="fa fa-trash"></i>Usuń</a>
+                    </sec:authorize>
+                </td>
                 </td>
             </tr>
         </c:forEach>

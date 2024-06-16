@@ -1,6 +1,7 @@
 package pl.coderslab.model;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -26,7 +27,7 @@ public class User {
     @NotBlank
     @Size(min = 5)
     private String password;
-    private int enabled;
+    private boolean enabled;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
 }

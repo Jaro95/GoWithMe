@@ -1,12 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('a.confirm-delete').forEach(link => {
-        link.addEventListener('click', event => {
-            if (!confirm('Nie klikaj bo się Arkowi internet wywali!')) {
-                event.preventDefault();
-            }
-        });
-    });
-});
 
 // Modal Image Gallery
 function onClick(element) {
@@ -42,6 +33,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     const image = document.querySelector("#icon-user");
+//     image.addEventListener("click",function (e) {
+//         const buttonLogout = document.querySelector("#logoutButton")
+//         if(buttonLogout == null) {
+//             const logoutButton = document.createElement("a")
+//             logoutButton.id = "logoutButton"
+//             logoutButton.innerText = "Wyloguj";
+//             logoutButton.href = "/logout";
+//             logoutButton.className = "btn btn-danger";
+//             image.parentElement.parentElement.appendChild(logoutButton);
+//         } else {
+//             image.parentElement.parentElement.removeChild(buttonLogout)
+//         }
+//
+//     })
+// });
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('user-icon').addEventListener('click', function() {
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', function(event) {
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        const userIcon = document.getElementById('user-icon');
+        if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+});
+
+
+
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     document.querySelectorAll('a.profile').addEventListener('click', event => {
+//             const profile = document.querySelector(".profile")
+//             const edit = document.createElement(<td>Edycja</td>)
+//             const logout = document.createElement(<td>Wyloguj</td>)
+//             profile.appendChild(edit);
+//             profile.appendChild(edit);
+//         });
+//     });
+// });
 
 
 // $(document).ready(function () {

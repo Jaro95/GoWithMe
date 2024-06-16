@@ -12,7 +12,7 @@
 
     <p class="w3-center w3-jumbo cantact-info">Logowanie</p>
     <c:if test="${not empty message}">
-        <div class="alert alert-error">
+        <div class="alert alert-success">
                 ${message}
         </div>
     </c:if>
@@ -28,10 +28,4 @@
 </div>
         <jsp:include page="footer.jsp"/>
 
-<%--<form method="post">--%>
-<%--    <div><label> Email : <input type="text" name="username"/> </label></div>--%>
-<%--    <div><label> Password: <input type="password" name="password"/> </label></div>--%>
-<%--    <div><input type="submit" value="Sign In"/></div>--%>
-<%--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-<%--</form>--%>
 

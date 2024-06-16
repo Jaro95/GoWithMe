@@ -16,6 +16,8 @@ import pl.coderslab.repository.UserDetailsRepository;
 import pl.coderslab.repository.UserRepository;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/gowithme")
@@ -41,17 +43,17 @@ public class HomeController {
         return "/home/main";
     }
 
-//    @GetMapping("/login")
-//    public String login() {
-//        return "/home/login";
-//    }
+    @GetMapping("/login")
+    public String login() {
+        return "/home/login";
+    }
 
     @GetMapping("/contact")
-    public String login(Model model) {
-        Contact contact = contactRepository.findAll().get(0);
-        model.addAttribute("address", contact.getAddress());
-        model.addAttribute("phone",contact.getPhoneNumber());
-        model.addAttribute("email", contact.getEmail());
+    public String getContact(Model model) {
+        List<Contact> contact = contactRepository.findAll();
+        model.addAttribute("address", contact.stream().map(Contact::getAddress).collect(Collectors.joining(";")));
+        model.addAttribute("phone",contact.stream().map(el -> el.getPhoneNumber()).map(el -> el.toString()).collect(Collectors.joining("; ")));
+        model.addAttribute("email", contact.stream().map(Contact::getEmail).collect(Collectors.joining("; ")));
         model.addAttribute("contactForm", new ContactForm());
         return "/home/contact";
     }
@@ -59,7 +61,7 @@ public class HomeController {
  * add information send successfully
  */
     @PostMapping("/contact")
-    public String login(@Valid ContactForm contactForm, BindingResult bindingResult,
+    public String postContact(@Valid ContactForm contactForm, BindingResult bindingResult,
                         Model model, RedirectAttributes redirectAttributes ) {
         if(bindingResult.hasErrors()) {
             Contact contact = contactRepository.findAll().get(0);
@@ -77,7 +79,7 @@ public class HomeController {
 
 
     @GetMapping("/registration")
-    public String getAddUser(ModelMap model) {
+    public String getRegistration(ModelMap model) {
         model.addAttribute("registrationWrapper", new RegistrationWrapper());
         return "home/registration";
     }
@@ -85,7 +87,7 @@ public class HomeController {
     *Leater must make create token and verification
  */
     @PostMapping("/registration")
-    public String postAddUser(@Valid RegistrationWrapper wrapper, BindingResult bindingResult,
+    public String postRegistration(@Valid RegistrationWrapper wrapper, BindingResult bindingResult,
                               RedirectAttributes redirectAttributes, Model model) {
         if(!wrapper.getUser().getPassword().equals(wrapper.getRepeatPassword())) {
             model.addAttribute("registrationWrapper", wrapper);
@@ -99,7 +101,7 @@ public class HomeController {
             return "home/registration";
         }
         userService.saveUser(wrapper.getUser());
-        wrapper.setUser(userRepository.findByEmail(wrapper.getUser().getEmail()));
+        wrapper.getUserDetails().setUser(userRepository.findByEmail(wrapper.getUser().getEmail()));
         userDetailsRepository.save(wrapper.getUserDetails());
         redirectAttributes.addFlashAttribute("message","Rejestracja przebiegła pomyślnie");
         return "redirect:/gowithme/login";
