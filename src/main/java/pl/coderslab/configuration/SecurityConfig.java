@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 //.antMatchers("/gowithme/**").permitAll()
-                .antMatchers("/gowithme/app/**").hasAnyRole("USER","ADMIN","GOD")
+                .antMatchers("/gowithme/app/**").hasAnyRole("USER","ADMIN","SUPER_ADMIN")
                 .and()
                 .formLogin().loginPage("/gowithme/login")
                 .defaultSuccessUrl("/gowithme/app", true)

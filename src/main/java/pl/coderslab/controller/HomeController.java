@@ -6,10 +6,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.coderslab.Service.RegistrationWrapper;
+import pl.coderslab.dto.RegistrationDTO;
 import pl.coderslab.Service.UserService;
 import pl.coderslab.model.Contact;
 import pl.coderslab.model.ContactForm;
+import pl.coderslab.model.User;
 import pl.coderslab.repository.ContactRepository;
 import pl.coderslab.repository.ContactFormRepository;
 import pl.coderslab.repository.UserDetailsRepository;
@@ -80,16 +81,16 @@ public class HomeController {
 
     @GetMapping("/registration")
     public String getRegistration(ModelMap model) {
-        model.addAttribute("registrationWrapper", new RegistrationWrapper());
+        model.addAttribute("registrationWrapper", new RegistrationDTO());
         return "home/registration";
     }
 /**
     *Leater must make create token and verification
  */
     @PostMapping("/registration")
-    public String postRegistration(@Valid RegistrationWrapper wrapper, BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes, Model model) {
-        if(!wrapper.getUser().getPassword().equals(wrapper.getRepeatPassword())) {
+    public String postRegistration(@Valid RegistrationDTO wrapper, BindingResult bindingResult,
+                                   RedirectAttributes redirectAttributes, Model model) {
+        if(!wrapper.getPassword().equals(wrapper.getRepeatPassword())) {
             model.addAttribute("registrationWrapper", wrapper);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "home/registration";
@@ -100,8 +101,11 @@ public class HomeController {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "home/registration";
         }
-        userService.saveUser(wrapper.getUser());
-        wrapper.getUserDetails().setUser(userRepository.findByEmail(wrapper.getUser().getEmail()));
+        userService.saveUser(User.builder()
+                .email(wrapper.getEmail())
+                .password(wrapper.getPassword())
+                .build());
+       // wrapper.getUserDetails() .setUser(userRepository.findByEmail(wrapper.getUser().getEmail()));
         userDetailsRepository.save(wrapper.getUserDetails());
         redirectAttributes.addFlashAttribute("message","Rejestracja przebiegła pomyślnie");
         return "redirect:/gowithme/login";

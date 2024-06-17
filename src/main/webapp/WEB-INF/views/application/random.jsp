@@ -25,7 +25,7 @@
         <tbody>
         <c:forEach var="activity" items="${activities}">
             <tr>
-                <td>${activity.categoory}</td>
+                <td>${activity.category.name}</td>
                 <td>${activity.description}</td>
                 <td>${activity.city}</td>
                 <td>${activity.location}</td>

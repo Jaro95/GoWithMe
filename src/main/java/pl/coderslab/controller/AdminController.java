@@ -51,7 +51,7 @@ public class AdminController {
                 .password("qwerty").build();
         User admin = User.builder().email("admin@admin")
                 .password("admin").build();
-        Role adminRole = Role.builder().name("ROLE_GOD").build();
+        Role adminRole = Role.builder().name("ROLE_SUPER_ADMIN").build();
         Role godRole = Role.builder().name("ROLE_ADMIN").build();
         Role userRole = Role.builder().name("ROLE_USER").build();
 

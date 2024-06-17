@@ -1,7 +1,6 @@
 package pl.coderslab.model;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -19,7 +18,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true, length = 60)
+    @Column(nullable = false, unique = true, length = 50)
     @NotBlank
     @Email
     @Size(max = 50)

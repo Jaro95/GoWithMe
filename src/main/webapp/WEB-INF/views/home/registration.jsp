@@ -19,24 +19,24 @@
     <div class="w3-center cantact-info">
         <form:form method="post" class="cantact-details"  modelAttribute="registrationWrapper">
             <p>
-                <form:input class="input-contact w3-border" type="text" placeholder="Imę" path="userDetails.firstName"/>
-            <p><form:errors path="userDetails.firstName" cssClass="alert alert-error"/></p>
+                <form:input class="input-contact w3-border" type="text" placeholder="Imę" path="firstName"/>
+            <p><form:errors path="firstName" cssClass="alert alert-error"/></p>
             </p>
             <p>
-                <form:input class="input-contact w3-border" type="text" placeholder="Nazwisko" path="userDetails.lastName"/>
-            <p><form:errors path="userDetails.lastName" cssClass="alert alert-error"/></p>
+                <form:input class="input-contact w3-border" type="text" placeholder="Nazwisko" path="lastName"/>
+            <p><form:errors path="lastName" cssClass="alert alert-error"/></p>
             </p>
             <p>
-                <form:input class="input-contact w3-border" type="text" placeholder="Miejscowość" path="userDetails.city"/>
-            <p><form:errors path="userDetails.city" cssClass="alert alert-error"/></p>
+                <form:input class="input-contact w3-border" type="text" placeholder="Miejscowość" path="city"/>
+            <p><form:errors path="city" cssClass="alert alert-error"/></p>
             </p>
             <p>
-                <form:input class="input-contact w3-border" type="email" placeholder="Email" path="user.email"/>
-            <p><form:errors path="user.email" cssClass="alert alert-error"/></p>
+                <form:input class="input-contact w3-border" type="email" placeholder="Email" path="email"/>
+            <p><form:errors path="email" cssClass="alert alert-error"/></p>
             </p>
             <p>
-                <form:input class="input-contact w3-border" type="password" placeholder="Hasło" path="user.password"/>
-            <p><form:errors path="user.password" cssClass="alert alert-error"/></p>
+                <form:input class="input-contact w3-border" type="password" placeholder="Hasło" path="password"/>
+            <p><form:errors path="password" cssClass="alert alert-error"/></p>
             </p>
             <p>
                 <form:input class="input-contact w3-border" type="password" placeholder="Powtórz hasło" path="repeatPassword"/>

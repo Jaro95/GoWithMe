@@ -13,6 +13,7 @@
     <table id="activitiesTable" class="display">
         <thead>
         <tr>
+            <th>Id</th>
             <th>Kategoria</th>
             <th>Opis</th>
             <th>Miasto</th>
@@ -23,8 +24,9 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="activity" items="${activities}">
+        <c:forEach var="activity" items="${activities}" varStatus="status">
             <tr>
+                <td>${status.count}</td>
                 <td>${activity.category.name}</td>
                 <td>${activity.description}</td>
                 <td>${activity.city}</td>

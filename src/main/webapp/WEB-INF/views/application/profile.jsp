@@ -21,7 +21,7 @@
                 <h3>${firstName} ${lastName}</h3>
                 <p>${city}</p>
                 <p>Wiek: ${age}</p>
-                <p style="text ">Kilka słów o mnie: </p>
+                <p>Kilka słów o mnie: </p>
                 <p>${description}</p>
                 <p><a href="/gowithme/app/profile/edit" class="w3-button w3-black">
                     <i class="fa fa-user-pen"></i> Edycja</a></p>
@@ -35,6 +35,7 @@
     <table id="activitiesTable" class="display">
         <thead>
         <tr>
+            <th>Id</th>
             <th>Aktywność</th>
             <th>Opis</th>
             <th>Miasto</th>
@@ -44,9 +45,10 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="activity" items="${activities}">
+        <c:forEach var="activity" items="${activities}" varStatus="status">
             <tr>
-                <td>${activity.activity.activity}</td>
+                <td>${status.count}</td>
+                <td>${activity.category.name}</td>
                 <td>${activity.description}</td>
                 <td>${activity.city}</td>
                 <td>${activity.location}</td>
@@ -58,15 +60,15 @@
                 <td>
                     <button class="w3-button w3-black"
                             onclick="location.href='/gowithme/app/activity/add_users?id=${activity.id}'">
-                        <i class="fa fa-right-to-bracket"></i>Przypisz
+                        <i class="fa-solid fa-person-group"></i>Przypisz
                     </button>
                     <button class="w3-button w3-black"
                             onclick="location.href='/gowithme/app/activity/edit?id=${activity.id}'">
-                        <i class="fa fa-right-to-bracket"></i>Edycja
+                        <i class="fa fa-rotate"></i>Edycja
                     </button>
                     <button class="w3-button w3-black"
                             onclick="location.href='/gowithme/app/activity/delete?id=${activity.id}'">
-                        <i class="fa fa-right-to-bracket"></i>Usuń
+                        <i class="fa fa-trash"></i>Usuń
                     </button>
                 </td>
                 </td>

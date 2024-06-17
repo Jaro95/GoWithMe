@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -8,43 +9,42 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp"/>
-<div class="w3-display-container w3-light-grey contact" id="appMain">
-    <p class="w3-center w3-jumbo cantact-info">Co w trawie piszczy</p>
-    <table id="activitiesTable" class="display">
-        <thead>
-        <tr>
-            <th>Kategoria</th>
-            <th>Opis</th>
-            <th>Miasto</th>
-            <th>Dokładna lokalizacja</th>
-            <th>Chętne osoby</th>
-            <th>Dodał</th>
-            <th>Brzmi spoko</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="activity" items="${activities}">
-            <tr>
-                <td>${activity.categoory}</td>
-                <td>${activity.description}</td>
-                <td>${activity.city}</td>
-                <td>${activity.location}</td>
-                <td>
-                       <c:forEach var="user" items="${activity.userDetails}">
-                           <p>${user.firstName} ${user.lastName}</p>
-                       </c:forEach>
-                </td>
-                <td>${activity.user.firstName} ${activity.user.lastName}</td>
-                <td>
-                    <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity?id=${activity.id}'">
-                        <i class="fa fa-right-to-bracket"></i>Szczegóły
-                    </button>
-                </td>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+<div class="w3-display-container w3-light-grey contact" id="contact">
+    <p class="w3-center w3-jumbo cantact-info">Dodaj aktywność</p>
+    <c:if test="${not empty message}">
+        <div class="alert alert-success">
+                ${message}
+        </div>
+    </c:if>
+    <div class="w3-center cantact-info">
+        <form:form method="post" class="cantact-details"  modelAttribute="activitiesPLan">
+            <p>
+                    <form:select class="input-contact w3-border" path="category.id" items="${categories}"
+                                 itemLabel="name" itemValue="id"/>
+            <p><form:errors path="category.name" cssClass="alert alert-error"/></p>
+            </p>
+            <p>
+                    <form:input class="input-contact w3-border" type="text" placeholder="Opis" path="description"/>
+            <p><form:errors path="description" cssClass="alert alert-error"/></p>
+            </p>
+            <p>
+                    <form:input class="input-contact w3-border" type="text" placeholder="Miejscowość" path="city"/>
+            <p><form:errors path="city" cssClass="alert alert-error"/></p>
+            </p>
+            <p>
+                    <form:input class="input-contact w3-border" type="text" placeholder="Dokładna lokalizacja" path="location"/>
+            <p><form:errors path="location" cssClass="alert alert-error"/></p>
+            </p>
+<%--            <p>--%>
+<%--                    <form:select class="input-contact w3-border" path="friendList" items="${friend}" multiple="true"/>--%>
+<%--            <p><form:errors path="friendList" cssClass="alert alert-error"/></p>--%>
+<%--            </p>--%>
+            <p>
+            <button class="w3-button w3-black" type="submit">
+                <i class="fa fa-person-walking"></i> Dodaj
+            </button>
+            </p>
+        </form:form>
+    </div>
 </div>
 <jsp:include page="footer.jsp"/>
