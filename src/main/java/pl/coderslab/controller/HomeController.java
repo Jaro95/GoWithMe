@@ -11,6 +11,7 @@ import pl.coderslab.Service.UserService;
 import pl.coderslab.model.Contact;
 import pl.coderslab.model.ContactForm;
 import pl.coderslab.model.User;
+import pl.coderslab.model.UserDetails;
 import pl.coderslab.repository.ContactRepository;
 import pl.coderslab.repository.ContactFormRepository;
 import pl.coderslab.repository.UserDetailsRepository;
@@ -106,7 +107,12 @@ public class HomeController {
                 .password(wrapper.getPassword())
                 .build());
        // wrapper.getUserDetails() .setUser(userRepository.findByEmail(wrapper.getUser().getEmail()));
-        userDetailsRepository.save(wrapper.getUserDetails());
+
+        userDetailsRepository.save(UserDetails.builder()
+                .firstName(wrapper.getFirstName())
+                .lastName(wrapper.getLastName())
+                .city(wrapper.getCity())
+                .user(userRepository.findByEmail(wrapper.getEmail())).build());
         redirectAttributes.addFlashAttribute("message","Rejestracja przebiegła pomyślnie");
         return "redirect:/gowithme/login";
     }

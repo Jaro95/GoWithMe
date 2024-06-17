@@ -1,18 +1,14 @@
 package pl.coderslab.controller;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.coderslab.Service.CustomUserDetails;
+import pl.coderslab.Service.CurrentUser;
 import pl.coderslab.Service.UserService;
-import pl.coderslab.Service.UserServiceImpl;
 import pl.coderslab.model.ActivitiesPlan;
-import pl.coderslab.model.Category;
 import pl.coderslab.model.UserDetails;
 import pl.coderslab.repository.ActivitiesPlanRepository;
 import pl.coderslab.repository.CategoryRepository;
@@ -52,13 +48,13 @@ public class ApplicationController {
     @PostMapping("/add_activity")
     public String postAddActivity(@Valid ActivitiesPlan activitiesPlan,
                                   Model model, BindingResult result, RedirectAttributes redirect,
-                                  @AuthenticationPrincipal CustomUserDetails customUser) {
+                                  @AuthenticationPrincipal CurrentUser currentUser) {
         if (result.hasErrors()) {
             model.addAttribute("activitiesPLan", activitiesPlan);
             model.addAttribute("errors", result.getAllErrors());
             return "application/addActivity";
         }
-        activitiesPlan.setUser(userDetailsRepository.findByUserId(customUser.getId()));
+        activitiesPlan.setUser(userDetailsRepository.findByUserId(currentUser.getUser().getId()));
         activitiesPlan.setEnabled(true);
         System.out.println(activitiesPlan.toString());
         activitiesPlanRepository.save(activitiesPlan);
@@ -67,9 +63,9 @@ public class ApplicationController {
     }
 
     @GetMapping("/profile")
-    public String getProfile(Model model, @AuthenticationPrincipal CustomUserDetails customUser) {
+    public String getProfile(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
 
-        UserDetails userDetails = userDetailsRepository.findByUserId(customUser.getId());
+        UserDetails userDetails = userDetailsRepository.findByUserId(currentUser.getUser().getId());
         model.addAttribute("firstName", userDetails.getFirstName());
         model.addAttribute("lastName", userDetails.getLastName());
         model.addAttribute("city", userDetails.getCity());
@@ -86,8 +82,8 @@ public class ApplicationController {
     }
 
     @GetMapping("/profile/edit")
-    public String getProfileEdit(Model model, @AuthenticationPrincipal CustomUserDetails customUser) {
-        model.addAttribute("userDetails", userDetailsRepository.findByUserId(customUser.getId()));
+    public String getProfileEdit(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+        model.addAttribute("userDetails", userDetailsRepository.findByUserId(currentUser.getUser().getId()));
         return "application/profileEdit";
     }
 
