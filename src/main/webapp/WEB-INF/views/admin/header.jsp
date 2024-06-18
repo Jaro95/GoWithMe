@@ -32,7 +32,7 @@
         <!-- Right-sided navbar links -->
         <div class="w3-right w3-hide-small">
             <a href="/gowithme/home" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Home</a>
-            <a href="/gowithme/app/main" class="w3-bar-item w3-button"><i class="fa fa-phone"></i> App</a>
+            <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-phone"></i> App</a>
             <a href="/gowithme/admin/create-contact" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Create contact</a>
             <a href="/gowithme/app/logout" class="w3-bar-item w3-button"><i class="fa fa-pencil"></i> Logout</a>
         </div>

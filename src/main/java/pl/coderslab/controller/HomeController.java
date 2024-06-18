@@ -20,6 +20,7 @@ import pl.coderslab.repository.UserDetailsRepository;
 import pl.coderslab.repository.UserRepository;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,25 +50,37 @@ public class HomeController {
 
     @GetMapping("/login")
     public String getLogin(@RequestParam(required = false) String error, Model model) {
-        System.out.println(error);
         model.addAttribute("wrongPassword", error);
         return "/home/login";
     }
 
     @GetMapping("/validate")
     public String validateUser(@AuthenticationPrincipal CurrentUser currentUser, RedirectAttributes redirectAttributes) {
-        if(!currentUser.getUser().isEnabled()) {
+        if (!currentUser.getUser().isEnabled()) {
             redirectAttributes.addFlashAttribute("messageEnabled", "Konto nie zostało aktywowane");
             return "redirect:/gowithme/login";
         }
-        return "redirect:/gowithme/home/main";
+        return "redirect:/gowithme/app";
+    }
+
+    @GetMapping("/enabled")
+    public String validateUser(@RequestParam(required = false) String token, RedirectAttributes redirectAttributes) {
+        User user = userRepository.findByToken(token);
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("messageEnabled", "Token nieprawidłowy lub jego ważność wygasła");
+            return "redirect:/gowithme/login";
+        }
+        user.setEnabled(true);
+        userRepository.save(user);
+        redirectAttributes.addFlashAttribute("message", "Konto zostało aktywowane");
+        return "redirect:/gowithme/app";
     }
 
     @GetMapping("/contact")
     public String getContact(Model model) {
         List<Contact> contact = contactRepository.findAll();
         model.addAttribute("address", contact.stream().map(Contact::getAddress).collect(Collectors.joining(";")));
-        model.addAttribute("phone",contact.stream().map(el -> el.getPhoneNumber()).map(el -> el.toString()).collect(Collectors.joining("; ")));
+        model.addAttribute("phone", contact.stream().map(el -> el.getPhoneNumber()).map(el -> el.toString()).collect(Collectors.joining("; ")));
         model.addAttribute("email", contact.stream().map(Contact::getEmail).collect(Collectors.joining("; ")));
         model.addAttribute("contactForm", new ContactForm());
         return "/home/contact";
@@ -76,18 +89,19 @@ public class HomeController {
 
     @PostMapping("/contact")
     public String postContact(@Valid ContactForm contactForm, BindingResult bindingResult,
-                        Model model, RedirectAttributes redirectAttributes ) {
-        if(bindingResult.hasErrors()) {
+                              Model model, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
             Contact contact = contactRepository.findAll().get(0);
             model.addAttribute("address", contact.getAddress());
-            model.addAttribute("phone",contact.getPhoneNumber());
+            model.addAttribute("phone", contact.getPhoneNumber());
             model.addAttribute("email", contact.getEmail());
             model.addAttribute("messageContact", contactForm);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "/home/contact";
         }
+        contactForm.setCreated(LocalDateTime.now());
         contactFormRepository.save(contactForm);
-        redirectAttributes.addFlashAttribute("message","Wiadomość wysłana");
+        redirectAttributes.addFlashAttribute("message", "Wiadomość wysłana");
         return "redirect:/gowithme/contact";
     }
 
@@ -97,43 +111,35 @@ public class HomeController {
         model.addAttribute("registrationDTO", new RegistrationDTO());
         return "home/registration";
     }
-/**
-    *Leater must make create token and verification
- */
+
+    /**
+     * Leater must make create token and verification
+     */
     @PostMapping("/registration")
     public String postRegistration(@Valid RegistrationDTO wrapper, BindingResult bindingResult,
-                                    Model model, RedirectAttributes redirectAttributes) {
+                                   Model model, RedirectAttributes redirectAttributes) {
 
-        if(userRepository.findByEmail(wrapper.getEmail()) != null) {
+        if (userRepository.findByEmail(wrapper.getEmail()) != null) {
             model.addAttribute("usedEmail", "Podany email jest zajęty");
             model.addAttribute("registrationDTO", wrapper);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "home/registration";
         }
 
-        if(!wrapper.getPassword().equals(wrapper.getRepeatPassword())) {
+        if (!wrapper.getPassword().equals(wrapper.getRepeatPassword())) {
             model.addAttribute("wrongPassword", "Hasła nie są takie same");
             model.addAttribute("registrationDTO", wrapper);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "home/registration";
         }
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("registrationDTO", wrapper);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "home/registration";
         }
-        userService.saveUser(User.builder()
-                .email(wrapper.getEmail())
-                .password(wrapper.getPassword())
-                .build());
-
-        userDetailsRepository.save(UserDetails.builder()
-                .firstName(wrapper.getFirstName())
-                .lastName(wrapper.getLastName())
-                .city(wrapper.getCity())
-                .user(userRepository.findByEmail(wrapper.getEmail())).build());
-        redirectAttributes.addFlashAttribute("message","Rejestracja przebiegła pomyślnie");
+        userService.saveUser(wrapper);
+        redirectAttributes.addFlashAttribute("message", "Rejestracja przebiegła pomyślnie");
         return "redirect:/gowithme/login";
     }
 

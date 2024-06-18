@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 
@@ -29,4 +30,7 @@ public class User {
     private boolean enabled;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
+    private String token;
+    @NotBlank
+    private LocalDateTime createdAccount;
 }

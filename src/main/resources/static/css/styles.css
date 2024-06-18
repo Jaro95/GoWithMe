@@ -264,3 +264,7 @@ a {
     margin-bottom: 2px;
     cursor: pointer;
 }
+.edit-about-user {
+    width: 330px;
+    height: 110px;
+}

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -36,4 +37,5 @@ public class ContactForm {
     @NotBlank
     @Size(max = 500)
     private String message;
+    private LocalDateTime created;
 }
