@@ -31,6 +31,5 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
     private String token;
-    @NotBlank
     private LocalDateTime createdAccount;
 }

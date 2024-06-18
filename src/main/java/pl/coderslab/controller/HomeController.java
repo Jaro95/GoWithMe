@@ -63,7 +63,7 @@ public class HomeController {
         return "redirect:/gowithme/app";
     }
 
-    @GetMapping("/enabled")
+    @GetMapping("/verification")
     public String validateUser(@RequestParam(required = false) String token, RedirectAttributes redirectAttributes) {
         User user = userRepository.findByToken(token);
         if (user == null) {
@@ -71,9 +71,10 @@ public class HomeController {
             return "redirect:/gowithme/login";
         }
         user.setEnabled(true);
+        user.setToken("");
         userRepository.save(user);
         redirectAttributes.addFlashAttribute("message", "Konto zostało aktywowane");
-        return "redirect:/gowithme/app";
+        return "redirect:/gowithme/login";
     }
 
     @GetMapping("/contact")

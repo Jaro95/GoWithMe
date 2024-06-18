@@ -15,6 +15,7 @@ import pl.coderslab.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,13 +24,15 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserDetailsRepository userDetailsRepository;
+    private final EmailService emailService;
 
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
-                           BCryptPasswordEncoder passwordEncoder, UserDetailsRepository userDetailsRepository) {
+                           BCryptPasswordEncoder passwordEncoder, UserDetailsRepository userDetailsRepository, EmailService emailService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.userDetailsRepository = userDetailsRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -46,13 +49,14 @@ public class UserServiceImpl implements UserService {
                 .enabled(false)
                 .roles(new HashSet<>(Arrays.asList(userRole)))
                 .createdAccount(LocalDateTime.now())
-                .token("")
+                .token(UUID.randomUUID().toString())
                 .build());
         userDetailsRepository.save(UserDetails.builder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .city(user.getCity())
                 .user(userRepository.findByEmail(user.getEmail())).build());
+        emailService.sendVerificationEmail(user.getEmail(),userRepository.findByEmail(user.getEmail()).getToken());
     }
 
     @Override
