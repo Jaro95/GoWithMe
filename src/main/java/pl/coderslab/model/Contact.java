@@ -28,4 +28,5 @@ public class Contact {
     private String email;
     @NotNull
     private int phoneNumber;
+
 }

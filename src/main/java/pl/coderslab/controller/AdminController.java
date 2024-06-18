@@ -7,16 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.Service.UserService;
-import pl.coderslab.model.Contact;
-import pl.coderslab.model.Role;
-import pl.coderslab.model.User;
-import pl.coderslab.model.UserDetails;
-import pl.coderslab.repository.ContactRepository;
-import pl.coderslab.repository.RoleRepository;
-import pl.coderslab.repository.UserDetailsRepository;
-import pl.coderslab.repository.UserRepository;
+import pl.coderslab.model.*;
+import pl.coderslab.repository.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,16 +24,7 @@ public class AdminController {
     private final UserDetailsRepository userDetailsRepository;
     private final RoleRepository roleRepository;
     private final ContactRepository contactRepository;
-
-    @GetMapping("/create-contact")
-    public String createUser() {
-        Contact contact = Contact.builder().address("Konin, ul.bez ulicy")
-                .email("gowithme@gmail.com")
-                .phoneNumber(889992993).build();
-
-        contactRepository.save(contact);
-        return "redirect:/gowithme/admin";
-    }
+    private final CategoryRepository categoryRepository;
 
     @GetMapping("/create-start")
     public String createStart() {
@@ -64,6 +51,8 @@ public class AdminController {
                 .city("Poznań")
                 .user(userRepository.findByEmail(admin.getEmail())).build();
         userDetailsRepository.save(adminDetails);
+        createContact();
+        createCategories();
         return "redirect:/gowithme/admin";
     }
 
@@ -78,10 +67,39 @@ public class AdminController {
         return "admin/adminPanel";
     }
 
+    @GetMapping("/category")
+    public String getCategory(Model model) {
+        createCategories();
+        return "admin/adminPanel";
+    }
+
+    @GetMapping("/contact")
+    public String getContact(Model model) {
+
+        return "admin/adminPanel";
+    }
+
     @GetMapping("/delete")
     public String postAddUser(@RequestParam long id) {
         userRepository.delete(userRepository.findById(id).get());
         return "redirect:/gowithme/home/alluser";
+    }
+
+    public void createContact() {
+        Contact contact = Contact.builder().address("Konin, ul.bez ulicy")
+                .email("gowithme@gmail.com")
+                .phoneNumber(889992993).build();
+
+        contactRepository.save(contact);
+    }
+
+    public void createCategories() {
+        List<String> category = Arrays.asList("Relaks","Bieganie","Gotowanie","Spacer"
+                ,"Wycieczka","Pływanie","Jazda na rowerze","Nordic walking"
+                ,"Street workout i kalistenika", "Tenis" , "Badminton", "Joga", "Siłownia", "Jazda na rolkach", "Kajaki", "Jazda na deskorolce", "Kitesurfing"
+                ,"Golf", "Triathlon", "Spacer z psem", "Siatkówka", "Siatkówka plażowa", "Aerobik", "Park linowy", "Piłka nożna", "Paintball");
+        List<Category> categoryList = category.stream().map(Category::new).toList();
+        categoryRepository.saveAll(categoryList);
     }
 
 }

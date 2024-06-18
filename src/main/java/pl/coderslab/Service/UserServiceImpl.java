@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
                 .lastName(user.getLastName())
                 .city(user.getCity())
                 .user(userRepository.findByEmail(user.getEmail())).build());
-        emailService.sendVerificationEmail(user.getEmail(),userRepository.findByEmail(user.getEmail()).getToken());
+       // emailService.sendVerificationEmail(user.getEmail(),userRepository.findByEmail(user.getEmail()).getToken());
     }
 
     @Override
