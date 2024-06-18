@@ -27,9 +27,10 @@
             <p><form:errors path="lastName" cssClass="alert alert-error"/></p>
             </p>
             <p>
+            <ul id="suggestions"></ul>
                     <form:input id="cityInput" class="input-contact w3-border" type="text" placeholder="Miejscowość"
                                 path="city"/>
-            <ul id="suggestions"></ul>
+
             <p><form:errors path="city" cssClass="alert alert-error"/></p>
             </p>
             <p>
