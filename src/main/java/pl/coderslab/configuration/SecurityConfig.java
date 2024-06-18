@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -35,7 +36,8 @@ public class SecurityConfig {
                 .antMatchers("/gowithme/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                 .and()
                 .formLogin().loginPage("/gowithme/login")
-                .defaultSuccessUrl("/gowithme/app", true)
+                .failureHandler(customAuthenticationFailureHandler())
+                .defaultSuccessUrl("/gowithme/validate", true)
                 .and()
                 .logout().logoutUrl("/gowithme/app/logout").logoutSuccessUrl("/gowithme/home")
                 .invalidateHttpSession(true)
@@ -44,5 +46,11 @@ public class SecurityConfig {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/gowithme/app/logout", "GET"));
         //.and().exceptionHandling().accessDeniedPage("/403");
         return http.build();
+    }
+
+    public AuthenticationFailureHandler customAuthenticationFailureHandler() {
+        return (request, response, exception) -> {
+            response.sendRedirect("/gowithme/login?error=true");
+        };
     }
 }

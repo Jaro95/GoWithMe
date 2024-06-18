@@ -1,11 +1,13 @@
 package pl.coderslab.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.coderslab.Service.CurrentUser;
 import pl.coderslab.dto.RegistrationDTO;
 import pl.coderslab.Service.UserService;
 import pl.coderslab.model.Contact;
@@ -46,8 +48,19 @@ public class HomeController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String getLogin(@RequestParam(required = false) String error, Model model) {
+        System.out.println(error);
+        model.addAttribute("wrongPassword", error);
         return "/home/login";
+    }
+
+    @GetMapping("/validate")
+    public String validateUser(@AuthenticationPrincipal CurrentUser currentUser, RedirectAttributes redirectAttributes) {
+        if(!currentUser.getUser().isEnabled()) {
+            redirectAttributes.addFlashAttribute("messageEnabled", "Konto nie zostało aktywowane");
+            return "redirect:/gowithme/login";
+        }
+        return "redirect:/gowithme/home/main";
     }
 
     @GetMapping("/contact")
@@ -59,9 +72,8 @@ public class HomeController {
         model.addAttribute("contactForm", new ContactForm());
         return "/home/contact";
     }
-/**
- * add information send successfully
- */
+
+
     @PostMapping("/contact")
     public String postContact(@Valid ContactForm contactForm, BindingResult bindingResult,
                         Model model, RedirectAttributes redirectAttributes ) {
