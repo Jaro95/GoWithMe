@@ -45,9 +45,9 @@
             <p>Kilka słów o mnie: </p>
             <p><form:textarea class="w3-border edit-about-user" type="text" placeholder="Coś o sobie"
                               path="description"/></p>
-            <p>
+            </p>
                 <button class="w3-button w3-black" type="submit">
-                    <i class="fa fa-check"></i> Zapisz
+                    <i class="fa fa-check"></i> Aktualizuj
                 </button>
             </p>
         </form:form>

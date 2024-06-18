@@ -56,10 +56,7 @@ public class AdminController {
         return "redirect:/gowithme/admin";
     }
 
-//    @GetMapping("/login")
-//    public String login() {
-//        return "login";
-//    }
+
 
     @GetMapping("")
     public String allUser(Model model) {
@@ -96,8 +93,10 @@ public class AdminController {
     public void createCategories() {
         List<String> category = Arrays.asList("Relaks","Bieganie","Gotowanie","Spacer"
                 ,"Wycieczka","Pływanie","Jazda na rowerze","Nordic walking"
-                ,"Street workout i kalistenika", "Tenis" , "Badminton", "Joga", "Siłownia", "Jazda na rolkach", "Kajaki", "Jazda na deskorolce", "Kitesurfing"
-                ,"Golf", "Triathlon", "Spacer z psem", "Siatkówka", "Siatkówka plażowa", "Aerobik", "Park linowy", "Piłka nożna", "Paintball");
+                ,"Street workout i kalistenika", "Tenis" , "Badminton", "Joga", "Siłownia", "Jazda na rolkach"
+                , "Kajaki", "Jazda na deskorolce", "Kitesurfing"
+                ,"Golf", "Triathlon", "Spacer z psem", "Siatkówka", "Siatkówka plażowa", "Aerobik", "Park linowy"
+                ,"Piłka nożna", "Paintball");
         List<Category> categoryList = category.stream().map(Category::new).toList();
         categoryRepository.saveAll(categoryList);
     }

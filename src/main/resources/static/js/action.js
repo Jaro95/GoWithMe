@@ -24,9 +24,9 @@ function w3_close() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('a.confirm-delete-user').forEach(link => {
+    document.querySelectorAll('#delete-activity').forEach(link => {
         link.addEventListener('click', event => {
-            if (!confirm('Czy na pewno chcesz usunąć użytkownika?')) {
+            if (!confirm('Czy na pewno chcesz usunąć aktywność?')) {
                 event.preventDefault();
             }
         });
