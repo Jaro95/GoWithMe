@@ -250,3 +250,21 @@ a {
     bottom: 20px;
     left: 20px; /
 }
+#suggestions {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    justify-content: center;
+    margin-right: 35%;
+    margin-left: 35%;
+}
+#suggestions li {
+    padding: 8px;
+    background-color: #f1f1f1;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+.edit-about-user {
+    width: 330px;
+    height: 110px;
+}

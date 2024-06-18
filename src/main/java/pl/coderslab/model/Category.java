@@ -1,9 +1,6 @@
 package pl.coderslab.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +14,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class Category {
 
     @Id
@@ -25,4 +23,8 @@ public class Category {
     @NotBlank
     @Size(max = 50)
     private String name;
+
+    public Category(String name) {
+        this.name = name;
+    }
 }

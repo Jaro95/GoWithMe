@@ -1,9 +1,6 @@
 package pl.coderslab.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,12 +12,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 public class ActivitiesPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotBlank
+
     @ManyToOne
     private Category category;
     @NotBlank
@@ -36,6 +34,5 @@ public class ActivitiesPlan {
     private List<UserDetails> userDetails;
     @OneToOne
     private UserDetails user;
-    @NotBlank
     private boolean enabled;
 }

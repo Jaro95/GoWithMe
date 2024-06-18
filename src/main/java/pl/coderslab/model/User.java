@@ -1,10 +1,10 @@
 package pl.coderslab.model;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 
@@ -19,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true, length = 60)
+    @Column(nullable = false, unique = true, length = 50)
     @NotBlank
     @Email
     @Size(max = 50)
@@ -30,4 +30,6 @@ public class User {
     private boolean enabled;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
+    private String token;
+    private LocalDateTime createdAccount;
 }

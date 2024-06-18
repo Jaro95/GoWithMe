@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -15,7 +16,7 @@
 
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -33,6 +34,9 @@
         <!-- Right-sided navbar links -->
         <div class="w3-right w3-hide-small">
 
+            <sec:authorize access="hasAnyRole('SUPER_ADMIN','ADMIN')">
+                <a href="/gowithme/admin" class="w3-bar-item w3-button"><i class="fa fa-jedi"></i> Admin</a>
+            </sec:authorize>
             <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-magnifying-glass"></i> Szukaj</a>
             <a href="/gowithme/app/add_activity" class="w3-bar-item w3-button"><i class="fa fa-person-running"></i> Dodaj aktywność</a>
             <a href="/gowithme/app/random" class="w3-bar-item w3-button"><i class="fa fa-dice"></i> Wybierz za mnie</a>

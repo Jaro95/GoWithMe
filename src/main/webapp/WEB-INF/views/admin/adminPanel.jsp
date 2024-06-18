@@ -42,7 +42,7 @@
                             onclick="location.href='/gowithme/admin/update?id=${userDetail.user.id}'">
                         <i class="fa fa-pencil"></i> Edytuj
                     </button>
-                    <sec:authorize access="hasRole('GOD')">
+                    <sec:authorize access="hasRole('SUPER_ADMIN')">
                         <a class="w3-button w3-black confirm-delete-user"
                            href="${pageContext.request.contextPath}/gowithme/admin/delete?id=${userDetail.user.id}">
                             <i class="fa fa-trash"></i>Usuń</a>

@@ -1,12 +1,13 @@
 package pl.coderslab.Service;
 
+import pl.coderslab.dto.RegistrationDTO;
 import pl.coderslab.model.User;
 
 public interface UserService {
 
     User findByEmail(String email);
 
-    void saveUser(User user);
+    void saveUser(RegistrationDTO user);
 
     void saveAdmin(User user);
 

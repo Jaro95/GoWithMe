@@ -11,6 +11,7 @@
 <jsp:include page="header.jsp"/>
 
 <div class="w3-container w3-light-grey">
+
     <div class="w3-row-padding">
         <div class="w3-col m6" style="padding:128px 200px">
             <img class="w3-image w3-round-large" src="/images/mainPeoplePedro.gif" alt="Buildings" width="350"
@@ -21,20 +22,31 @@
                 <h3>${firstName} ${lastName}</h3>
                 <p>${city}</p>
                 <p>Wiek: ${age}</p>
-                <p style="text ">Kilka słów o mnie: </p>
+                <p>Kilka słów o mnie: </p>
                 <p>${description}</p>
                 <p><a href="/gowithme/app/profile/edit" class="w3-button w3-black">
                     <i class="fa fa-user-pen"></i> Edycja</a></p>
-        </div>
 
+        </div>
+        <c:if test="${not empty messageUpdate}">
+            <div class=" alert alert-success">
+                    ${messageUpdate}
+            </div>
+        </c:if>
     </div>
 </div>
 
 <div class="w3-display-container w3-light-grey contact" id="appMain">
     <div class="w3-center w3-xlarge ">Twoje aktywności</div>
+    <c:if test="${not empty messageActivity}">
+        <div class="alert alert-success">
+                ${messageActivity}
+        </div>
+    </c:if>
     <table id="activitiesTable" class="display">
         <thead>
         <tr>
+            <th>Id</th>
             <th>Aktywność</th>
             <th>Opis</th>
             <th>Miasto</th>
@@ -44,9 +56,10 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="activity" items="${activities}">
+        <c:forEach var="activity" items="${activities}" varStatus="status">
             <tr>
-                <td>${activity.activity.activity}</td>
+                <td>${status.count}</td>
+                <td>${activity.category.name}</td>
                 <td>${activity.description}</td>
                 <td>${activity.city}</td>
                 <td>${activity.location}</td>
@@ -58,16 +71,16 @@
                 <td>
                     <button class="w3-button w3-black"
                             onclick="location.href='/gowithme/app/activity/add_users?id=${activity.id}'">
-                        <i class="fa fa-right-to-bracket"></i>Przypisz
+                        <i class="fa-solid fa-person-group"></i>Przypisz
                     </button>
                     <button class="w3-button w3-black"
                             onclick="location.href='/gowithme/app/activity/edit?id=${activity.id}'">
-                        <i class="fa fa-right-to-bracket"></i>Edycja
+                        <i class="fa fa-rotate"></i>Edycja
                     </button>
-                    <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/delete?id=${activity.id}'">
-                        <i class="fa fa-right-to-bracket"></i>Usuń
-                    </button>
+                    <a class="w3-button w3-black"
+                            href='/gowithme/app/activity/delete?id=${activity.id}' id="delete-activity">
+                        <i class="fa fa-trash"></i>Usuń
+                    </a>
                 </td>
                 </td>
             </tr>
