@@ -1,4 +1,3 @@
-
 // Modal Image Gallery
 function onClick(element) {
     document.getElementById("img01").src = element.src;
@@ -53,12 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // });
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('user-icon').addEventListener('click', function() {
+    document.getElementById('user-icon').addEventListener('click', function () {
         const dropdownMenu = document.getElementById('dropdown-menu');
         dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
     });
 
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         const dropdownMenu = document.getElementById('dropdown-menu');
         const userIcon = document.getElementById('user-icon');
         if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
@@ -66,9 +65,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const inputCity = document.getElementById ('cityInput');
+    inputCity.addEventListener('input', function () {
+        let prefix = this.value;
 
+        if (prefix.length >= 1) {
+            fetch(`http://api.geonames.org/searchJSON?name_startsWith=${prefix}&maxRows=1&country=PL&username=gohan`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    let suggestions = document.getElementById('suggestions');
+                    suggestions.innerHTML = '';
 
+                    data.geonames.forEach(city => {
+                        let li = document.createElement('li');
+                        li.textContent = city.name;
 
+                        li.addEventListener('click', function() {
+                            document.getElementById('cityInput').value = city.name;
+                            suggestions.innerHTML = ''; // Clear suggestions after selection
+                        });
+                        suggestions.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            document.getElementById('suggestions').innerHTML = '';
+        }
+    });
+});
 
 
 // document.addEventListener('DOMContentLoaded', () => {

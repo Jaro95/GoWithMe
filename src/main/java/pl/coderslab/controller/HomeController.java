@@ -82,7 +82,7 @@ public class HomeController {
 
     @GetMapping("/registration")
     public String getRegistration(ModelMap model) {
-        model.addAttribute("registrationWrapper", new RegistrationDTO());
+        model.addAttribute("registrationDTO", new RegistrationDTO());
         return "home/registration";
     }
 /**
@@ -90,15 +90,24 @@ public class HomeController {
  */
     @PostMapping("/registration")
     public String postRegistration(@Valid RegistrationDTO wrapper, BindingResult bindingResult,
-                                   RedirectAttributes redirectAttributes, Model model) {
+                                    Model model, RedirectAttributes redirectAttributes) {
+
+        if(userRepository.findByEmail(wrapper.getEmail()) != null) {
+            model.addAttribute("usedEmail", "Podany email jest zajęty");
+            model.addAttribute("registrationDTO", wrapper);
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "home/registration";
+        }
+
         if(!wrapper.getPassword().equals(wrapper.getRepeatPassword())) {
-            model.addAttribute("registrationWrapper", wrapper);
+            model.addAttribute("wrongPassword", "Hasła nie są takie same");
+            model.addAttribute("registrationDTO", wrapper);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "home/registration";
         }
 
         if(bindingResult.hasErrors()){
-            model.addAttribute("registrationWrapper", wrapper);
+            model.addAttribute("registrationDTO", wrapper);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "home/registration";
         }
@@ -106,7 +115,6 @@ public class HomeController {
                 .email(wrapper.getEmail())
                 .password(wrapper.getPassword())
                 .build());
-       // wrapper.getUserDetails() .setUser(userRepository.findByEmail(wrapper.getUser().getEmail()));
 
         userDetailsRepository.save(UserDetails.builder()
                 .firstName(wrapper.getFirstName())

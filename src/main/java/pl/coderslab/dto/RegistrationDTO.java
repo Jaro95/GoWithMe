@@ -19,16 +19,19 @@ public class RegistrationDTO {
     private String email;
     @NotBlank
     @Size(min = 5)
+    @Size(max = 50)
     private String password;
-    private boolean enabled;
-    @NotBlank
-    @Size(max = 50)
-    private String firstName;
-    @NotBlank
-    @Size(max = 50)
-    private String lastName;
-    @NotBlank
-    private String city;
     @NotBlank
     private String repeatPassword;
+    private boolean enabled;
+    @NotBlank
+    @Size(max = 30)
+    private String firstName;
+    @NotBlank
+    @Size(max = 30)
+    private String lastName;
+    @NotBlank
+    @Size(max = 30)
+    private String city;
+
 }

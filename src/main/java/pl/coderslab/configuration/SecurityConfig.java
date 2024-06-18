@@ -32,6 +32,7 @@ public class SecurityConfig {
         http.authorizeRequests()
                 //.antMatchers("/gowithme/**").permitAll()
                 .antMatchers("/gowithme/app/**").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                .antMatchers("/gowithme/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                 .and()
                 .formLogin().loginPage("/gowithme/login")
                 .defaultSuccessUrl("/gowithme/app", true)

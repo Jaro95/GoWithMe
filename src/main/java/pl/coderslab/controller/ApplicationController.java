@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import pl.coderslab.repository.UserDetailsRepository;
 import javax.validation.Valid;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/gowithme/app")
 public class ApplicationController {
 
@@ -25,12 +27,6 @@ public class ApplicationController {
     private final UserService userService;
     private final CategoryRepository categoryRepository;
 
-    public ApplicationController(UserDetailsRepository userDetailsRepository, ActivitiesPlanRepository activitiesPlanRepository, UserService userService, CategoryRepository categoryRepository) {
-        this.userDetailsRepository = userDetailsRepository;
-        this.activitiesPlanRepository = activitiesPlanRepository;
-        this.userService = userService;
-        this.categoryRepository = categoryRepository;
-    }
 
     @GetMapping("")
     public String main(Model model) {

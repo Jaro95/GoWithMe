@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import pl.coderslab.repository.UserRepository;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/gowithme/admin")
 public class AdminController {
 
@@ -26,14 +28,6 @@ public class AdminController {
     private final UserDetailsRepository userDetailsRepository;
     private final RoleRepository roleRepository;
     private final ContactRepository contactRepository;
-
-    public AdminController(UserService userService, UserRepository userRepository, UserDetailsRepository userDetailsRepository, RoleRepository roleRepository, ContactRepository contactRepository) {
-        this.userService = userService;
-        this.userRepository = userRepository;
-        this.userDetailsRepository = userDetailsRepository;
-        this.roleRepository = roleRepository;
-        this.contactRepository = contactRepository;
-    }
 
     @GetMapping("/create-contact")
     public String createUser() {
