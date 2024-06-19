@@ -61,7 +61,7 @@
                 <td>${activity.city}</td>
                 <td>${activity.location}</td>
                 <td>
-                    <c:forEach var="user" items="${activity.userDetails}">
+                    <c:forEach var="user" items="${activity.usersJoined}">
                         <p>${user.firstName} ${user.lastName}</p>
                     </c:forEach>
                 </td>

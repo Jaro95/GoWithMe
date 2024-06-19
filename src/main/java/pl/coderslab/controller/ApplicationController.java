@@ -130,15 +130,24 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/assign")
-    public String getAssignActivity(Model model, @RequestParam long id/*,@RequestParam(required = false) long userId*/) {
-        model.addAttribute("activities", activitiesPlanRepository.findById(id).stream().toList());
+    public String getAssignActivity(Model model, @RequestParam long id) {
         List<UserDetails> userDetailsList = waitOnAccessToActivityRepository.allWaitingUsersInActivity(id);
-        System.out.println("TESTY");
-        System.out.println(userDetailsList.toString());
+        ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(id).get();
         model.addAttribute("userList",userDetailsList);
-        UserDetails userDetails = userDetailsRepository.findById(id).get();
-        model.addAttribute("activities", activitiesPlanRepository.findById(userDetails.getId()));
+        model.addAttribute("usersJoined",userDetailsList);
+        model.addAttribute("activities", activitiesPlanRepository.findById(id).stream().toList());
         return "application/assignToActivity";
+    }
+
+    @PostMapping("/activity/assign")
+    public String getAssignActivity() {
+        System.out.println("JESTEM W POST");
+        // System.out.println(activitiesPlanUser.getId() + "       ID");
+//        ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activitiesPlanUser.getId()).get();
+//        activitiesPlan.setUsersJoined(activitiesPlanUser.getUsersJoined());
+//        activitiesPlanRepository.save(activitiesPlan);
+//        redirectAttributes.addFlashAttribute("messageActivity", "Przypisano osobę do aktywności");
+        return "redirect:/gowithme/app/profile";
     }
 
     @GetMapping("/profile")

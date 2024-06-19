@@ -11,13 +11,14 @@
 <jsp:include page="header.jsp"/>
 
 <div class="w3-container w3-light-grey">
-<c:forEach items="${userList}" var="user">
-    <div class="w3-row-padding" id = "user${user.id}">
-        <div class="w3-col m6" style="padding:128px 200px">
-            <img class="w3-image w3-round-large" src="/images/mainPeoplePedro.gif" alt="Buildings" width="350"
-                 height="200">
-        </div>
-        <div class="w3-col m6" style="padding:128px 200px">
+    <p class="w3-center w3-jumbo cantact-info">Przypisz do aktywności</p>
+    <c:forEach items="${userList}" var="user">
+        <div class="w3-row-padding" id="user${user.id}">
+            <div class="w3-col m6" style="padding:128px 200px">
+                <img class="w3-image w3-round-large" src="/images/mainPeoplePedro.gif" alt="Buildings" width="350"
+                     height="200">
+            </div>
+            <div class="w3-col m6" style="padding:128px 200px">
 
                 <h3>${user.firstName} ${user.lastName}</h3>
                 <p>${user.city}</p>
@@ -26,13 +27,13 @@
                 <p>${user.description}</p>
 
 
+            </div>
         </div>
-    </div>
-</c:forEach>
+    </c:forEach>
 </div>
 
 <div class="w3-display-container w3-light-grey contact" id="appMain">
-    <div class="w3-center w3-xlarge ">Aktywność: </div>
+
     <c:if test="${not empty messageActivity}">
         <div class="alert alert-success">
                 ${messageActivity}
@@ -51,6 +52,9 @@
         </tr>
         </thead>
         <tbody>
+        <form method="post">
+
+        </form>
 <%--        <c:forEach var="activity" items="${activities}" varStatus="status">--%>
 <%--            <tr>--%>
 <%--                <td>${status.count}</td>--%>
@@ -68,23 +72,29 @@
 <%--        </c:forEach>--%>
         </tbody>
     </table>
+    <form method="post">
 
-<%--    <form:form method="post">--%>
-<%--        <div class="w3-center w3-xlarge ">Aktywność: </div>--%>
-<%--        <c:forEach items="${userList}" var="user" >--%>
-<%--            <form:checkbox path="user" value="${user.id}" />--%>
-<%--            <form:label path="user">${user.firstName} ${user.lastName}</form:label><br/>--%>
-<%--&lt;%&ndash;            <input type="checkbox" id="${user.id}" name="fruit" value="${user.firstName} ${user.lastName}">&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <label for="${user.id}">${user.firstName} ${user.lastName}</label><br>&ndash;%&gt;--%>
-<%--        </c:forEach>--%>
-<%--        <button class="w3-button w3-plus" type="submit">--%>
-<%--            <i class="fa fa-check"></i> Dodaj--%>
-<%--        </button>--%>
-<%--    </form:form>--%>
-<%--    <form:form method="post">--%>
-<%--        <form:checkboxes items="${userDetails}" path="userdetails" itemLabel="firtName" itemValue="id"/>--%>
-<%--        --%>
-<%--    </form:form>--%>
+        <button class="w3-button w3-black" type="submit">
+            <i class="fa fa-check"></i> Zapisz
+        </button>
+    </form>
+
+    <%--    <form:form method="post">--%>
+    <%--        <div class="w3-center w3-xlarge ">Aktywność:</div>--%>
+    <%--        <c:forEach items="${userList}" var="user">--%>
+    <%--            <form:checkbox path="user" value="${user.id}"/>--%>
+    <%--            <form:label path="user">${user.firstName} ${user.lastName}</form:label><br/>--%>
+    <%--            &lt;%&ndash;            <input type="checkbox" id="${user.id}" name="fruit" value="${user.firstName} ${user.lastName}">&ndash;%&gt;--%>
+    <%--            &lt;%&ndash;            <label for="${user.id}">${user.firstName} ${user.lastName}</label><br>&ndash;%&gt;--%>
+    <%--        </c:forEach>--%>
+    <%--        <button class="w3-button w3-plus" type="submit">--%>
+    <%--            <i class="fa fa-check"></i> Dodaj--%>
+    <%--        </button>--%>
+    <%--    </form:form>--%>
+    <%--    <form:form method="post">--%>
+    <%--        <form:checkboxes items="${userDetails}" path="userdetails" itemLabel="firtName" itemValue="id"/>--%>
+
+    <%--    </form:form>--%>
 
 </div>
 <jsp:include page="footer.jsp"/>
