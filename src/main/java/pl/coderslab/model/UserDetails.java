@@ -30,8 +30,7 @@ public class UserDetails {
     private String city;
     private int age;
     private String description;
-    @ManyToMany
-    @JoinTable(name = "activites_joined_people")
+    @OneToMany
     private List<ActivitiesPlan> activitiesPlan;
     @OneToOne
     private User user;
