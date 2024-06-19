@@ -26,6 +26,7 @@
         <tbody>
         <c:forEach var="activity" items="${activities}" varStatus="status">
             <tr>
+
                 <td>${status.count}</td>
                 <td>${activity.category.name}</td>
                 <td>${activity.description}</td>
@@ -39,7 +40,7 @@
                 <td>${activity.user.firstName} ${activity.user.lastName}</td>
                 <td>
                     <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity?id=${activity.id}'">
+                            onclick="location.href='/gowithme/app/activity/assign?id=${activity.id}'">
                         <i class="fa fa-right-to-bracket"></i>Szczegóły
                     </button>
                 </td>

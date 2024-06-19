@@ -28,16 +28,16 @@
                     <i class="fa fa-user-pen"></i> Edycja</a></p>
 
         </div>
+        <c:if test="${not empty messageUpdate}">
+            <div class=" alert alert-success">
+                    ${messageUpdate}
+            </div>
+        </c:if>
     </div>
-    <c:if test="${not empty messageUpdate}">
-        <div class="w3-center alert alert-success">
-                ${messageUpdate}
-        </div>
-    </c:if>
 </div>
 
 <div class="w3-display-container w3-light-grey contact" id="appMain">
-    <div class="w3-center w3-xlarge ">Twoje aktywności</div>
+    <div class="w3-center w3-xlarge ">Aktywność: </div>
     <c:if test="${not empty messageActivity}">
         <div class="alert alert-success">
                 ${messageActivity}
@@ -71,16 +71,9 @@
                 <td>
                     <button class="w3-button w3-black"
                             onclick="location.href='/gowithme/app/activity/add_users?id=${activity.id}'">
-                        <i class="fa-solid fa-person-group"></i>Przypisz
+                        <i class="fa-solid fa-plus"></i>Dołącz
                     </button>
-                    <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/edit?id=${activity.id}'">
-                        <i class="fa fa-rotate"></i>Edycja
-                    </button>
-                    <a class="w3-button w3-black"
-                            href='/gowithme/app/activity/delete?id=${activity.id}' id="delete-activity">
-                        <i class="fa fa-trash"></i>Usuń
-                    </a>
+
                 </td>
                 </td>
             </tr>

@@ -90,6 +90,19 @@ public class ApplicationController {
         return "redirect:/gowithme/app/profile";
     }
 
+    @GetMapping("/activity/assign")
+    public String getAssignActivity(Model model, @RequestParam long id) {
+
+        UserDetails userDetails = userDetailsRepository.findById(id).get();
+        model.addAttribute("firstName", userDetails.getFirstName());
+        model.addAttribute("lastName", userDetails.getLastName());
+        model.addAttribute("city", userDetails.getCity());
+        model.addAttribute("age", userDetails.getAge());
+        model.addAttribute("description", userDetails.getDescription());
+        model.addAttribute("activities", activitiesPlanRepository.findById(userDetails.getId()));
+        return "application/profile";
+    }
+
     @GetMapping("/profile")
     public String getProfile(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
 
@@ -99,7 +112,7 @@ public class ApplicationController {
         model.addAttribute("city", userDetails.getCity());
         model.addAttribute("age", userDetails.getAge());
         model.addAttribute("description", userDetails.getDescription());
-        model.addAttribute("activities", activitiesPlanRepository.findByUserId(userDetails.getId()));
+        model.addAttribute("activities", activitiesPlanRepository.findByUserId(currentUser.getUser().getId()));
         return "application/profile";
     }
 
