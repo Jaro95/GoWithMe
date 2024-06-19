@@ -48,7 +48,7 @@
             <th>Opis</th>
             <th>Miasto</th>
             <th>Dokładna lokalizacja</th>
-            <th>Chętne osoby</th>
+            <th>Przypisane osoby</th>
             <th>Akcje</th>
         </tr>
         </thead>

@@ -16,7 +16,10 @@ import pl.coderslab.repository.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -55,10 +58,11 @@ public class ApplicationController {
         }
         activitiesPlan.setUser(userDetailsRepository.findByUserId(currentUser.getUser().getId()));
         activitiesPlan.setEnabled(true);
+        activitiesPlan.setUsersJoined(new ArrayList<>());
         System.out.println(activitiesPlan.toString());
         activitiesPlanRepository.save(activitiesPlan);
         redirect.addFlashAttribute("message", "Dodano Aktywność");
-        return "redirect:/gowithme/app/acitivity/add";
+        return "redirect:/gowithme/app/activity/add";
     }
 
     @GetMapping("/activity/edit")
@@ -110,9 +114,6 @@ public class ApplicationController {
         return "application/detailsUserActivity";
     }
 
-    /**
-*dodać sprawdzanie czy już jest w bazie i czeka na potwierdzenie
-     */
     @PostMapping("/activity/details")
     public String postDetailsUserActivity(WaitOnAccessToActivity waitOnAccessToActivity, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CurrentUser currentUser) {
         if(currentUser.getUser().getId().equals(waitOnAccessToActivity.getActivityPlan().getUser().getId())) {
@@ -130,25 +131,31 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/assign")
-    public String getAssignActivity(Model model, @RequestParam long id) {
-        List<UserDetails> userDetailsList = waitOnAccessToActivityRepository.allWaitingUsersInActivity(id);
-        ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(id).get();
-        model.addAttribute("userList",userDetailsList);
-        model.addAttribute("usersJoined",userDetailsList);
-        model.addAttribute("activities", activitiesPlanRepository.findById(id).stream().toList());
-        return "application/assignToActivity";
+    public String getAssign(@RequestParam long id,Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+        model.addAttribute("activities",activitiesPlanRepository.findById(id).stream().toList());
+        model.addAttribute("userList", waitOnAccessToActivityRepository.allWaitingUsersInActivity(id));
+        model.addAttribute("activityId",id);
+        return "application/activityAssignPeople";
+    }
+    @GetMapping("/activity/assignUser")
+    public String getAssignUserToActivity(@RequestParam long activityId,@RequestParam long userId, RedirectAttributes redirectAttributes) {
+        ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activityId).get();
+        List<UserDetails> userDetailsList = activitiesPlan.getUsersJoined();
+        userDetailsList.add(userDetailsRepository.findById(userId).get());
+        activitiesPlan.setUsersJoined(userDetailsList);
+        System.out.println(activitiesPlan.toString());
+        activitiesPlanRepository.save(activitiesPlan);
+        redirectAttributes.addFlashAttribute("messageSuccess", "Dodano użytkownika do aktywności");
+        return "redirect:/gowithme/app/activity/assign?id="+activityId;
     }
 
-    @PostMapping("/activity/assign")
-    public String getAssignActivity() {
-        System.out.println("JESTEM W POST");
-        // System.out.println(activitiesPlanUser.getId() + "       ID");
-//        ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activitiesPlanUser.getId()).get();
-//        activitiesPlan.setUsersJoined(activitiesPlanUser.getUsersJoined());
-//        activitiesPlanRepository.save(activitiesPlan);
-//        redirectAttributes.addFlashAttribute("messageActivity", "Przypisano osobę do aktywności");
-        return "redirect:/gowithme/app/profile";
+    @GetMapping("/activity/deleteUserFroWaitingList")
+    public String getDeleteUserFromWaitingList(@RequestParam long activityId,@RequestParam long userId, RedirectAttributes redirectAttributes) {
+        waitOnAccessToActivityRepository.deleteFromWaitingList(activityId,userId);
+        redirectAttributes.addFlashAttribute("messageDelete", "Usunięto użytkownika z listy oczekujących");
+        return "redirect:/gowithme/app/activity/assign?id="+activityId;
     }
+
 
     @GetMapping("/profile")
     public String getProfile(Model model, @AuthenticationPrincipal CurrentUser currentUser) {

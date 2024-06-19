@@ -18,7 +18,7 @@
             <th>Opis</th>
             <th>Miasto</th>
             <th>Dokładna lokalizacja</th>
-            <th>Chętne osoby</th>
+            <th>Przypisane osoby</th>
             <th>Dodał</th>
             <th>Brzmi spoko</th>
         </tr>

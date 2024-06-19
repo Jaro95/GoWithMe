@@ -33,6 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('#delete-user-from-list').forEach(link => {
+        link.addEventListener('click', event => {
+            if (!confirm('Czy na pewno chcesz usunąć użytkownika z listy oczekujących?')) {
+                event.preventDefault();
+            }
+        });
+    });
+});
+
 // document.addEventListener('DOMContentLoaded', () => {
 //     const image = document.querySelector("#icon-user");
 //     image.addEventListener("click",function (e) {
@@ -144,6 +154,18 @@ $(document).ready(function () {
         "paging": true,
         "ordering": true,
         "info": true
+    });
+
+    $('#searchBox').on('keyup', function () {
+        table.search(this.value).draw();
+    });
+});
+$(document).ready(function () {
+    var table = $('#assignTable').DataTable({
+        "paging": false,
+        "ordering": false,
+        "info": false,
+        "dom": 't'
     });
 
     $('#searchBox').on('keyup', function () {
