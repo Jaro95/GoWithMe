@@ -1,3 +1,4 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -13,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/action.js"></script>
@@ -28,8 +30,13 @@
         <div class="w3-right w3-hide-small">
             <a href="/gowithme/home" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Home</a>
             <a href="/gowithme/contact" class="w3-bar-item w3-button"><i class="fa fa-phone"></i> Kontakt</a>
+            <sec:authorize access="isAnonymous()">
             <a href="/gowithme/login" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Logowanie</a>
             <a href="/gowithme/registration" class="w3-bar-item w3-button"><i class="fa fa-pencil"></i> Rejestracja</a>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-door-open"></i> Aplikacja</a>
+            </sec:authorize>
         </div>
         <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 

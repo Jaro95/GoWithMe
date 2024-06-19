@@ -90,6 +90,21 @@ public class ApplicationController {
         return "redirect:/gowithme/app/profile";
     }
 
+    @GetMapping("/activity/details")
+    public String getDetailsUserActivity(Model model, @RequestParam long id, @RequestParam long activityId) {
+
+        UserDetails userDetails = userDetailsRepository.findByUserId(id);
+        System.out.println(userDetails.toString());
+        model.addAttribute("firstName", userDetails.getFirstName());
+        model.addAttribute("lastName", userDetails.getLastName());
+        model.addAttribute("city", userDetails.getCity());
+        model.addAttribute("age", userDetails.getAge());
+        model.addAttribute("description", userDetails.getDescription());
+
+        model.addAttribute("activities", activitiesPlanRepository.findById(activityId).stream().toList());
+        return "application/detailsUserActivity";
+    }
+
     @GetMapping("/activity/assign")
     public String getAssignActivity(Model model, @RequestParam long id) {
 

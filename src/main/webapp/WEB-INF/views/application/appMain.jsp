@@ -40,7 +40,7 @@
                 <td>${activity.user.firstName} ${activity.user.lastName}</td>
                 <td>
                     <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/assign?id=${activity.id}'">
+                            onclick="location.href='/gowithme/app/activity/details?id=${activity.user.id}&activityId=${activity.id}'">
                         <i class="fa fa-right-to-bracket"></i>Szczegóły
                     </button>
                 </td>
