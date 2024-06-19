@@ -11,29 +11,24 @@
 <jsp:include page="header.jsp"/>
 
 <div class="w3-container w3-light-grey">
-
-    <div class="w3-row-padding">
+<c:forEach items="${userList}" var="user">
+    <div class="w3-row-padding" id = "user${user.id}">
         <div class="w3-col m6" style="padding:128px 200px">
             <img class="w3-image w3-round-large" src="/images/mainPeoplePedro.gif" alt="Buildings" width="350"
                  height="200">
         </div>
         <div class="w3-col m6" style="padding:128px 200px">
 
-                <h3>${firstName} ${lastName}</h3>
-                <p>${city}</p>
-                <p>Wiek: ${age}</p>
+                <h3>${user.firstName} ${user.lastName}</h3>
+                <p>${user.city}</p>
+                <p>Wiek: ${user.age}</p>
                 <p>Kilka słów o mnie: </p>
-                <p>${description}</p>
-                <p><a href="/gowithme/app/profile/edit" class="w3-button w3-black">
-                    <i class="fa fa-user-pen"></i> Edycja</a></p>
+                <p>${user.description}</p>
+
 
         </div>
-        <c:if test="${not empty messageUpdate}">
-            <div class=" alert alert-success">
-                    ${messageUpdate}
-            </div>
-        </c:if>
     </div>
+</c:forEach>
 </div>
 
 <div class="w3-display-container w3-light-grey contact" id="appMain">
@@ -56,29 +51,40 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="activity" items="${activities}" varStatus="status">
-            <tr>
-                <td>${status.count}</td>
-                <td>${activity.category.name}</td>
-                <td>${activity.description}</td>
-                <td>${activity.city}</td>
-                <td>${activity.location}</td>
-                <td>
-                    <c:forEach var="user" items="${activity.userDetails}">
-                        <p>${user.firstName} ${user.lastName}</p>
-                    </c:forEach>
-                </td>
-                <td>
-                    <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/add_users?id=${activity.id}'">
-                        <i class="fa-solid fa-plus"></i>Dołącz
-                    </button>
-
-                </td>
-                </td>
-            </tr>
-        </c:forEach>
+<%--        <c:forEach var="activity" items="${activities}" varStatus="status">--%>
+<%--            <tr>--%>
+<%--                <td>${status.count}</td>--%>
+<%--                <td>${activity.category.name}</td>--%>
+<%--                <td>${activity.description}</td>--%>
+<%--                <td>${activity.city}</td>--%>
+<%--                <td>${activity.location}</td>--%>
+<%--                <td>--%>
+<%--                    <c:forEach var="user" items="${activity.userDetails}">--%>
+<%--                        <p>${user.firstName} ${user.lastName}</p>--%>
+<%--                    </c:forEach>--%>
+<%--                </td>--%>
+<%--                --%>
+<%--            </tr>--%>
+<%--        </c:forEach>--%>
         </tbody>
     </table>
+
+<%--    <form:form method="post">--%>
+<%--        <div class="w3-center w3-xlarge ">Aktywność: </div>--%>
+<%--        <c:forEach items="${userList}" var="user" >--%>
+<%--            <form:checkbox path="user" value="${user.id}" />--%>
+<%--            <form:label path="user">${user.firstName} ${user.lastName}</form:label><br/>--%>
+<%--&lt;%&ndash;            <input type="checkbox" id="${user.id}" name="fruit" value="${user.firstName} ${user.lastName}">&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <label for="${user.id}">${user.firstName} ${user.lastName}</label><br>&ndash;%&gt;--%>
+<%--        </c:forEach>--%>
+<%--        <button class="w3-button w3-plus" type="submit">--%>
+<%--            <i class="fa fa-check"></i> Dodaj--%>
+<%--        </button>--%>
+<%--    </form:form>--%>
+<%--    <form:form method="post">--%>
+<%--        <form:checkboxes items="${userDetails}" path="userdetails" itemLabel="firtName" itemValue="id"/>--%>
+<%--        --%>
+<%--    </form:form>--%>
+
 </div>
 <jsp:include page="footer.jsp"/>

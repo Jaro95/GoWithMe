@@ -96,6 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// document.addEventListener('DOMContentLoaded', () => {
+//     document.getElementById('user-icon').addEventListener('click', function () {
+//         const dropdownMenu = document.getElementById('dropdown-menu');
+//         dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+//     })
+// });
 
 // document.addEventListener('DOMContentLoaded', () => {
 //     document.querySelectorAll('a.profile').addEventListener('click', event => {

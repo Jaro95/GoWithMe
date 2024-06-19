@@ -70,7 +70,7 @@
                 </td>
                 <td>
                     <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/add_users?id=${activity.id}'">
+                            onclick="location.href='/gowithme/app/activity/assign?id=${activity.id}'">
                         <i class="fa-solid fa-person-group"></i>Przypisz
                     </button>
                     <button class="w3-button w3-black"

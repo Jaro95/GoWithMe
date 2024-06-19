@@ -38,7 +38,7 @@
                 <a href="/gowithme/admin" class="w3-bar-item w3-button"><i class="fa fa-jedi"></i> Admin</a>
             </sec:authorize>
             <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-magnifying-glass"></i> Szukaj</a>
-            <a href="/gowithme/app/add_activity" class="w3-bar-item w3-button"><i class="fa fa-person-running"></i> Dodaj aktywność</a>
+            <a href="/gowithme/app/activity/add" class="w3-bar-item w3-button"><i class="fa fa-person-running"></i> Dodaj aktywność</a>
             <a href="/gowithme/app/random" class="w3-bar-item w3-button"><i class="fa fa-dice"></i> Wybierz za mnie</a>
             <a  class="w3-bar-item w3-button " id = "user-icon"><i class="fa fa-user" ></i> <i class="fa fa-list"></i></a>
                 <div class="dropdown-menu" id="dropdown-menu">

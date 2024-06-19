@@ -35,6 +35,11 @@
                 ${messageAssign}
         </div>
     </c:if>
+    <c:if test="${not empty messageError}">
+        <div class="alert alert-error">
+                ${messageError}
+        </div>
+    </c:if>
     <table id="activitiesTable" class="display">
         <thead>
         <tr>
@@ -61,10 +66,13 @@
                     </c:forEach>
                 </td>
                 <td>
-                    <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/add_users?id=${activity.id}'">
+                    <form:form modelAttribute="waitOnAccessToActivity">
+                        <form:input path="activityPlan" type="hidden"/>
+                        <form:input path="userDetails" type="hidden"/>
+                    <button type="submit" class="w3-button w3-black">
                         <i class="fa-solid fa-person-group"></i>Zainteresowany
                     </button>
+                    </form:form>
                 </td>
             </tr>
         </c:forEach>

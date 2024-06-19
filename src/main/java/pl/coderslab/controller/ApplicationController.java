@@ -1,7 +1,6 @@
 package pl.coderslab.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +11,12 @@ import pl.coderslab.Service.CurrentUser;
 import pl.coderslab.Service.UserService;
 import pl.coderslab.model.ActivitiesPlan;
 import pl.coderslab.model.UserDetails;
-import pl.coderslab.repository.ActivitiesPlanRepository;
-import pl.coderslab.repository.CategoryRepository;
-import pl.coderslab.repository.UserDetailsRepository;
-import pl.coderslab.repository.UserRepository;
+import pl.coderslab.model.WaitOnAccessToActivity;
+import pl.coderslab.repository.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,6 +28,7 @@ public class ApplicationController {
     private final UserService userService;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final WaitOnAccessToActivityRepository waitOnAccessToActivityRepository;
 
 
     @GetMapping("")
@@ -37,14 +37,14 @@ public class ApplicationController {
         return "application/appMain";
     }
 
-    @GetMapping("/add_activity")
+    @GetMapping("/activity/add")
     public String getAddActivity(Model model) {
         model.addAttribute("activitiesPLan", new ActivitiesPlan());
         model.addAttribute("categories", categoryRepository.findAll());
         return "application/activityAdd";
     }
 
-    @PostMapping("/add_activity")
+    @PostMapping("/activity/add")
     public String postAddActivity(@Valid ActivitiesPlan activitiesPlan,
                                   Model model, BindingResult result, RedirectAttributes redirect,
                                   @AuthenticationPrincipal CurrentUser currentUser) {
@@ -58,7 +58,7 @@ public class ApplicationController {
         System.out.println(activitiesPlan.toString());
         activitiesPlanRepository.save(activitiesPlan);
         redirect.addFlashAttribute("message", "Dodano Aktywność");
-        return "redirect:/gowithme/app/add_activity";
+        return "redirect:/gowithme/app/acitivity/add";
     }
 
     @GetMapping("/activity/edit")
@@ -91,7 +91,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/details")
-    public String getDetailsUserActivity(Model model, @RequestParam long id, @RequestParam long activityId) {
+    public String getDetailsUserActivity(Model model, @RequestParam long id, @RequestParam long activityId, @AuthenticationPrincipal CurrentUser currentUser) {
 
         UserDetails userDetails = userDetailsRepository.findByUserId(id);
         System.out.println(userDetails.toString());
@@ -100,22 +100,45 @@ public class ApplicationController {
         model.addAttribute("city", userDetails.getCity());
         model.addAttribute("age", userDetails.getAge());
         model.addAttribute("description", userDetails.getDescription());
-
+        ActivitiesPlan activityPlan = activitiesPlanRepository.findById(activityId).get();
         model.addAttribute("activities", activitiesPlanRepository.findById(activityId).stream().toList());
+        model.addAttribute("waitOnAccessToActivity", WaitOnAccessToActivity.builder()
+                .activityPlan(activityPlan)
+                .userDetails(userDetailsRepository.findByUserId(currentUser.getUser().getId()))
+                .build());
+        model.addAttribute("userId",id);
         return "application/detailsUserActivity";
     }
 
-    @GetMapping("/activity/assign")
-    public String getAssignActivity(Model model, @RequestParam long id) {
+    /**
+*dodać sprawdzanie czy już jest w bazie i czeka na potwierdzenie
+     */
+    @PostMapping("/activity/details")
+    public String postDetailsUserActivity(WaitOnAccessToActivity waitOnAccessToActivity, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CurrentUser currentUser) {
+        if(currentUser.getUser().getId().equals(waitOnAccessToActivity.getActivityPlan().getUser().getId())) {
+            redirectAttributes.addFlashAttribute("messageError", "Nie możesz wysłać prośby o dołączenie do swojej aktywności");
+            return "redirect:/gowithme/app/activity/details?id=" + waitOnAccessToActivity.getActivityPlan().getUser().getId()+ "&activityId=" + waitOnAccessToActivity.getActivityPlan().getId();
+        }
+        if (waitOnAccessToActivityRepository.validateContainInList(waitOnAccessToActivity.getActivityPlan(),waitOnAccessToActivity.getUserDetails()) != null) {
+            redirectAttributes.addFlashAttribute("messageError", "Użytkownik otrzymał juz Twoją prośbę o dołączenie");
+            return "redirect:/gowithme/app/activity/details?id=" + waitOnAccessToActivity.getActivityPlan().getUser().getId()+ "&activityId=" + waitOnAccessToActivity.getActivityPlan().getId();
+        }
+        waitOnAccessToActivity.setRequestDate(LocalDateTime.now());
+        waitOnAccessToActivityRepository.save(waitOnAccessToActivity);
+        redirectAttributes.addFlashAttribute("messageAssign", "Wysłano prośbę o dołączenie");
+        return "redirect:/gowithme/app/activity/details?id=" + waitOnAccessToActivity.getActivityPlan().getUser().getId()+ "&activityId=" + waitOnAccessToActivity.getActivityPlan().getId();
+    }
 
+    @GetMapping("/activity/assign")
+    public String getAssignActivity(Model model, @RequestParam long id/*,@RequestParam(required = false) long userId*/) {
+        model.addAttribute("activities", activitiesPlanRepository.findById(id).stream().toList());
+        List<UserDetails> userDetailsList = waitOnAccessToActivityRepository.allWaitingUsersInActivity(id);
+        System.out.println("TESTY");
+        System.out.println(userDetailsList.toString());
+        model.addAttribute("userList",userDetailsList);
         UserDetails userDetails = userDetailsRepository.findById(id).get();
-        model.addAttribute("firstName", userDetails.getFirstName());
-        model.addAttribute("lastName", userDetails.getLastName());
-        model.addAttribute("city", userDetails.getCity());
-        model.addAttribute("age", userDetails.getAge());
-        model.addAttribute("description", userDetails.getDescription());
         model.addAttribute("activities", activitiesPlanRepository.findById(userDetails.getId()));
-        return "application/profile";
+        return "application/assignToActivity";
     }
 
     @GetMapping("/profile")
