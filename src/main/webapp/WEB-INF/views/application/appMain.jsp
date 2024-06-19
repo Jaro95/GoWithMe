@@ -18,7 +18,7 @@
             <th>Opis</th>
             <th>Miasto</th>
             <th>Dokładna lokalizacja</th>
-            <th>Chętne osoby</th>
+            <th>Przypisane osoby</th>
             <th>Dodał</th>
             <th>Brzmi spoko</th>
         </tr>
@@ -26,20 +26,21 @@
         <tbody>
         <c:forEach var="activity" items="${activities}" varStatus="status">
             <tr>
+
                 <td>${status.count}</td>
                 <td>${activity.category.name}</td>
                 <td>${activity.description}</td>
                 <td>${activity.city}</td>
                 <td>${activity.location}</td>
                 <td>
-                       <c:forEach var="user" items="${activity.userDetails}">
+                       <c:forEach var="user" items="${activity.usersJoined}">
                            <p>${user.firstName} ${user.lastName}</p>
                        </c:forEach>
                 </td>
                 <td>${activity.user.firstName} ${activity.user.lastName}</td>
                 <td>
                     <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity?id=${activity.id}'">
+                            onclick="location.href='/gowithme/app/activity/details?id=${activity.user.id}&activityId=${activity.id}'">
                         <i class="fa fa-right-to-bracket"></i>Szczegóły
                     </button>
                 </td>

@@ -12,7 +12,7 @@
 
     <p class="w3-center w3-jumbo cantact-info">Logowanie</p>
     <c:if test="${not empty message}">
-        <div class="alert alert-success"><i class="fa fa-check"> ${message}</i>
+        <div class="alert alert-success"> ${message}
 
         </div>
     </c:if>

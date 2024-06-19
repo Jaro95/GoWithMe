@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @ToString
+@Builder
 public class ActivitiesPlan {
 
     @Id
@@ -30,8 +31,7 @@ public class ActivitiesPlan {
     @Size(max = 100)
     private String location;
     @OneToMany
-    @JoinTable(name = "activites_joined_people")
-    private List<UserDetails> userDetails;
+    private List<UserDetails> usersJoined;
     @OneToOne
     private UserDetails user;
     private boolean enabled;

@@ -18,29 +18,26 @@
                  height="200">
         </div>
         <div class="w3-col m6" style="padding:128px 200px">
-
-                <h3>${firstName} ${lastName}</h3>
-                <p>${city}</p>
-                <p>Wiek: ${age}</p>
-                <p>Kilka słów o mnie: </p>
-                <p>${description}</p>
-                <p><a href="/gowithme/app/profile/edit" class="w3-button w3-black">
-                    <i class="fa fa-user-pen"></i> Edycja</a></p>
-
+            <h3>${firstName} ${lastName}</h3>
+            <p>${city}</p>
+            <p>Wiek: ${age}</p>
+            <p>Kilka słów o mnie: </p>
+            <p>${description}</p>
         </div>
     </div>
-    <c:if test="${not empty messageUpdate}">
-        <div class="w3-center alert alert-success">
-                ${messageUpdate}
-        </div>
-    </c:if>
+
 </div>
 
 <div class="w3-display-container w3-light-grey contact" id="appMain">
-    <div class="w3-center w3-xlarge ">Twoje aktywności</div>
-    <c:if test="${not empty messageActivity}">
+    <div class="w3-center w3-xlarge ">Aktywność do której chcesz dołączyć</div>
+    <c:if test="${not empty messageAssign}">
         <div class="alert alert-success">
-                ${messageActivity}
+                ${messageAssign}
+        </div>
+    </c:if>
+    <c:if test="${not empty messageError}">
+        <div class="alert alert-error">
+                ${messageError}
         </div>
     </c:if>
     <table id="activitiesTable" class="display">
@@ -69,19 +66,13 @@
                     </c:forEach>
                 </td>
                 <td>
-                    <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/assign?id=${activity.id}'">
-                        <i class="fa-solid fa-person-group"></i>Przypisz
+                    <form:form modelAttribute="waitOnAccessToActivity">
+                        <form:input path="activityPlan" type="hidden"/>
+                        <form:input path="userDetails" type="hidden"/>
+                    <button type="submit" class="w3-button w3-black">
+                        <i class="fa-solid fa-person-group"></i>Zainteresowany
                     </button>
-                    <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/edit?id=${activity.id}'">
-                        <i class="fa fa-rotate"></i>Edycja
-                    </button>
-                    <a class="w3-button w3-black"
-                            href='/gowithme/app/activity/delete?id=${activity.id}' id="delete-activity">
-                        <i class="fa fa-trash"></i>Usuń
-                    </a>
-                </td>
+                    </form:form>
                 </td>
             </tr>
         </c:forEach>
