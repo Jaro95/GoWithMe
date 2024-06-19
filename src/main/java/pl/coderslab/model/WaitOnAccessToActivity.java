@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,9 +17,9 @@ public class WaitOnAccessToActivity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne
-    private ActivitiesPlan activityPlan;
-    @ManyToOne
-    private UserDetails userDetails;
+    @OneToMany
+    private List<ActivitiesPlan> activityPlan;
+    @OneToMany
+    private List<UserDetails> userDetails;
     private LocalDateTime requestDate;
 }
