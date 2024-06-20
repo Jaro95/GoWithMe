@@ -218,3 +218,53 @@ table.dataTable tbody td {
     padding: 10px;
     text-align: center;
 }
+
+.dropdown-menu {
+    display: none; /* Ukryj menu rozwijane */
+    position: absolute;
+    top: 60px; /* Pozycjonuj menu tuż pod nawigacją */
+    right: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    width: 150px; /* Szerokość menu */
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #333;
+    text-align: center; /* Wycentruj tekst */
+
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+a {
+    text-decoration: none;
+}
+.social-icon {
+    position: fixed;
+    bottom: 20px;
+    left: 20px; /
+}
+#suggestions {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    justify-content: center;
+    margin-right: 35%;
+    margin-left: 35%;
+}
+#suggestions li {
+    padding: 8px;
+    background-color: #f1f1f1;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+.edit-about-user {
+    width: 330px;
+    height: 110px;
+}

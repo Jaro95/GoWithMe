@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.Service.CurrentUser;
 import pl.coderslab.Service.NotificationService;
-import pl.coderslab.Service.UserService;
 import pl.coderslab.dto.WaitingOnAccessToActivityDTO;
 import pl.coderslab.model.ActivitiesPlan;
+import pl.coderslab.model.Notification;
 import pl.coderslab.model.UserDetails;
 import pl.coderslab.model.WaitOnAccessToActivity;
 import pl.coderslab.repository.*;
@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
+@SessionAttributes("notificationsList")
 @RequestMapping("/gowithme/app")
 public class ApplicationController {
 
@@ -34,6 +35,11 @@ public class ApplicationController {
     private final NotificationService notificationService;
     private final NotificationRepository notificationRepository;
 
+
+    @ModelAttribute("notificationsList")
+    public List<Notification> setNotoficationList(@AuthenticationPrincipal CurrentUser currentUser) {
+        return notificationRepository.findAllByUserDetailsOrderByCreateDateTimeDesc(userDetailsRepository.findByUser(currentUser.getUser()));
+    }
 
     @GetMapping("")
     public String main(Model model) {
