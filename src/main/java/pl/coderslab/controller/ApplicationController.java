@@ -66,11 +66,19 @@ public class ApplicationController {
         return "redirect:/gowithme/app/activity/add";
     }
 
+//    @GetMapping("/activity/edit")
+//    public String getEditActivity(@RequestParam long id, Model model) {
+//        model.addAttribute("activitiesPLan", activitiesPlanRepository.findById(id));
+//        model.addAttribute("categories", categoryRepository.findAll());
+//        return "application/activityEdit";
+//    }
     @GetMapping("/activity/edit")
     public String getEditActivity(@RequestParam long id, Model model) {
-        model.addAttribute("activitiesPLan", activitiesPlanRepository.findById(id));
+        model.addAttribute("activitiesPLan", activitiesPlanRepository.findById(id).get());
         model.addAttribute("categories", categoryRepository.findAll());
-        return "application/activityEdit";
+        model.addAttribute("userList", activitiesPlanRepository.findById(id).get().getUsersJoined());
+        model.addAttribute("activityId", id);
+        return "application/activityEditNew";
     }
 
     @PostMapping("/activity/edit")
@@ -86,6 +94,16 @@ public class ApplicationController {
         activitiesPlanRepository.save(activitiesPlan);
         redirectAttributes.addFlashAttribute("messageActivity", "Aktywność zaktualizowana");
         return "redirect:/gowithme/app/profile";
+    }
+
+    @GetMapping("/activity/deleteUserFromJoinedList")
+    public String getDeleteUserFromJoinedList(@RequestParam long activityId, @RequestParam long userId, RedirectAttributes redirectAttributes) {
+        ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activityId).get();
+        activitiesPlan.setUsersJoined(activitiesPlan.getUsersJoined()
+                .stream().filter(el -> !el.equals(userDetailsRepository.findById(userId).get())).collect(Collectors.toList()));
+        activitiesPlanRepository.save(activitiesPlan);
+        redirectAttributes.addFlashAttribute("messageDelete", "Usunięto użytkownika z aktywności");
+        return "redirect:/gowithme/app/activity/edit?id=" + activityId;
     }
 
     @GetMapping("/activity/delete")
@@ -132,7 +150,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/assign")
-    public String getAssign(@RequestParam long id, Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+    public String getAssign(@RequestParam long id, Model model) {
         model.addAttribute("activities", activitiesPlanRepository.findById(id).stream().toList());
         model.addAttribute("userList", waitOnAccessToActivityRepository.allWaitingUsersInActivity(id));
         model.addAttribute("activityId", id);
