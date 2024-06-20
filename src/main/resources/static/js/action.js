@@ -34,6 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('#delete-user-from-joined-list').forEach(link => {
+        link.addEventListener('click', event => {
+            if (!confirm('Czy na pewno chcesz usunąć uzytkownika z aktywności')) {
+                event.preventDefault();
+            }
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#delete-user-from-list').forEach(link => {
         link.addEventListener('click', event => {
             if (!confirm('Czy na pewno chcesz usunąć użytkownika z listy oczekujących?')) {

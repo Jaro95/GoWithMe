@@ -30,7 +30,7 @@ public class UserDetails {
     private String city;
     private int age;
     private String description;
-    @OneToMany
+    @ManyToMany
     private List<ActivitiesPlan> activitiesPlan;
     @OneToOne
     private User user;

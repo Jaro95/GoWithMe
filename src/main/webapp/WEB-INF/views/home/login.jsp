@@ -17,7 +17,7 @@
         </div>
     </c:if>
     <c:if test="${not empty messageEnabled}">
-        <div class="alert alert-error"><i class="fa fa-bell"> ${messageEnabled}</i>
+        <div class="alert alert-error"> ${messageEnabled}
 
         </div>
     </c:if>

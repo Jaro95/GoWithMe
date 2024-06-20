@@ -25,7 +25,6 @@
             <p>
             <ul id="suggestions"></ul>
                     <form:input id="cityInput" class="input-contact w3-border" type="text" placeholder="Miejscowość" path="city"/>
-
             <p><form:errors path="city" cssClass="alert alert-error"/></p>
             </p>
             <p>

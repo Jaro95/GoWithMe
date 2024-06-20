@@ -66,9 +66,9 @@
                     </c:forEach>
                 </td>
                 <td>
-                    <form:form modelAttribute="waitOnAccessToActivity">
-                        <form:input path="activityPlan" type="hidden"/>
-                        <form:input path="userDetails" type="hidden"/>
+                    <form:form modelAttribute="waitOnAccessToActivityDTO">
+                        <form:input path="activityPlanId" type="hidden"/>
+                        <form:input path="userCreatedActivityId" type="hidden"/>
                     <button type="submit" class="w3-button w3-black">
                         <i class="fa-solid fa-person-group"></i>Zainteresowany
                     </button>

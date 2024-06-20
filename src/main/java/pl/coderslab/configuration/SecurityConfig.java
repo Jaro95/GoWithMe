@@ -31,7 +31,7 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/gowithme/**").permitAll()
+                .antMatchers("/gowithme/admin/create-start").permitAll()
                 .antMatchers("/gowithme/app/**").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
                 .antMatchers("/gowithme/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
                 .and()
