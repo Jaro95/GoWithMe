@@ -161,7 +161,10 @@ public class ApplicationController {
     public String getAssignUserToActivity(@RequestParam long activityId, @RequestParam long userId, RedirectAttributes redirectAttributes) {
         ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activityId).get();
         List<UserDetails> userDetailsList = activitiesPlan.getUsersJoined();
-        userDetailsList.add(userDetailsRepository.findById(userId).get());
+        if(userDetailsList.contains(userDetailsRepository.findById(userId).get())) {
+            redirectAttributes.addFlashAttribute("messageError", "Użytkownik jest już przypisany do aktywności");
+            return "redirect:/gowithme/app/activity/assign?id=" + activityId;
+        }
         activitiesPlan.setUsersJoined(userDetailsList);
         System.out.println(activitiesPlan.toString());
         activitiesPlanRepository.save(activitiesPlan);
