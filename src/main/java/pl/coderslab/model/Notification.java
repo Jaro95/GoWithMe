@@ -1,9 +1,6 @@
 package pl.coderslab.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -17,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class Notification {
 
     @Id
@@ -24,8 +22,8 @@ public class Notification {
     private long id;
     @NotBlank
     private String name;
-    @ManyToMany(mappedBy = "notificationsList")
-    private List<UserDetails> userDetails;
+    @ManyToOne
+    private UserDetails userDetails;
     @NotNull
     private LocalDateTime createDateTime;
     @NotNull
