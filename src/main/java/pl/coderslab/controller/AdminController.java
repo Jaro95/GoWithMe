@@ -28,6 +28,9 @@ public class AdminController {
 
     @GetMapping("/create-start")
     public String createStart() {
+        if(!userRepository.findAll().isEmpty()){
+            return "redirect:/gowithme/admin";
+        }
         User god = User.builder().email("god@god")
                 .password("qwerty").build();
         User admin = User.builder().email("admin@admin")

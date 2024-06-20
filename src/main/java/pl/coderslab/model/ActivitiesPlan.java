@@ -30,7 +30,7 @@ public class ActivitiesPlan {
     @NotBlank
     @Size(max = 100)
     private String location;
-    @OneToMany
+    @ManyToMany
     private List<UserDetails> usersJoined;
     @OneToOne
     private UserDetails user;
