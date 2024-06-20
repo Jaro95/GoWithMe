@@ -28,4 +28,6 @@ public class Notification {
     private List<UserDetails> userDetails;
     @NotNull
     private LocalDateTime createDateTime;
+    @NotNull
+    private boolean display;
 }
