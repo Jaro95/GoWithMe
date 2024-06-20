@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.Service.CurrentUser;
 import pl.coderslab.Service.UserService;
+import pl.coderslab.dto.WaitingOnAccessToActivityDTO;
 import pl.coderslab.model.ActivitiesPlan;
 import pl.coderslab.model.UserDetails;
 import pl.coderslab.model.WaitOnAccessToActivity;
@@ -66,7 +67,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/edit")
-    public String getEditActivity(@RequestParam long id ,Model model) {
+    public String getEditActivity(@RequestParam long id, Model model) {
         model.addAttribute("activitiesPLan", activitiesPlanRepository.findById(id));
         model.addAttribute("categories", categoryRepository.findAll());
         return "application/activityEdit";
@@ -75,8 +76,8 @@ public class ApplicationController {
     @PostMapping("/activity/edit")
     public String postEditActivity(@Valid ActivitiesPlan activitiesPlan, BindingResult bindingResult
             , RedirectAttributes redirectAttributes, @AuthenticationPrincipal CurrentUser currentUser, Model model) {
-        if(bindingResult.hasErrors()) {
-            model.addAttribute("errors",bindingResult.getAllErrors());
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
             model.addAttribute("activitiesPlan", activitiesPlan);
             model.addAttribute("categories", categoryRepository.findAll());
             return "application/activityEdit";
@@ -88,9 +89,9 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/delete")
-    public String getDeleteActivity(@RequestParam long id,RedirectAttributes redirectAttributes) {
-       activitiesPlanRepository.deleteById(id);
-       redirectAttributes.addFlashAttribute("messageActivity", "Aktywność usunięta");
+    public String getDeleteActivity(@RequestParam long id, RedirectAttributes redirectAttributes) {
+        activitiesPlanRepository.deleteById(id);
+        redirectAttributes.addFlashAttribute("messageActivity", "Aktywność usunięta");
         return "redirect:/gowithme/app/profile";
     }
 
@@ -104,41 +105,42 @@ public class ApplicationController {
         model.addAttribute("city", userDetails.getCity());
         model.addAttribute("age", userDetails.getAge());
         model.addAttribute("description", userDetails.getDescription());
-        ActivitiesPlan activityPlan = activitiesPlanRepository.findById(activityId).get();
         model.addAttribute("activities", activitiesPlanRepository.findById(activityId).stream().toList());
-        model.addAttribute("waitOnAccessToActivity", WaitOnAccessToActivity.builder()
-                .activityPlan(activityPlan)
-                .userDetails(userDetailsRepository.findByUserId(currentUser.getUser().getId()))
-                .build());
-        model.addAttribute("userId",id);
+        model.addAttribute("waitOnAccessToActivityDTO", new WaitingOnAccessToActivityDTO(activityId, id));
         return "application/detailsUserActivity";
     }
 
     @PostMapping("/activity/details")
-    public String postDetailsUserActivity(WaitOnAccessToActivity waitOnAccessToActivity, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CurrentUser currentUser) {
-        if(currentUser.getUser().getId().equals(waitOnAccessToActivity.getActivityPlan().getUser().getId())) {
+    public String postDetailsUserActivity(WaitingOnAccessToActivityDTO waitingOnAccessToActivityDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CurrentUser currentUser) {
+        if (currentUser.getUser().getId().equals(activitiesPlanRepository.findById(waitingOnAccessToActivityDTO.activityPlanId()).get().getUser().getId())) {
             redirectAttributes.addFlashAttribute("messageError", "Nie możesz wysłać prośby o dołączenie do swojej aktywności");
-            return "redirect:/gowithme/app/activity/details?id=" + waitOnAccessToActivity.getActivityPlan().getUser().getId()+ "&activityId=" + waitOnAccessToActivity.getActivityPlan().getId();
+            return "redirect:/gowithme/app/activity/details?id=" + waitingOnAccessToActivityDTO.userCreatedActivityId() + "&activityId=" + waitingOnAccessToActivityDTO.activityPlanId();
         }
-        if (waitOnAccessToActivityRepository.validateContainInList(waitOnAccessToActivity.getActivityPlan(),waitOnAccessToActivity.getUserDetails()) != null) {
+        if (waitOnAccessToActivityRepository.allWaitingUsersInActivity(waitingOnAccessToActivityDTO.activityPlanId())
+                .contains(userDetailsRepository.findByUserId(currentUser.getUser().getId()))) {
             redirectAttributes.addFlashAttribute("messageError", "Użytkownik otrzymał juz Twoją prośbę o dołączenie");
-            return "redirect:/gowithme/app/activity/details?id=" + waitOnAccessToActivity.getActivityPlan().getUser().getId()+ "&activityId=" + waitOnAccessToActivity.getActivityPlan().getId();
+            return "redirect:/gowithme/app/activity/details?id=" + waitingOnAccessToActivityDTO.userCreatedActivityId() + "&activityId=" + waitingOnAccessToActivityDTO.activityPlanId();
         }
-        waitOnAccessToActivity.setRequestDate(LocalDateTime.now());
+        WaitOnAccessToActivity waitOnAccessToActivity = WaitOnAccessToActivity.builder()
+                .activityPlan(activitiesPlanRepository.findById(waitingOnAccessToActivityDTO.activityPlanId()).get())
+                .userDetails(userDetailsRepository.findByUserId(currentUser.getUser().getId()))
+                .requestDate(LocalDateTime.now()).build();
+
         waitOnAccessToActivityRepository.save(waitOnAccessToActivity);
         redirectAttributes.addFlashAttribute("messageAssign", "Wysłano prośbę o dołączenie");
-        return "redirect:/gowithme/app/activity/details?id=" + waitOnAccessToActivity.getActivityPlan().getUser().getId()+ "&activityId=" + waitOnAccessToActivity.getActivityPlan().getId();
+        return "redirect:/gowithme/app/activity/details?id=" + waitingOnAccessToActivityDTO.userCreatedActivityId() + "&activityId=" + waitingOnAccessToActivityDTO.activityPlanId();
     }
 
     @GetMapping("/activity/assign")
-    public String getAssign(@RequestParam long id,Model model, @AuthenticationPrincipal CurrentUser currentUser) {
-        model.addAttribute("activities",activitiesPlanRepository.findById(id).stream().toList());
+    public String getAssign(@RequestParam long id, Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+        model.addAttribute("activities", activitiesPlanRepository.findById(id).stream().toList());
         model.addAttribute("userList", waitOnAccessToActivityRepository.allWaitingUsersInActivity(id));
-        model.addAttribute("activityId",id);
+        model.addAttribute("activityId", id);
         return "application/activityAssignPeople";
     }
+
     @GetMapping("/activity/assignUser")
-    public String getAssignUserToActivity(@RequestParam long activityId,@RequestParam long userId, RedirectAttributes redirectAttributes) {
+    public String getAssignUserToActivity(@RequestParam long activityId, @RequestParam long userId, RedirectAttributes redirectAttributes) {
         ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activityId).get();
         List<UserDetails> userDetailsList = activitiesPlan.getUsersJoined();
         userDetailsList.add(userDetailsRepository.findById(userId).get());
@@ -146,14 +148,14 @@ public class ApplicationController {
         System.out.println(activitiesPlan.toString());
         activitiesPlanRepository.save(activitiesPlan);
         redirectAttributes.addFlashAttribute("messageSuccess", "Dodano użytkownika do aktywności");
-        return "redirect:/gowithme/app/activity/assign?id="+activityId;
+        return "redirect:/gowithme/app/activity/assign?id=" + activityId;
     }
 
     @GetMapping("/activity/deleteUserFroWaitingList")
-    public String getDeleteUserFromWaitingList(@RequestParam long activityId,@RequestParam long userId, RedirectAttributes redirectAttributes) {
-        waitOnAccessToActivityRepository.deleteFromWaitingList(activityId,userId);
+    public String getDeleteUserFromWaitingList(@RequestParam long activityId, @RequestParam long userId, RedirectAttributes redirectAttributes) {
+        waitOnAccessToActivityRepository.deleteFromWaitingList(activityId, userId);
         redirectAttributes.addFlashAttribute("messageDelete", "Usunięto użytkownika z listy oczekujących");
-        return "redirect:/gowithme/app/activity/assign?id="+activityId;
+        return "redirect:/gowithme/app/activity/assign?id=" + activityId;
     }
 
 
@@ -183,7 +185,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/profile/edit")
-    public String postUpdateUser(@Valid UserDetails userDetails, Model model,RedirectAttributes redirectAttributes, BindingResult result) {
+    public String postUpdateUser(@Valid UserDetails userDetails, Model model, RedirectAttributes redirectAttributes, BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute("userDetails", userDetails);
             return "application/profileEdit";
