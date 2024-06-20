@@ -38,13 +38,24 @@
                 <a href="/gowithme/admin" class="w3-bar-item w3-button"><i class="fa fa-jedi"></i> Admin</a>
             </sec:authorize>
             <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-magnifying-glass"></i> Szukaj</a>
-            <a href="/gowithme/app/activity/add" class="w3-bar-item w3-button"><i class="fa fa-person-running"></i> Dodaj aktywność</a>
-            <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-bell"></i> Powiadomienia</a>
-            <a  class="w3-bar-item w3-button " id = "user-icon"><i class="fa fa-user" ></i> <i class="fa fa-list"></i></a>
-                <div class="dropdown-menu" id="dropdown-menu">
-                    <a href="/gowithme/app/profile"><div class="dropdown-item">Profil</div></a>
-                    <a href="<c:url value='/gowithme/app/logout'/>"><div class="dropdown-item">Wyloguj</div></a>
-                </div>
+            <a href="/gowithme/app/activity/add" class="w3-bar-item w3-button"><i class="fa fa-person-running"></i>
+                Dodaj aktywność</a>
+            <a class="w3-bar-item w3-button" id="notification"><i class="fa fa-bell" ></i> Powiadomienia</a>
+            <div class="dropdown-notification" id="dropdown-notification">
+                <c:forEach items="${sessionScope.notificationsList}" var="notification">
+                    <div class="dropdown-notification-item ">${notification.name}</div>
+                </c:forEach>
+
+            </div>
+            <a class="w3-bar-item w3-button " id="user-icon"><i class="fa fa-user"></i> <i class="fa fa-list"></i></a>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="/gowithme/app/profile">
+                    <div class="dropdown-item">Profil</div>
+                </a>
+                <a href="<c:url value='/gowithme/app/logout'/>">
+                    <div class="dropdown-item">Wyloguj</div>
+                </a>
+            </div>
 
 
         </div>

@@ -85,6 +85,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('notification').addEventListener('click', function () {
+        const dropdownMenu = document.getElementById('dropdown-notification');
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', function (event) {
+        const dropdownMenu = document.getElementById('dropdown-notification');
+        const userIcon = document.getElementById('notification');
+        if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const inputCity = document.getElementById ('cityInput');
     inputCity.addEventListener('input', function () {
