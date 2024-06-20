@@ -36,6 +36,8 @@ public class UserDetails {
     private String description;
     @ManyToMany
     private List<ActivitiesPlan> activitiesPlan;
+    @ManyToMany
+    private List<Notification> notificationsList;
     @OneToOne
     private User user;
 
