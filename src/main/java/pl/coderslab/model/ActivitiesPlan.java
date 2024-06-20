@@ -26,6 +26,7 @@ public class ActivitiesPlan {
     @Size(max=300)
     private String description;
     @NotBlank
+    @Size(max=100)
     private String city;
     @NotBlank
     @Size(max = 100)

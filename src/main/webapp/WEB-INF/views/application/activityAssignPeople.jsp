@@ -37,6 +37,11 @@
 
 <div class="w3-display-container w3-light-grey contact" id="appMain">
     <div class="w3-center w3-jumbo cantact-info">Przydziel do aktywności</div>
+    <c:if test="${not empty messageError}">
+        <div class="alert alert-error">
+                ${messageError}
+        </div>
+    </c:if>
     <c:if test="${not empty messageSuccess}">
         <div class="alert alert-success">
                 ${messageSuccess}

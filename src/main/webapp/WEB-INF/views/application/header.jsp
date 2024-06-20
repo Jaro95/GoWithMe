@@ -39,7 +39,7 @@
             </sec:authorize>
             <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-magnifying-glass"></i> Szukaj</a>
             <a href="/gowithme/app/activity/add" class="w3-bar-item w3-button"><i class="fa fa-person-running"></i> Dodaj aktywność</a>
-            <a href="/gowithme/app/random" class="w3-bar-item w3-button"><i class="fa fa-dice"></i> Wybierz za mnie</a>
+            <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-bell"></i> Powiadomienia</a>
             <a  class="w3-bar-item w3-button " id = "user-icon"><i class="fa fa-user" ></i> <i class="fa fa-list"></i></a>
                 <div class="dropdown-menu" id="dropdown-menu">
                     <a href="/gowithme/app/profile"><div class="dropdown-item">Profil</div></a>
@@ -58,12 +58,12 @@
 </div>
 
 <!-- Sidebar on small screens when clicking the menu icon -->
-<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium " style="display:none"
-     id="mySidebar">
-    <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
-    <a href="/gowithme/app/main" onclick="w3_close()" class="fa fa-user w3-button">Szukaj</a>
-    <a href="/gowithme/app/add_activity" onclick="w3_close()" class="w3-bar-item w3-button">Dodaj aktywność</a>
-    <a href="/gowithme/app/random" onclick="w3_close()" class="fa fa-user w3-button">Wybierz za mnie</a>
-    <a href="/gowithme/app/profile" onclick="w3_close()" class="w3-bar-item w3-button">Profil</a>
-
-</nav>
+<%--<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium " style="display:none"--%>
+<%--     id="mySidebar">--%>
+<%--    <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>--%>
+<%--    <a href="/gowithme/app/main" onclick="w3_close()" class="fa fa-user w3-button">Szukaj</a>--%>
+<%--    <a href="/gowithme/app/add_activity" onclick="w3_close()" class="w3-bar-item w3-button">Dodaj aktywność</a>--%>
+<%--    <a href="/gowithme/app/random" onclick="w3_close()" class="fa fa-ring w3-button">Powiadomienia</a>--%>
+<%--    <a href="/gowithme/app/profile" onclick="w3_close()" class="w3-bar-item w3-user">Profil</a>--%>
+<%--  --%>
+<%--</nav>--%>

@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp"/>
 
-<div class="w3-light-grey contact">
+<div class="w3-light-grey">
     <p class="w3-center w3-jumbo cantact-info">Edycja danych</p>
     <div class="w3-center contact-info">
         <img class="w3-image w3-round-large" src="/images/mainPeoplePedro.gif" alt="Buildings" width="350"

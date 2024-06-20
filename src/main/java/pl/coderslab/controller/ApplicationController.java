@@ -165,6 +165,7 @@ public class ApplicationController {
             redirectAttributes.addFlashAttribute("messageError", "Użytkownik jest już przypisany do aktywności");
             return "redirect:/gowithme/app/activity/assign?id=" + activityId;
         }
+        userDetailsList.add(userDetailsRepository.findById(userId).get());
         activitiesPlan.setUsersJoined(userDetailsList);
         System.out.println(activitiesPlan.toString());
         activitiesPlanRepository.save(activitiesPlan);
