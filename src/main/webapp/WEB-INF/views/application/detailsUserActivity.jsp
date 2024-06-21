@@ -65,15 +65,22 @@
                         <p>${user.firstName} ${user.lastName}</p>
                     </c:forEach>
                 </td>
-                <td>
-                    <form:form modelAttribute="waitOnAccessToActivityDTO">
-                        <form:input path="activityPlanId" type="hidden"/>
-                        <form:input path="userCreatedActivityId" type="hidden"/>
-                    <button type="submit" class="w3-button w3-black">
-                        <i class="fa-solid fa-person-group"></i>Zainteresowany
-                    </button>
-                    </form:form>
-                </td>
+                <c:if test="${activity.enabled}">
+                    <td>
+                        <form:form modelAttribute="waitOnAccessToActivityDTO">
+                            <form:input path="activityPlanId" type="hidden"/>
+                            <form:input path="userCreatedActivityId" type="hidden"/>
+                            <button type="submit" class="w3-button w3-black">
+                                <i class="fa-solid fa-person-group"></i>Zainteresowany
+                            </button>
+                        </form:form>
+                    </td>
+                </c:if>
+                <c:if test="${!activity.enabled}">
+                    <td>
+                        Użytkownik nie szuka już więcej osób
+                    </td>
+                </c:if>
             </tr>
         </c:forEach>
         </tbody>

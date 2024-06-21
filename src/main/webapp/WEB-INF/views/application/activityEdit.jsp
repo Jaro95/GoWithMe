@@ -32,6 +32,7 @@
                 <th>Opis</th>
                 <th>Miasto</th>
                 <th>Dokładna lokalizacja</th>
+                <th>Aktwyne</th>
                 <th>Akcja</th>
             </tr>
             </thead>
@@ -58,6 +59,13 @@
                                    placeholder="Dokładna lokalizacja"
                                    path="location"/>
                     <p><form:errors path="location" cssClass="alert alert-error"/></p>
+                </td>
+                <td>
+                    <form:select class="w3-border" path="enabled">
+                        <form:option value="true">Tak</form:option>
+                        <form:option value="false">Nie</form:option>
+                    </form:select>
+                    <p><form:errors path="category.name" cssClass="alert alert-error"/></p>
                 </td>
                 <form:input path="usersJoined" type="hidden"/>
                 <td>
