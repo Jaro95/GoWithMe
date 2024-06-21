@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.Service.CurrentUser;
 import pl.coderslab.Service.NotificationService;
+import pl.coderslab.Service.UserServiceImpl;
 import pl.coderslab.dto.WaitingOnAccessToActivityDTO;
-import pl.coderslab.model.ActivitiesPlan;
-import pl.coderslab.model.Notification;
-import pl.coderslab.model.UserDetails;
-import pl.coderslab.model.WaitOnAccessToActivity;
+import pl.coderslab.model.*;
 import pl.coderslab.repository.*;
 
 import javax.validation.Valid;
@@ -34,6 +32,8 @@ public class ApplicationController {
     private final WaitOnAccessToActivityRepository waitOnAccessToActivityRepository;
     private final NotificationService notificationService;
     private final NotificationRepository notificationRepository;
+    private final UserRepository userRepository;
+    private final UserServiceImpl userServiceImpl;
 
 
     @ModelAttribute("notificationsList")
@@ -203,14 +203,34 @@ public class ApplicationController {
         model.addAttribute("city", userDetails.getCity());
         model.addAttribute("age", userDetails.getAge());
         model.addAttribute("description", userDetails.getDescription());
+        model.addAttribute("login", currentUser.getUser().getEmail());
         model.addAttribute("activities", activitiesPlanRepository.findByUserId(currentUser.getUser().getId()));
         return "application/profile";
     }
 
-    @GetMapping("/random")
-    public String getRandom(Model model) {
-        model.addAttribute("activities", activitiesPlanRepository.findAll());
-        return "application/random";
+    @GetMapping("/profile/editLogin")
+    public String getProfileEditLogin(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+
+        UserDetails userDetails = userDetailsRepository.findByUserId(currentUser.getUser().getId());
+        model.addAttribute("firstName", userDetails.getFirstName());
+        model.addAttribute("lastName", userDetails.getLastName());
+        model.addAttribute("city", userDetails.getCity());
+        model.addAttribute("age", userDetails.getAge());
+        model.addAttribute("description", userDetails.getDescription());
+        model.addAttribute("activities", activitiesPlanRepository.findByUserId(currentUser.getUser().getId()));
+        return "application/profileEditLogin";
+    }
+
+    @PostMapping("/profile/editLogin")
+    public String postProfileEditLogin(@RequestParam String email,Model model, @AuthenticationPrincipal CurrentUser currentUser,RedirectAttributes redirectAttributes) {
+        System.out.println(email);
+        if(userRepository.findByEmail(email) != null) {
+            redirectAttributes.addFlashAttribute("messageError", email + " jest zajęty");
+            return "redirect:/gowithme/app/profile/editLogin";
+        }
+        userServiceImpl.changeEmail(email,currentUser.getUser());
+        redirectAttributes.addFlashAttribute("messageEmail", "Email został zmieniony");
+        return "redirect:/gowithme/app/profile";
     }
 
     @GetMapping("/profile/edit")
@@ -223,6 +243,7 @@ public class ApplicationController {
     public String postUpdateUser(@Valid UserDetails userDetails, Model model, RedirectAttributes redirectAttributes, BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute("userDetails", userDetails);
+            model.addAttribute("errors",result.getAllErrors());
             return "application/profileEdit";
         }
         redirectAttributes.addFlashAttribute("messageUpdate", "Konto zaktualizowane ");

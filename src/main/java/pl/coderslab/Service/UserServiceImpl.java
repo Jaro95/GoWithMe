@@ -1,6 +1,7 @@
 package pl.coderslab.Service;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -74,6 +75,11 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(true);
         Role userRole = roleRepository.findByName("ROLE_SUPER_ADMIN");
         user.setRoles(new HashSet<>(Arrays.asList(userRole)));
+        userRepository.save(user);
+    }
+
+    public void changeEmail(String email, User user) {
+        user.setEmail(email);
         userRepository.save(user);
     }
 

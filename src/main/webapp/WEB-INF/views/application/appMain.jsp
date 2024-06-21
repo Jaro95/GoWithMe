@@ -38,13 +38,19 @@
                        </c:forEach>
                 </td>
                 <td>${activity.user.firstName} ${activity.user.lastName}</td>
+                <c:if test="${activity.enabled}">
                 <td>
                     <button class="w3-button w3-black"
                             onclick="location.href='/gowithme/app/activity/details?id=${activity.user.id}&activityId=${activity.id}'">
                         <i class="fa fa-right-to-bracket"></i>Szczegóły
                     </button>
                 </td>
-                </td>
+                </c:if>
+                <c:if test="${!activity.enabled}">
+                    <td>
+                        Nieaktywne
+                    </td>
+                </c:if>
             </tr>
         </c:forEach>
         </tbody>

@@ -28,20 +28,22 @@
                     <i class="fa fa-user-pen"></i> Edycja</a></p>
         </div>
         <div class="user-information">
-            <p>Login:  ${login} </p>
-            <p><a href="/gowithme/app/profile/editLogin" class="w3-button w3-black">
-                <i class="fa fa-envelope"></i> Edytuj login</a></p>
-
-            <p><a href="/gowithme/app/profile/editPassword" class="w3-button w3-black">
-                <i class="fa fa-user-gear"></i> Edytuj hasło</a></p>
+            <form method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <p>Nowy emal:  <input name="email"> </p>
+                <c:if test="${not empty messageError}">
+                    <p class="alert alert-error change-email">
+                            ${messageError}
+                    </p>
+                </c:if>
+                <button class="w3-button w3-black " type="submit">
+                    <i class="fa-solid fa-save"></i> Zapisz
+                </button>
+            </form>
         </div>
+
 
     </div>
-    <c:if test="${not empty messageEmail}">
-        <div class="w3-center alert alert-success">
-                ${messageEmail}
-        </div>
-    </c:if>
     <c:if test="${not empty messageUpdate}">
         <div class="w3-center alert alert-success">
                 ${messageUpdate}
