@@ -40,10 +40,22 @@
             <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-magnifying-glass"></i> Szukaj</a>
             <a href="/gowithme/app/activity/add" class="w3-bar-item w3-button"><i class="fa fa-person-running"></i>
                 Dodaj aktywność</a>
+            <a class="w3-bar-item w3-button " id="activities-navigation"><i class="fa fa-layer-group"></i> Aktywności</a>
+            <div class="dropdown-activities" id="dropdown-activities">
+                <a href="/gowithme/app/activities/user">
+                    <div class="dropdown-item">Moje</div>
+                </a>
+                <a href="/gowithme/app/activities/userAssigned">
+                    <div class="dropdown-item">Przypisane</div>
+                </a>
+                <a href="/gowithme/app/activities/userWaitingList">
+                    <div class="dropdown-item">Oczekujące</div>
+                </a>
+            </div>
             <a class="w3-bar-item w3-button" id="notification"><i class="fa fa-bell"></i> Powiadomienia</a>
             <div class="dropdown-notification" id="dropdown-notification">
                 <c:forEach items="${sessionScope.notificationsList}" var="notification">
-                    <div class="dropdown-notification-item ">${notification.name}</div>
+                    <div class="dropdown-item ">${notification.name}</div>
                 </c:forEach>
 
             </div>
