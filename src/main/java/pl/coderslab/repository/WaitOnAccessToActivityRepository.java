@@ -20,4 +20,6 @@ public interface WaitOnAccessToActivityRepository extends JpaRepository<WaitOnAc
     @Transactional
     @Query("delete WaitOnAccessToActivity w where w.activityPlan.id = ?1 and w.userDetails.id = ?2")
     void deleteFromWaitingList(long activitiesPlanId, long userDetailsId);
+   @Query("select w.activityPlan from WaitOnAccessToActivity w where w.userDetails.id = ?1")
+    List<ActivitiesPlan> findByUserDetailsId(long id);
 }

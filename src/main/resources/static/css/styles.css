@@ -223,7 +223,7 @@ table.dataTable tbody td {
     display: none; /* Ukryj menu rozwijane */
     position: absolute;
     top: 60px; /* Pozycjonuj menu tuż pod nawigacją */
-    right: 20px;
+    right: 0px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
@@ -256,17 +256,25 @@ table.dataTable tbody td {
     width: 400px; /* Szerokość menu */
 }
 
-.dropdown-notification-item {
-    padding: 10px 20px;
-    cursor: pointer;
-    color: #333;
-    text-align: center; /* Wycentruj tekst */
 
+.dropdown-activities {
+    display: none; /* Ukryj menu rozwijane */
+    position: absolute;
+    top: 60px; /* Pozycjonuj menu tuż pod nawigacją */
+    right: 215px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    width: 200px; /* Szerokość menu */
 }
 
-.dropdown-notification-item:hover {
-    background-color: #f0f0f0;
-}
+
+
+
+
+
+
 a {
     text-decoration: none;
 }

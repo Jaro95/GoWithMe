@@ -193,6 +193,25 @@ public class ApplicationController {
         return "redirect:/gowithme/app/activity/assign?id=" + activityId;
     }
 
+    @GetMapping("/activities/{type}")
+    public String getActivitiesUser(@PathVariable String type, Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+        List<ActivitiesPlan> activitiesPlanList = switch (type) {
+            case "user" -> activitiesPlanRepository.findByUserId(currentUser.getUser().getId());
+            case "userAssigned" -> activitiesPlanRepository.findByUsersJoinedId(currentUser.getUser().getId());
+            default -> List.of();
+        };
+        if (type.equals("userWaitingList")) {
+            List<ActivitiesPlan> activitiesPlan = activitiesPlanRepository.findByUsersJoinedId(currentUser.getUser().getId());
+            activitiesPlanList = waitOnAccessToActivityRepository.findByUserDetailsId(currentUser.getUser().getId())
+                    .stream()
+                    .filter(el -> !activitiesPlan.contains(el))
+                    .collect(Collectors.toList());
+        }
+
+        model.addAttribute("activities", activitiesPlanList);
+        return "application/activitiesUser";
+    }
+
 
     @GetMapping("/profile")
     public String getProfile(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
@@ -208,10 +227,10 @@ public class ApplicationController {
         return "application/profile";
     }
 
+
     @GetMapping("/profile/edit/{type}")
     public String getProfileEditData(@PathVariable String type,
                                      Model model, @AuthenticationPrincipal CurrentUser currentUser) {
-
         model.addAttribute(type.equals("email") ? "email" : "password", type);
         UserDetails userDetails = userDetailsRepository.findByUserId(currentUser.getUser().getId());
         model.addAttribute("firstName", userDetails.getFirstName());
@@ -224,7 +243,8 @@ public class ApplicationController {
     }
 
     @PostMapping("/profile/edit/editData")
-    public String postProfileEditLogin(@RequestParam(required = false) String email, @RequestParam(required = false) String password,
+    public String postProfileEditLogin(@RequestParam(required = false) String
+                                               email, @RequestParam(required = false) String password,
                                        @RequestParam(required = false) String repeatPassword,
                                        @AuthenticationPrincipal CurrentUser currentUser, RedirectAttributes redirectAttributes) {
 
@@ -245,8 +265,6 @@ public class ApplicationController {
         userServiceImpl.changePassword(password, currentUser.getUser());
         redirectAttributes.addFlashAttribute("messageUpdate", "Hasło zostało zmienione");
         return "redirect:/gowithme/app/profile";
-
-
     }
 
     @GetMapping("/profile/edit")
@@ -256,7 +274,8 @@ public class ApplicationController {
     }
 
     @PostMapping("/profile/edit")
-    public String postUpdateUser(@Valid UserDetails userDetails, Model model, RedirectAttributes redirectAttributes, BindingResult result) {
+    public String postUpdateUser(@Valid UserDetails userDetails, Model model, RedirectAttributes
+            redirectAttributes, BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute("userDetails", userDetails);
             model.addAttribute("errors", result.getAllErrors());

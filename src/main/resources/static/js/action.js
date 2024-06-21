@@ -72,14 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
 // });
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('user-icon').addEventListener('click', function () {
-        const dropdownMenu = document.getElementById('dropdown-menu');
+    document.getElementById('activities-navigation').addEventListener('click', function () {
+        const dropdownMenu = document.getElementById('dropdown-activities');
         dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
     });
 
     document.addEventListener('click', function (event) {
-        const dropdownMenu = document.getElementById('dropdown-menu');
-        const userIcon = document.getElementById('user-icon');
+        const dropdownMenu = document.getElementById('dropdown-activities');
+        const userIcon = document.getElementById('activities-navigation');
         if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
             dropdownMenu.style.display = 'none';
         }
@@ -100,6 +100,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('user-icon').addEventListener('click', function () {
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', function (event) {
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        const userIcon = document.getElementById('user-icon');
+        if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+});
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const inputCity = document.getElementById ('cityInput');
