@@ -49,21 +49,46 @@
                 <c:if test="${!activity.enabled}">
                     <td>Nie</td>
                 </c:if>
-                <td>
-                    <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/assign?id=${activity.id}'">
-                        <i class="fa-solid fa-person-group"></i>Przypisz
-                    </button>
-                    <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/edit?id=${activity.id}'">
-                        <i class="fa fa-rotate"></i>Edycja
-                    </button>
-                    <a class="w3-button w3-black"
-                            href='/gowithme/app/activity/delete?id=${activity.id}' id="delete-activity">
-                        <i class="fa fa-trash"></i>Usuń
-                    </a>
-                </td>
-                </td>
+                <c:if test="${not empty user}">
+                    <td>
+                        <button class="w3-button w3-black"
+                                onclick="location.href='/gowithme/app/activity/assign?id=${activity.id}'">
+                            <i class="fa-solid fa-person-group"></i>Przypisz
+                        </button>
+                        <button class="w3-button w3-black"
+                                onclick="location.href='/gowithme/app/activity/edit?id=${activity.id}'">
+                            <i class="fa fa-rotate"></i>Edycja
+                        </button>
+                        <a class="w3-button w3-black"
+                           href='/gowithme/app/activity/delete?id=${activity.id}' id="delete-activity">
+                            <i class="fa fa-trash"></i>Usuń
+                        </a>
+                    </td>
+                </c:if>
+                <c:if test="${not empty userAssigned}">
+                    <td>
+                        <button class="w3-button w3-black"
+                                onclick="location.href='/gowithme/app/activity/deleteAssign?activityId=${activity.id}'">
+                            <i class="fa fa-right-to-bracket"></i>Wypisz się z aktywności
+                        </button>
+                        <button class="w3-button w3-black"
+                                onclick="location.href='/gowithme/app/activity/details?id=${activity.user.id}&activityId=${activity.id}'">
+                            <i class="fa fa-right-to-bracket"></i>Szczegóły
+                        </button>
+                    </td>
+                </c:if>
+                <c:if test="${not empty userWaitingList}">
+                    <td>
+                        <button class="w3-button w3-black"
+                                onclick="location.href='/gowithme/app/activity/deleteRequest?activityId=${activity.id}'">
+                            <i class="fa fa-right-to-bracket"></i>Wypisz się z listy oczekujących
+                        </button>
+                        <button class="w3-button w3-black"
+                                onclick="location.href='/gowithme/app/activity/details?id=${activity.user.id}&activityId=${activity.id}'">
+                            <i class="fa fa-right-to-bracket"></i>Szczegóły
+                        </button>
+                    </td>
+                </c:if>
             </tr>
         </c:forEach>
         </tbody>

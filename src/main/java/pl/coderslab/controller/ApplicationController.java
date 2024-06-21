@@ -184,7 +184,8 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/deleteUserFroWaitingList")
-    public String getDeleteUserFromWaitingList(@RequestParam long activityId, @RequestParam long userId, RedirectAttributes redirectAttributes) {
+    public String getDeleteUserFromWaitingList(@RequestParam long activityId, @RequestParam long userId,
+                                               RedirectAttributes redirectAttributes) {
         waitOnAccessToActivityRepository.deleteFromWaitingList(activityId, userId);
         ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activityId).get();
         notificationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(),
@@ -195,23 +196,60 @@ public class ApplicationController {
 
     @GetMapping("/activities/{type}")
     public String getActivitiesUser(@PathVariable String type, Model model, @AuthenticationPrincipal CurrentUser currentUser) {
-        List<ActivitiesPlan> activitiesPlanList = switch (type) {
-            case "user" -> activitiesPlanRepository.findByUserId(currentUser.getUser().getId());
-            case "userAssigned" -> activitiesPlanRepository.findByUsersJoinedId(currentUser.getUser().getId());
-            default -> List.of();
-        };
-        if (type.equals("userWaitingList")) {
-            List<ActivitiesPlan> activitiesPlan = activitiesPlanRepository.findByUsersJoinedId(currentUser.getUser().getId());
+        List<ActivitiesPlan> activitiesPlanList = new ArrayList<>();
+
+        if(type.equals("user")) {
+            activitiesPlanList = activitiesPlanRepository.findByUserId(currentUser.getUser().getId());
+            model.addAttribute("user", "enabled");
+        }
+
+        if(type.equals("userAssigned")) {
+            activitiesPlanList =  activitiesPlanRepository.findByUsersJoinedId(currentUser.getUser().getId());
+            model.addAttribute("userAssigned", "enabled");
+        }
+        if(type.equals("userWaitingList")) {
+            List<ActivitiesPlan> activitiesUserJoinedPlan = activitiesPlanRepository.findByUsersJoinedId(currentUser.getUser().getId());
             activitiesPlanList = waitOnAccessToActivityRepository.findByUserDetailsId(currentUser.getUser().getId())
                     .stream()
-                    .filter(el -> !activitiesPlan.contains(el))
+                    .filter(el -> !activitiesUserJoinedPlan.contains(el))
                     .collect(Collectors.toList());
+            model.addAttribute("userWaitingList", "enabled");
         }
 
         model.addAttribute("activities", activitiesPlanList);
         return "application/activitiesUser";
     }
+    @GetMapping("/activity/deleteAssign")
+    public String getDeleteFromAssignedPlan(@RequestParam long activityId, @AuthenticationPrincipal CurrentUser currentUser,
+                                             RedirectAttributes redirectAttributes) {
+        UserDetails userDetails = userDetailsRepository.findByUser(currentUser.getUser());
+        ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activityId).get();
+        activitiesPlan.setUsersJoined(activitiesPlan.getUsersJoined()
+                .stream()
+                .filter(el -> !activitiesPlan.getUsersJoined().contains(userDetails))
+                .collect(Collectors.toList()));
+        activitiesPlanRepository.save(activitiesPlan);
+        waitOnAccessToActivityRepository.deleteFromWaitingList(activitiesPlan.getId(),userDetails.getId());
+        redirectAttributes.addFlashAttribute("messageActivity",
+                "Wypisałeś się z aktywności " + activitiesPlan.getCategory().getName());
+        notificationService.addNotificationRejectActivity(notificationRepository,activitiesPlan.getUser(),
+                userDetails," wypisał się z aktywności ",activitiesPlan.getCategory());
+        return "redirect:/gowithme/app/activities/userAssigned";
+    }
 
+    @GetMapping("/activity/deleteRequest")
+    public String getDeleteRequestFromWaitingList(@RequestParam long activityId, @AuthenticationPrincipal CurrentUser currentUser,
+                                            RedirectAttributes redirectAttributes) {
+        UserDetails userDetails = userDetailsRepository.findByUser(currentUser.getUser());
+        ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activityId).get();
+        waitOnAccessToActivityRepository.deleteFromWaitingList(activitiesPlanRepository.findById(activityId).get().getId(),
+                userDetailsRepository.findByUser(currentUser.getUser()).getId());
+        redirectAttributes.addFlashAttribute("messageActivity",
+                "Usunąłeś prośbę o dołączenie do aktywności " + activitiesPlan.getCategory().getName());
+        notificationService.addNotificationRejectActivity(notificationRepository,activitiesPlan.getUser(),
+                userDetails," usunął prośbę o dołączenie do aktywności ",activitiesPlan.getCategory());
+        return "redirect:/gowithme/app/activities/userWaitingList";
+    }
 
     @GetMapping("/profile")
     public String getProfile(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
