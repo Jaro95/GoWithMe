@@ -12,35 +12,58 @@
 
 <div class="w3-container w3-light-grey">
 
-    <div class="w3-row-padding">
-        <div class="w3-col m6" style="padding:128px 200px">
-            <img class="w3-image w3-round-large" src="/images/mainPeoplePedro.gif" alt="Buildings" width="350"
-                 height="200">
-        </div>
-        <div class="user-information">
+<div class="w3-row-padding">
+<div class="w3-col m6" style="padding:128px 200px">
+    <img class="w3-image w3-round-large" src="/images/mainPeoplePedro.gif" alt="Buildings" width="350"
+         height="200">
+</div>
+<div class="user-information">
 
-                <h3>${firstName} ${lastName}</h3>
-                <p>${city}</p>
-                <p>Wiek: ${age}</p>
-                <p>Kilka słów o mnie: </p>
-                <p>${description}</p>
-                <p><a href="/gowithme/app/profile/edit" class="w3-button w3-black">
-                    <i class="fa fa-user-pen"></i> Edycja</a></p>
-        </div>
-        <div class="user-information">
-            <form method="post">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <p>Nowy emal:  <input name="email"> </p>
-                <c:if test="${not empty messageError}">
-                    <p class="alert alert-error change-email">
-                            ${messageError}
-                    </p>
-                </c:if>
-                <button class="w3-button w3-black " type="submit">
-                    <i class="fa-solid fa-save"></i> Zapisz
-                </button>
-            </form>
-        </div>
+    <h3>${firstName} ${lastName}</h3>
+    <p>${city}</p>
+    <p>Wiek: ${age}</p>
+    <p>Kilka słów o mnie: </p>
+    <p>${description}</p>
+    <p><a href="/gowithme/app/profile/edit" class="w3-button w3-black">
+        <i class="fa fa-user-pen"></i> Edycja</a></p>
+</div>
+<div class="user-information">
+<c:if test="${not empty email}">
+    <form method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <p>Nowy emal: <input name="email"></p>
+        <c:if test="${not empty messageError}">
+            <p class="alert alert-error change-email">
+                    ${messageError}
+            </p>
+        </c:if>
+        <button class="w3-button w3-black " type="submit">
+            <i class="fa-solid fa-save"></i> Zapisz
+        </button>
+    </form>
+</c:if>
+<c:if test="${not empty password}">
+    <form method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <p>Nowy hasło: <input name="password"></p>
+        <c:if test="${not empty messageError}">
+            <p class="alert alert-error change-email">
+                    ${messageError}
+            </p>
+        </c:if>
+        <p>Powtórz hasło: <input name="repeatPassword"></p>
+        <c:if test="${not empty messageError}">
+            <p class="alert alert-error change-email">
+                    ${messageError}
+            </p>
+        </c:if>
+        <button class="w3-button w3-black " type="submit">
+            <i class="fa-solid fa-save"></i> Zapisz
+        </button>
+    </form>
+
+</c:if>
+    </div>
 
 
     </div>
@@ -49,9 +72,9 @@
                 ${messageUpdate}
         </div>
     </c:if>
-</div>
+    </div>
 
-<div class="w3-display-container w3-light-grey contact" id="appMain">
+    <div class="w3-display-container w3-light-grey contact" id="appMain">
     <div class="w3-center w3-xlarge ">Twoje aktywności</div>
     <c:if test="${not empty messageActivity}">
         <div class="alert alert-success">
@@ -59,55 +82,55 @@
         </div>
     </c:if>
     <table id="activitiesTable" class="display">
-        <thead>
+    <thead>
+    <tr>
+    <th>Id</th>
+    <th>Aktywność</th>
+    <th>Opis</th>
+    <th>Miasto</th>
+    <th>Dokładna lokalizacja</th>
+    <th>Przypisane osoby</th>
+    <th>Aktywne</th>
+    <th>Akcje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="activity" items="${activities}" varStatus="status">
         <tr>
-            <th>Id</th>
-            <th>Aktywność</th>
-            <th>Opis</th>
-            <th>Miasto</th>
-            <th>Dokładna lokalizacja</th>
-            <th>Przypisane osoby</th>
-            <th>Aktywne</th>
-            <th>Akcje</th>
+            <td>${status.count}</td>
+            <td>${activity.category.name}</td>
+            <td>${activity.description}</td>
+            <td>${activity.city}</td>
+            <td>${activity.location}</td>
+            <td>
+                <c:forEach var="user" items="${activity.usersJoined}">
+                    <p>${user.firstName} ${user.lastName}</p>
+                </c:forEach>
+            </td>
+            <c:if test="${activity.enabled}">
+                <td>Tak</td>
+            </c:if>
+            <c:if test="${!activity.enabled}">
+                <td>Nie</td>
+            </c:if>
+            <td>
+                <button class="w3-button w3-black"
+                        onclick="location.href='/gowithme/app/activity/assign?id=${activity.id}'">
+                    <i class="fa-solid fa-person-group"></i>Przypisz
+                </button>
+                <button class="w3-button w3-black"
+                        onclick="location.href='/gowithme/app/activity/edit?id=${activity.id}'">
+                    <i class="fa fa-rotate"></i>Edycja
+                </button>
+                <a class="w3-button w3-black"
+                   href='/gowithme/app/activity/delete?id=${activity.id}' id="delete-activity">
+                    <i class="fa fa-trash"></i>Usuń
+                </a>
+            </td>
+            </td>
         </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="activity" items="${activities}" varStatus="status">
-            <tr>
-                <td>${status.count}</td>
-                <td>${activity.category.name}</td>
-                <td>${activity.description}</td>
-                <td>${activity.city}</td>
-                <td>${activity.location}</td>
-                <td>
-                    <c:forEach var="user" items="${activity.usersJoined}">
-                        <p>${user.firstName} ${user.lastName}</p>
-                    </c:forEach>
-                </td>
-                <c:if test="${activity.enabled}">
-                    <td>Tak</td>
-                </c:if>
-                <c:if test="${!activity.enabled}">
-                    <td>Nie</td>
-                </c:if>
-                <td>
-                    <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/assign?id=${activity.id}'">
-                        <i class="fa-solid fa-person-group"></i>Przypisz
-                    </button>
-                    <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/app/activity/edit?id=${activity.id}'">
-                        <i class="fa fa-rotate"></i>Edycja
-                    </button>
-                    <a class="w3-button w3-black"
-                            href='/gowithme/app/activity/delete?id=${activity.id}' id="delete-activity">
-                        <i class="fa fa-trash"></i>Usuń
-                    </a>
-                </td>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
+    </c:forEach>
+    </tbody>
     </table>
-</div>
-<jsp:include page="footer.jsp"/>
+    </div>
+    <jsp:include page="footer.jsp"/>

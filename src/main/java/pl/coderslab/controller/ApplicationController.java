@@ -208,8 +208,11 @@ public class ApplicationController {
         return "application/profile";
     }
 
-    @GetMapping("/profile/editLogin")
-    public String getProfileEditLogin(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+    @GetMapping("/profile/edit/{type}")
+    public String getProfileEditData(@PathVariable String type,
+                                      Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+//        model.addAttribute("")
+//        type.equals("email") ? model.addAttribute("email", type) : model.addAttribute("password", type);
 
         UserDetails userDetails = userDetailsRepository.findByUserId(currentUser.getUser().getId());
         model.addAttribute("firstName", userDetails.getFirstName());
@@ -221,15 +224,16 @@ public class ApplicationController {
         return "application/profileEditLogin";
     }
 
-    @PostMapping("/profile/editLogin")
-    public String postProfileEditLogin(@RequestParam String email,Model model, @AuthenticationPrincipal CurrentUser currentUser,RedirectAttributes redirectAttributes) {
-        System.out.println(email);
+    @PostMapping("/profile/edit/data")
+    public String postProfileEditLogin(@RequestParam(required = false) String email, @RequestParam(required = false) String password,
+                                       Model model, @AuthenticationPrincipal CurrentUser currentUser,RedirectAttributes redirectAttributes) {
+
         if(userRepository.findByEmail(email) != null) {
             redirectAttributes.addFlashAttribute("messageError", email + " jest zajęty");
             return "redirect:/gowithme/app/profile/editLogin";
         }
         userServiceImpl.changeEmail(email,currentUser.getUser());
-        redirectAttributes.addFlashAttribute("messageEmail", "Email został zmieniony");
+        redirectAttributes.addFlashAttribute("messageUpdate", "Email został zmieniony");
         return "redirect:/gowithme/app/profile";
     }
 

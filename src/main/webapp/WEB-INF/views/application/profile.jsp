@@ -29,19 +29,14 @@
         </div>
         <div class="user-information">
             <p>Login:  ${login} </p>
-            <p><a href="/gowithme/app/profile/editLogin" class="w3-button w3-black">
+            <p><a href="/gowithme/app/profile/edit/data?email=c" class="w3-button w3-black">
                 <i class="fa fa-envelope"></i> Edytuj login</a></p>
 
-            <p><a href="/gowithme/app/profile/editPassword" class="w3-button w3-black">
+            <p><a href="/gowithme/app/profile/edit/data?password=c" class="w3-button w3-black">
                 <i class="fa fa-user-gear"></i> Edytuj hasło</a></p>
         </div>
 
     </div>
-    <c:if test="${not empty messageEmail}">
-        <div class="w3-center alert alert-success">
-                ${messageEmail}
-        </div>
-    </c:if>
     <c:if test="${not empty messageUpdate}">
         <div class="w3-center alert alert-success">
                 ${messageUpdate}
