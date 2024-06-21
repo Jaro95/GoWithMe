@@ -52,6 +52,7 @@
             <th>Miasto</th>
             <th>Dokładna lokalizacja</th>
             <th>Przypisane osoby</th>
+            <th>Aktywne</th>
             <th>Akcje</th>
         </tr>
         </thead>
@@ -68,6 +69,12 @@
                         <p>${user.firstName} ${user.lastName}</p>
                     </c:forEach>
                 </td>
+                <c:if test="${activity.enabled}">
+                    <td>Tak</td>
+                </c:if>
+                <c:if test="${!activity.enabled}">
+                    <td>Nie</td>
+                </c:if>
                 <td>
                     <button class="w3-button w3-black"
                             onclick="location.href='/gowithme/app/activity/assign?id=${activity.id}'">
