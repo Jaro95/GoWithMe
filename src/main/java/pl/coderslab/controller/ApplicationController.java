@@ -113,10 +113,10 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/delete")
-    public String getDeleteActivity(@RequestParam long id, RedirectAttributes redirectAttributes) {
+    public String getDeleteActivity(@RequestParam long id,@RequestParam String url, RedirectAttributes redirectAttributes) {
         activitiesPlanRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("messageActivity", "Aktywność usunięta");
-        return "redirect:/gowithme/app/profile";
+        return "redirect:" + url;
     }
 
     @GetMapping("/activity/details")
