@@ -82,5 +82,9 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         userRepository.save(user);
     }
+    public void changePassword(String password, User user) {
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
 
 }

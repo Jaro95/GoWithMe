@@ -29,11 +29,11 @@
 </div>
 <div class="user-information">
 <c:if test="${not empty email}">
-    <form method="post">
+    <form method="post" action="${pageContext.request.contextPath}/gowithme/app/profile/edit/editData">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <p>Nowy emal: <input name="email"></p>
         <c:if test="${not empty messageError}">
-            <p class="alert alert-error change-email">
+            <p class="alert alert-error change-data">
                     ${messageError}
             </p>
         </c:if>
@@ -43,20 +43,16 @@
     </form>
 </c:if>
 <c:if test="${not empty password}">
-    <form method="post">
+    <form method="post" action="${pageContext.request.contextPath}/gowithme/app/profile/edit/editData">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <p>Nowy hasło: <input name="password"></p>
+        <p>Nowy hasło: <input name="password" type="password"></p>
         <c:if test="${not empty messageError}">
-            <p class="alert alert-error change-email">
+            <p class="alert alert-error change-data">
                     ${messageError}
             </p>
         </c:if>
-        <p>Powtórz hasło: <input name="repeatPassword"></p>
-        <c:if test="${not empty messageError}">
-            <p class="alert alert-error change-email">
-                    ${messageError}
-            </p>
-        </c:if>
+        <p>Powtórz hasło: <input name="repeatPassword" type="password"></p>
+
         <button class="w3-button w3-black " type="submit">
             <i class="fa-solid fa-save"></i> Zapisz
         </button>

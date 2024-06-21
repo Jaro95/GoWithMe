@@ -29,10 +29,10 @@
         </div>
         <div class="user-information">
             <p>Login:  ${login} </p>
-            <p><a href="/gowithme/app/profile/edit/data?email=c" class="w3-button w3-black">
+            <p><a href="/gowithme/app/profile/edit/email" class="w3-button w3-black">
                 <i class="fa fa-envelope"></i> Edytuj login</a></p>
 
-            <p><a href="/gowithme/app/profile/edit/data?password=c" class="w3-button w3-black">
+            <p><a href="/gowithme/app/profile/edit/password" class="w3-button w3-black">
                 <i class="fa fa-user-gear"></i> Edytuj hasło</a></p>
         </div>
 

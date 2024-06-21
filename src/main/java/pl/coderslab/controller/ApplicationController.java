@@ -101,13 +101,13 @@ public class ApplicationController {
 
     @GetMapping("/activity/deleteUserFromJoinedList")
     public String getDeleteUserFromJoinedList(@RequestParam long activityId, @RequestParam long userId,
-                                              @AuthenticationPrincipal CurrentUser currentUser , RedirectAttributes redirectAttributes) {
+                                              @AuthenticationPrincipal CurrentUser currentUser, RedirectAttributes redirectAttributes) {
         ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activityId).get();
         activitiesPlan.setUsersJoined(activitiesPlan.getUsersJoined()
                 .stream().filter(el -> !el.equals(userDetailsRepository.findById(userId).get())).collect(Collectors.toList()));
         activitiesPlanRepository.save(activitiesPlan);
-        notificationService.addNotificationRejectActivity(notificationRepository,userDetailsRepository.findById(userId).get(), userDetailsRepository.findByUserId(currentUser.getUser().getId())
-                ," usunął Cię z aktywności ",activitiesPlan.getCategory());
+        notificationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(), userDetailsRepository.findByUserId(currentUser.getUser().getId())
+                , " usunął Cię z aktywności ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageDelete", "Usunięto użytkownika z aktywności");
         return "redirect:/gowithme/app/activity/edit?id=" + activityId;
     }
@@ -152,7 +152,7 @@ public class ApplicationController {
                 .requestDate(LocalDateTime.now()).build();
 
         waitOnAccessToActivityRepository.save(waitOnAccessToActivity);
-        notificationService.addNotificationRejectActivity(notificationRepository,activitiesPlan.getUser(), userDetailsRepository.findByUserId(currentUser.getUser().getId()),
+        notificationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(), userDetailsRepository.findByUserId(currentUser.getUser().getId()),
                 " wysłał prośbę o dołączenie do ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageAssign", "Wysłano prośbę o dołączenie");
         return "redirect:/gowithme/app/activity/details?id=" + waitingOnAccessToActivityDTO.userCreatedActivityId() + "&activityId=" + waitingOnAccessToActivityDTO.activityPlanId();
@@ -177,8 +177,8 @@ public class ApplicationController {
         userDetailsList.add(userDetailsRepository.findById(userId).get());
         activitiesPlan.setUsersJoined(userDetailsList);
         activitiesPlanRepository.save(activitiesPlan);
-        notificationService.addNotificationRejectActivity(notificationRepository,userDetailsRepository.findById(userId).get(),
-                activitiesPlan.getUser(), " dodał Cię do aktywności ",activitiesPlan.getCategory());
+        notificationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(),
+                activitiesPlan.getUser(), " dodał Cię do aktywności ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageSuccess", "Dodano użytkownika do aktywności");
         return "redirect:/gowithme/app/activity/assign?id=" + activityId;
     }
@@ -187,8 +187,8 @@ public class ApplicationController {
     public String getDeleteUserFromWaitingList(@RequestParam long activityId, @RequestParam long userId, RedirectAttributes redirectAttributes) {
         waitOnAccessToActivityRepository.deleteFromWaitingList(activityId, userId);
         ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activityId).get();
-        notificationService.addNotificationRejectActivity(notificationRepository,userDetailsRepository.findById(userId).get(),
-                activitiesPlan.getUser(), " usunął Cię z listy oczekujących dla aktywności ",activitiesPlan.getCategory());
+        notificationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(),
+                activitiesPlan.getUser(), " usunął Cię z listy oczekujących dla aktywności ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageDelete", "Usunięto użytkownika z listy oczekujących");
         return "redirect:/gowithme/app/activity/assign?id=" + activityId;
     }
@@ -210,10 +210,9 @@ public class ApplicationController {
 
     @GetMapping("/profile/edit/{type}")
     public String getProfileEditData(@PathVariable String type,
-                                      Model model, @AuthenticationPrincipal CurrentUser currentUser) {
-//        model.addAttribute("")
-//        type.equals("email") ? model.addAttribute("email", type) : model.addAttribute("password", type);
+                                     Model model, @AuthenticationPrincipal CurrentUser currentUser) {
 
+        model.addAttribute(type.equals("email") ? "email" : "password", type);
         UserDetails userDetails = userDetailsRepository.findByUserId(currentUser.getUser().getId());
         model.addAttribute("firstName", userDetails.getFirstName());
         model.addAttribute("lastName", userDetails.getLastName());
@@ -224,17 +223,30 @@ public class ApplicationController {
         return "application/profileEditLogin";
     }
 
-    @PostMapping("/profile/edit/data")
+    @PostMapping("/profile/edit/editData")
     public String postProfileEditLogin(@RequestParam(required = false) String email, @RequestParam(required = false) String password,
-                                       Model model, @AuthenticationPrincipal CurrentUser currentUser,RedirectAttributes redirectAttributes) {
+                                       @RequestParam(required = false) String repeatPassword,
+                                       @AuthenticationPrincipal CurrentUser currentUser, RedirectAttributes redirectAttributes) {
 
-        if(userRepository.findByEmail(email) != null) {
+        if (userRepository.findByEmail(email) != null) {
             redirectAttributes.addFlashAttribute("messageError", email + " jest zajęty");
-            return "redirect:/gowithme/app/profile/editLogin";
+            return "redirect:/gowithme/app/profile/edit/email";
         }
-        userServiceImpl.changeEmail(email,currentUser.getUser());
-        redirectAttributes.addFlashAttribute("messageUpdate", "Email został zmieniony");
+        if (password == null) {
+            userServiceImpl.changeEmail(email, currentUser.getUser());
+            redirectAttributes.addFlashAttribute("messageUpdate", "Email został zmieniony");
+            return "redirect:/gowithme/app/profile";
+        }
+        if (password != null & !password.equals(repeatPassword)) {
+            redirectAttributes.addFlashAttribute("messageError", "Hasła nie są jednakowe");
+            return "redirect:/gowithme/app/profile/edit/password";
+        }
+
+        userServiceImpl.changePassword(password, currentUser.getUser());
+        redirectAttributes.addFlashAttribute("messageUpdate", "Hasło zostało zmienione");
         return "redirect:/gowithme/app/profile";
+
+
     }
 
     @GetMapping("/profile/edit")
@@ -247,7 +259,7 @@ public class ApplicationController {
     public String postUpdateUser(@Valid UserDetails userDetails, Model model, RedirectAttributes redirectAttributes, BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute("userDetails", userDetails);
-            model.addAttribute("errors",result.getAllErrors());
+            model.addAttribute("errors", result.getAllErrors());
             return "application/profileEdit";
         }
         redirectAttributes.addFlashAttribute("messageUpdate", "Konto zaktualizowane ");
