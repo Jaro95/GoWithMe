@@ -48,9 +48,11 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/add")
-    public String getAddActivity(Model model) {
+    public String getAddActivity(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
         model.addAttribute("activitiesPLan", new ActivitiesPlan());
         model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("activitiesPlan", activitiesPlanRepository.findByCity(userDetailsRepository.findByUser(currentUser.getUser()).getCity())
+                .stream().filter(el -> !el.getUser().equals(userDetailsRepository.findByUser(currentUser.getUser()))).collect(Collectors.toSet()));
         return "application/activityAdd";
     }
 
@@ -66,7 +68,6 @@ public class ApplicationController {
         activitiesPlan.setUser(userDetailsRepository.findByUserId(currentUser.getUser().getId()));
         activitiesPlan.setEnabled(true);
         activitiesPlan.setUsersJoined(new ArrayList<>());
-        System.out.println(activitiesPlan.toString());
         activitiesPlanRepository.save(activitiesPlan);
         redirect.addFlashAttribute("message", "Dodano Aktywność");
         return "redirect:/gowithme/app/activity/add";
@@ -78,7 +79,7 @@ public class ApplicationController {
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("userList", activitiesPlanRepository.findById(id).get().getUsersJoined());
         model.addAttribute("activityId", id);
-        return "application/activityEditNew";
+        return "application/activityEdit";
     }
 
     @PostMapping("/activity/edit")
@@ -88,6 +89,8 @@ public class ApplicationController {
             model.addAttribute("errors", bindingResult.getAllErrors());
             model.addAttribute("activitiesPlan", activitiesPlan);
             model.addAttribute("categories", categoryRepository.findAll());
+            model.addAttribute("userList", activitiesPlanRepository.findById(activitiesPlan.getId()).get().getUsersJoined());
+            model.addAttribute("activityId", activitiesPlan.getId());
             return "application/activityEdit";
         }
         activitiesPlan.setUser(userDetailsRepository.findByUserId(currentUser.getUser().getId()));
