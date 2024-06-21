@@ -17,7 +17,7 @@
             <img class="w3-image w3-round-large" src="/images/mainPeoplePedro.gif" alt="Buildings" width="350"
                  height="200">
         </div>
-        <div class="w3-col m6" style="padding:128px 200px">
+        <div class="user-information">
 
                 <h3>${firstName} ${lastName}</h3>
                 <p>${city}</p>
@@ -26,8 +26,16 @@
                 <p>${description}</p>
                 <p><a href="/gowithme/app/profile/edit" class="w3-button w3-black">
                     <i class="fa fa-user-pen"></i> Edycja</a></p>
-
         </div>
+        <div class="user-information">
+            <p>Login:  ${login} </p>
+            <p><a href="/gowithme/app/profile/edit/email" class="w3-button w3-black">
+                <i class="fa fa-envelope"></i> Edytuj login</a></p>
+
+            <p><a href="/gowithme/app/profile/edit/password" class="w3-button w3-black">
+                <i class="fa fa-user-gear"></i> Edytuj hasło</a></p>
+        </div>
+
     </div>
     <c:if test="${not empty messageUpdate}">
         <div class="w3-center alert alert-success">

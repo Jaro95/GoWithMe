@@ -293,3 +293,13 @@ a {
     width: 330px;
     height: 110px;
 }
+.user-information {
+    padding-top:128px;
+    width: 25%;
+    float: left;
+}
+
+.change-data {
+    margin-left: 0;
+    margin-right: 0;
+}
