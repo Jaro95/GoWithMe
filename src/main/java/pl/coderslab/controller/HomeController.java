@@ -13,10 +13,8 @@ import pl.coderslab.Service.UserService;
 import pl.coderslab.model.Contact;
 import pl.coderslab.model.ContactForm;
 import pl.coderslab.model.User;
-import pl.coderslab.model.UserDetails;
 import pl.coderslab.repository.ContactRepository;
 import pl.coderslab.repository.ContactFormRepository;
-import pl.coderslab.repository.UserDetailsRepository;
 import pl.coderslab.repository.UserRepository;
 
 import javax.validation.Valid;
@@ -28,15 +26,14 @@ import java.util.stream.Collectors;
 @RequestMapping("/gowithme")
 public class HomeController {
 
-    private final UserDetailsRepository userDetailsRepository;
+
     private final ContactRepository contactRepository;
     private final UserService userService;
     private final ContactFormRepository contactFormRepository;
     private final UserRepository userRepository;
 
 
-    public HomeController(UserDetailsRepository userDetailsRepository, ContactRepository contactRepository, UserService userService, ContactFormRepository contactFormRepository, UserRepository userRepository) {
-        this.userDetailsRepository = userDetailsRepository;
+    public HomeController(ContactRepository contactRepository, UserService userService, ContactFormRepository contactFormRepository, UserRepository userRepository) {
         this.contactRepository = contactRepository;
         this.userService = userService;
         this.contactFormRepository = contactFormRepository;
