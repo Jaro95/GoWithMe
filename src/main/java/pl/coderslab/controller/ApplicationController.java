@@ -1,6 +1,8 @@
 package pl.coderslab.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -36,9 +39,16 @@ public class ApplicationController {
     private final UserServiceImpl userServiceImpl;
 
 
-    @ModelAttribute("notificationsList")
-    public List<Notification> setNotoficationList(@AuthenticationPrincipal CurrentUser currentUser) {
-        return notificationRepository.findAllByUserDetailsOrderByCreateDateTimeDesc(userDetailsRepository.findByUser(currentUser.getUser()));
+    @ModelAttribute
+    public void setNotoficationList(@RequestParam Optional<Integer> page,
+                                                  @RequestParam Optional<Integer> size,
+                                                  @AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+        Page<Notification> notificationPage = notificationRepository.findAllByUserDetailsIdOrderByCreateDateTimeDesc
+                (userDetailsRepository.findByUser(currentUser.getUser()).getId(), PageRequest.of(currentPage - 1, pageSize));
+        model.addAttribute("notificationsList", notificationPage);
+       // return notificationRepository.findAllByUserDetailsOrderByCreateDateTimeDesc(userDetailsRepository.findByUser(currentUser.getUser()));
     }
 
     @GetMapping("")

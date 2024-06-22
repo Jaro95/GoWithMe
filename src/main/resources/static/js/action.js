@@ -214,3 +214,16 @@ $(document).ready(function () {
         table.search(this.value).draw();
     });
 });
+
+$(document).ready(function() {
+    $('.prev-button, .next-button').on('click', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $.get(url, function(data) {
+            $('.notification-list').html($(data).find('.notification-list').html());
+            $('.navigation-buttons').html($(data).find('.navigation-buttons').html());
+        });
+    });
+});
+
+

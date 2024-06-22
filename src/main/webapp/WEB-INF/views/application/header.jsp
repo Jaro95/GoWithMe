@@ -40,7 +40,8 @@
             <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-magnifying-glass"></i> Szukaj</a>
             <a href="/gowithme/app/activity/add" class="w3-bar-item w3-button"><i class="fa fa-person-running"></i>
                 Dodaj aktywność</a>
-            <a class="w3-bar-item w3-button " id="activities-navigation"><i class="fa fa-layer-group"></i> Aktywności</a>
+            <a class="w3-bar-item w3-button " id="activities-navigation"><i class="fa fa-layer-group"></i>
+                Aktywności</a>
             <div class="dropdown-activities" id="dropdown-activities">
                 <a href="/gowithme/app/activities/user">
                     <div class="dropdown-item">Moje</div>
@@ -54,10 +55,27 @@
             </div>
             <a class="w3-bar-item w3-button" id="notification"><i class="fa fa-bell"></i> Powiadomienia</a>
             <div class="dropdown-notification" id="dropdown-notification">
-                <c:forEach items="${sessionScope.notificationsList}" var="notification">
-                    <div class="dropdown-item ">${notification.name}</div>
-                </c:forEach>
-
+                <div class="navigation-buttons notification-list">
+                    <div class="navigation-buttons">
+                    <c:if test="${notificationsList.number > 0}">
+                            <a href="?page=${notificationsList.number}&size=${notificationsList.size}"
+                               class="prev-button">
+                                <div class="dropdown-item ">^</div>
+                            </a>
+                    </c:if>
+                    </div>
+                    <c:forEach items="${sessionScope.notificationsList.content}" var="notification">
+                        <div class="dropdown-item ">${notification.name}</div>
+                    </c:forEach>
+                    <div class="navigation-buttons">
+                        <c:if test="${notificationsList.number + 1 < notificationsList.totalPages}">
+                            <a href="?page=${notificationsList.number + 2}&size=${notificationsList.size}"
+                               class="next-button">
+                                <div class="dropdown-item ">v</div>
+                            </a>
+                        </c:if>
+                    </div>
+                </div>
             </div>
             <a class="w3-bar-item w3-button " id="user-icon"><i class="fa fa-user"></i> <i class="fa fa-list"></i></a>
             <div class="dropdown-menu" id="dropdown-menu">
