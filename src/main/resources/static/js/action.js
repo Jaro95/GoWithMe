@@ -148,36 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     document.getElementById('user-icon').addEventListener('click', function () {
-//         const dropdownMenu = document.getElementById('dropdown-menu');
-//         dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-//     })
-// });
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     document.querySelectorAll('a.profile').addEventListener('click', event => {
-//             const profile = document.querySelector(".profile")
-//             const edit = document.createElement(<td>Edycja</td>)
-//             const logout = document.createElement(<td>Wyloguj</td>)
-//             profile.appendChild(edit);
-//             profile.appendChild(edit);
-//         });
-//     });
-// });
-
-
-// $(document).ready(function () {
-//     var table = $('#activityTable').DataTable({
-//         "paging": true,
-//         "ordering": true,
-//         "info": true
-//     });
-//
-//     $('#searchBox').on('keyup', function () {
-//         table.search(this.value).draw();
-//     });
-// });
 
 $(document).ready(function () {
     var table = $('#adminTable').DataTable({

@@ -40,7 +40,7 @@ public class ApplicationController {
 
 
     @ModelAttribute
-    public void setNotoficationList(@RequestParam Optional<Integer> page,
+    public void setNotificationList(@RequestParam Optional<Integer> page,
                                                   @RequestParam Optional<Integer> size,
                                                   @AuthenticationPrincipal CurrentUser currentUser, Model model) {
         int currentPage = page.orElse(1);
