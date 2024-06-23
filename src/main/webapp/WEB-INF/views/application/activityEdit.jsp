@@ -39,6 +39,7 @@
 
             <tbody>
             <tr>
+                <form:input path="id" type="hidden"/>
                 <td>
                     <form:select class="input-contact w3-border" path="category.id" items="${categories}"
                                  itemLabel="name" itemValue="id"/>

@@ -48,6 +48,9 @@
                     <form:input class="input-contact w3-border" type="password" placeholder="Powtórz hasło"
                                 path="repeatPassword"/>
             <p><form:errors path="repeatPassword" cssClass="alert alert-error"/></p>
+            <c:if test="${not empty wrongPassword}">
+                <p class="alert alert-error">${wrongPassword}</p>
+            </c:if>
             <p>
                 <button class="w3-button w3-black" type="submit">
                     <i class="fa fa-plus"></i> Utwórz konto

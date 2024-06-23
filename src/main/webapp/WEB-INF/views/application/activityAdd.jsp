@@ -18,10 +18,11 @@
     </c:if>
     <div class="w3-center cantact-info">
         <form:form method="post" class="cantact-details" modelAttribute="activitiesPLan">
+            <form:input path="id" type="hidden"/>
             <p>
                     <form:select class="input-contact w3-border" path="category.id" items="${categories}"
                                  itemLabel="name" itemValue="id"/>
-            <p><form:errors path="category.name" cssClass="alert alert-error"/></p>
+            <p><form:errors path="category.id" cssClass="alert alert-error"/></p>
             </p>
             <p>
                     <form:input class="input-contact w3-border" type="text" placeholder="Opis" path="description"/>
@@ -40,10 +41,6 @@
                                 path="location"/>
             <p><form:errors path="location" cssClass="alert alert-error"/></p>
             </p>
-            <%--            <p>--%>
-            <%--                    <form:select class="input-contact w3-border" path="friendList" items="${friend}" multiple="true"/>--%>
-            <%--            <p><form:errors path="friendList" cssClass="alert alert-error"/></p>--%>
-            <%--            </p>--%>
             <p>
                 <button class="w3-button w3-black" type="submit">
                     <i class="fa fa-person-walking"></i> Dodaj
