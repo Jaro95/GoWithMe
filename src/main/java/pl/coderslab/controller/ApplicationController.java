@@ -59,10 +59,10 @@ public class ApplicationController {
 
     @GetMapping("/activity/add")
     public String getAddActivity(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
-        model.addAttribute("activitiesPLan", new ActivitiesPlan());
+        model.addAttribute("activitiesPlan", new ActivitiesPlan());
         model.addAttribute("categories", categoryRepository.findAll());
-        model.addAttribute("activitiesPlan", activitiesPlanRepository.findByCity(userDetailsRepository.findByUser(currentUser.getUser()).getCity())
-                .stream().filter(el -> !el.getUser().equals(userDetailsRepository.findByUser(currentUser.getUser()))).collect(Collectors.toSet()));
+        model.addAttribute("activitiesPlanList", activitiesPlanRepository.findByCity(userDetailsRepository.findByUser(currentUser.getUser()).getCity())
+                .stream().filter(el -> !el.getUser().equals(userDetailsRepository.findByUser(currentUser.getUser()))).collect(Collectors.toList()));
         return "application/activityAdd";
     }
 
@@ -71,12 +71,10 @@ public class ApplicationController {
                                   Model model, RedirectAttributes redirect,
                                   @AuthenticationPrincipal CurrentUser currentUser) {
         if (result.hasErrors()) {
-            model.addAttribute("activitiesPLan", activitiesPlan);
+            model.addAttribute("activitiesPlan", activitiesPlan);
             model.addAttribute("categories", categoryRepository.findAll());
-            model.addAttribute("activitiesPlan", activitiesPlanRepository.findByCity(userDetailsRepository.findByUser(currentUser.getUser()).getCity())
-                    .stream().filter(el -> !el.getUser().equals(userDetailsRepository.findByUser(currentUser.getUser()))).collect(Collectors.toSet()));
-            System.out.println("jestem");
-            System.out.println(result.getAllErrors());
+            model.addAttribute("activitiesPlanList", activitiesPlanRepository.findByCity(userDetailsRepository.findByUser(currentUser.getUser()).getCity())
+                    .stream().filter(el -> !el.getUser().equals(userDetailsRepository.findByUser(currentUser.getUser()))).collect(Collectors.toList()));
             model.addAttribute("errors", result.getAllErrors());
             return "application/activityAdd";
         }
@@ -90,7 +88,7 @@ public class ApplicationController {
 
     @GetMapping("/activity/edit")
     public String getEditActivity(@RequestParam long id, Model model) {
-        model.addAttribute("activitiesPLan", activitiesPlanRepository.findById(id).get());
+        model.addAttribute("activitiesPlan", activitiesPlanRepository.findById(id).get());
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("userList", activitiesPlanRepository.findById(id).get().getUsersJoined());
         model.addAttribute("activityId", id);
@@ -138,7 +136,6 @@ public class ApplicationController {
     public String getDetailsUserActivity(Model model, @RequestParam long id, @RequestParam long activityId, @AuthenticationPrincipal CurrentUser currentUser) {
 
         UserDetails userDetails = userDetailsRepository.findByUserId(id);
-        System.out.println(userDetails.toString());
         model.addAttribute("firstName", userDetails.getFirstName());
         model.addAttribute("lastName", userDetails.getLastName());
         model.addAttribute("city", userDetails.getCity());

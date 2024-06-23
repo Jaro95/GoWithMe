@@ -17,12 +17,12 @@
         </div>
     </c:if>
     <div class="w3-center cantact-info">
-        <form:form method="post" class="cantact-details" modelAttribute="activitiesPLan">
+        <form:form method="post" class="cantact-details" modelAttribute="activitiesPlan">
             <form:input path="id" type="hidden"/>
             <p>
                     <form:select class="input-contact w3-border" path="category.id" items="${categories}"
                                  itemLabel="name" itemValue="id"/>
-            <p><form:errors path="category.id" cssClass="alert alert-error"/></p>
+            <p><form:errors path="category.name" cssClass="alert alert-error"/></p>
             </p>
             <p>
                     <form:input class="input-contact w3-border" type="text" placeholder="Opis" path="description"/>
@@ -53,7 +53,7 @@
     <div class="w3-container w3-light-grey" style="padding:28px 16px" id="team">
         <h3 class="w3-center">Aktywności w Twojej miejscowości</h3>
         <div class="w3-row-padding w3-grayscale" style="margin-top:64px">
-            <c:forEach items="${activitiesPlan}" var="activity">
+            <c:forEach items="${activitiesPlanList}" var="activity">
                 <div class="w3-col l3 m6 w3-margin-bottom">
                     <div class="w3-card">
                         <img src="/images/mainPeople.jpg" alt="${activity.user.firstName}" style="width:100%">

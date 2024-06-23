@@ -180,7 +180,22 @@ main {
     margin-left: 35%;
 }
 
-.alert-success {
+.alert-activity-edit {
+    display: flex;
+    resize: none;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px;
+    border-radius: .35rem;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1%;
+    margin-left: 1%;
+}
+
+
+
+    .alert-success {
     color: #0f6848;
     background-color: #d2f4e8;
     border-color: #bff0de
