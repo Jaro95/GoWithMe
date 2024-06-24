@@ -7,9 +7,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.coderslab.Service.CurrentUser;
+import pl.coderslab.service.CurrentUser;
 import pl.coderslab.dto.RegistrationDTO;
-import pl.coderslab.Service.UserService;
+import pl.coderslab.service.UserService;
 import pl.coderslab.model.Contact;
 import pl.coderslab.model.ContactForm;
 import pl.coderslab.model.User;
@@ -68,7 +68,7 @@ public class HomeController {
             return "redirect:/gowithme/login";
         }
         user.setEnabled(true);
-        user.setToken("");
+        user.setToken("verificated");
         userRepository.save(user);
         redirectAttributes.addFlashAttribute("message", "Konto zostało aktywowane");
         return "redirect:/gowithme/login";

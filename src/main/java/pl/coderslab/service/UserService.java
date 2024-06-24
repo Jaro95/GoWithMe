@@ -1,4 +1,4 @@
-package pl.coderslab.Service;
+package pl.coderslab.service;
 
 import pl.coderslab.dto.RegistrationDTO;
 import pl.coderslab.model.User;

@@ -1,4 +1,4 @@
-package pl.coderslab.Service;
+package pl.coderslab.service;
 
 
 import java.util.Collection;
