@@ -44,7 +44,7 @@ public class ApplicationController {
                                     @RequestParam Optional<Integer> size,
                                     @AuthenticationPrincipal CurrentUser currentUser, Model model) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(3);
+        int pageSize = size.orElse(6);
         Page<Notification> notificationPage = notificationRepository.findAllByUserDetailsIdOrderByCreateDateTimeDesc
                 (userDetailsRepository.findByUser(currentUser.getUser()).getId(), PageRequest.of(currentPage - 1, pageSize));
         model.addAttribute("notificationsList", notificationPage);

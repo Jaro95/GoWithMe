@@ -3,7 +3,7 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 body, html {
-    height: 97.5%;
+    height: 97.25%;
     line-height: 1.8;
     /*overflow: hidden;*/
 }
@@ -13,7 +13,7 @@ body, html {
     background-position: center;
     background-size: cover;
     background-image: url("/images/mainPeople.jpg");
-    min-height: 100.2%;
+    min-height: 100.7%;
 }
 
 .w3-bar .w3-button {
@@ -322,7 +322,18 @@ a {
 }
 .w3-bar-block .w3-bar-item {padding: 16px}
 
-.chat {
+.nav-chat {
         top: 60px;
-        height: 98%;
+        height: 94%;
+        margin-left:0px
+}
+.person {
+    height: 94%;
+    margin-left:300px;
+    position: relative;
+    top:60px;
+}
+
+.message-start {
+    top:60px;
 }
