@@ -187,12 +187,16 @@ $(document).ready(function () {
 });
 
 $(document).ready(function() {
-    $('.prev-button, .next-button').on('click', function(e) {
+    $(document).on('click', '.prev-button, .next-button', function(e) {
         e.preventDefault();
         var url = $(this).attr('href');
         $.get(url, function(data) {
-            $('.notification-list').html($(data).find('.notification-list').html());
-            $('.navigation-buttons').html($(data).find('.navigation-buttons').html());
+            var newContent = $(data).find('.notification-list').html();
+            var newNavigation = $(data).find('.navigation-buttons').html();
+            $('.notification-list').html(newContent);
+            $('.navigation-buttons').html(newNavigation);
+        }).fail(function() {
+            alert('Wystąpił błąd podczas ładowania danych.');
         });
     });
 });

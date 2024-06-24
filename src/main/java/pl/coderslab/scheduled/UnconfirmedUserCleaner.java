@@ -21,8 +21,9 @@ public class UnconfirmedUserCleaner {
     public void cleanUnconfirmedUsers() {
         LocalDateTime timeBeforeUserDelete = LocalDateTime.now().minusDays(1);
         List<User> unconfirmedUsers = userRepository.unconfirmedUsers("verificated",timeBeforeUserDelete);
+        unconfirmedUsers.forEach(user -> user.getRoles().clear());
         System.out.println("sprawdzamy");
         unconfirmedUsers.forEach(System.out::println);
-        //userRepository.deleteAll(unconfirmedUsers);
+        userRepository.deleteAll(unconfirmedUsers);
     }
 }
