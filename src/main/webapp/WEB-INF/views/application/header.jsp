@@ -23,6 +23,10 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/action.js"></script>
+
+
+
+
 </head>
 <body>
 
@@ -53,6 +57,7 @@
                     <div class="dropdown-item">Oczekujące</div>
                 </a>
             </div>
+            <a href="/gowithme/app/chat" class="w3-bar-item w3-button "><i class="fa fa-message"></i> Chat</a>
             <a class="w3-bar-item w3-button" id="notification"><i class="fa fa-bell"></i> Powiadomienia</a>
             <div class="dropdown-notification" id="dropdown-notification">
                 <div class="navigation-buttons notification-list">

@@ -180,7 +180,22 @@ main {
     margin-left: 35%;
 }
 
-.alert-success {
+.alert-activity-edit {
+    display: flex;
+    resize: none;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px;
+    border-radius: .35rem;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1%;
+    margin-left: 1%;
+}
+
+
+
+    .alert-success {
     color: #0f6848;
     background-color: #d2f4e8;
     border-color: #bff0de
@@ -223,7 +238,7 @@ table.dataTable tbody td {
     display: none; /* Ukryj menu rozwijane */
     position: absolute;
     top: 60px; /* Pozycjonuj menu tuż pod nawigacją */
-    right: 20px;
+    right: 0px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
@@ -242,6 +257,33 @@ table.dataTable tbody td {
 .dropdown-item:hover {
     background-color: #f0f0f0;
 }
+
+
+.dropdown-notification {
+    display: none; /* Ukryj menu rozwijane */
+    position: absolute;
+    top: 60px; /* Pozycjonuj menu tuż pod nawigacją */
+    right: 60px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    width: 400px; /* Szerokość menu */
+}
+
+
+.dropdown-activities {
+    display: none; /* Ukryj menu rozwijane */
+    position: absolute;
+    top: 60px; /* Pozycjonuj menu tuż pod nawigacją */
+    right: 300px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    width: 200px; /* Szerokość menu */
+}
+
 a {
     text-decoration: none;
 }
@@ -267,4 +309,14 @@ a {
 .edit-about-user {
     width: 330px;
     height: 110px;
+}
+.user-information {
+    padding-top:128px;
+    width: 25%;
+    float: left;
+}
+
+.change-data {
+    margin-left: 0;
+    margin-right: 0;
 }

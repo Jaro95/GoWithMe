@@ -276,19 +276,13 @@ table.dataTable tbody td {
     display: none; /* Ukryj menu rozwijane */
     position: absolute;
     top: 60px; /* Pozycjonuj menu tuż pod nawigacją */
-    right: 215px;
+    right: 300px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     overflow: hidden;
     width: 200px; /* Szerokość menu */
 }
-
-
-
-
-
-
 
 a {
     text-decoration: none;
@@ -325,4 +319,10 @@ a {
 .change-data {
     margin-left: 0;
     margin-right: 0;
+}
+.w3-bar-block .w3-bar-item {padding: 16px}
+
+.chat {
+        top: 60px;
+        height: 98%;
 }

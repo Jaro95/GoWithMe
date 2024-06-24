@@ -348,5 +348,10 @@ public class ApplicationController {
         return "redirect:/gowithme/app/profile";
     }
 
+    @GetMapping("/chat")
+    public String getChat(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+        model.addAttribute("userDetails", userDetailsRepository.findByUserId(currentUser.getUser().getId()));
+        return "application/communicator";
+    }
 
 }
