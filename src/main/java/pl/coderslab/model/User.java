@@ -25,7 +25,7 @@ public class User {
     @Size(max = 50)
     private String email;
     @NotBlank
-    @Size(min = 5)
+    @Size(min = 5, message = "{Size.user.password}")
     private String password;
     private boolean enabled;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

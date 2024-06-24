@@ -93,7 +93,8 @@
                         <i class="fa fa-rotate"></i>Edycja
                     </button>
                     <a class="w3-button w3-black"
-                            href='/gowithme/app/activity/delete?id=${activity.id}' id="delete-activity">
+                            href='${pageContext.request.contextPath}/gowithme/app/activity/delete?id=${activity.id}&url=/gowithme/app/profile'
+                       id="delete-activity">
                         <i class="fa fa-trash"></i>Usuń
                     </a>
                 </td>

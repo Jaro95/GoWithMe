@@ -11,7 +11,15 @@
 <jsp:include page="header.jsp"/>
 
 <div class="w3-display-container w3-light-grey contact" id="appMain">
+    <c:if test="${not empty user}">
     <div class="w3-center w3-jumbo cantact-info">Twoje aktywności</div>
+    </c:if>
+    <c:if test="${not empty userAssigned}">
+        <div class="w3-center w3-jumbo cantact-info">Aktywności do których zostałeś przypisany</div>
+    </c:if>
+    <c:if test="${not empty userWaitingList}">
+        <div class="w3-center w3-jumbo cantact-info">Lista aktywności oczekujących na akceptacje</div>
+    </c:if>
     <c:if test="${not empty messageActivity}">
         <div class="alert alert-success">
                 ${messageActivity}
@@ -60,7 +68,7 @@
                             <i class="fa fa-rotate"></i>Edycja
                         </button>
                         <a class="w3-button w3-black"
-                           href='/gowithme/app/activity/delete?id=${activity.id}' id="delete-activity">
+                           href='${pageContext.request.contextPath}/gowithme/app/activity/delete?id=${activity.id}&url=/gowithme/app/activities/user' id="delete-activity">
                             <i class="fa fa-trash"></i>Usuń
                         </a>
                     </td>

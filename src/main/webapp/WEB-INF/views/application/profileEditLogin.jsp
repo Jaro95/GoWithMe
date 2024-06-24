@@ -29,7 +29,7 @@
 </div>
 <div class="user-information">
 <c:if test="${not empty email}">
-    <form method="post" action="${pageContext.request.contextPath}/gowithme/app/profile/edit/editData">
+    <form method="post" action="${pageContext.request.contextPath}/gowithme/app/profile/edit/editLogin">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <p>Nowy emal: <input name="email"></p>
         <c:if test="${not empty messageError}">
@@ -43,7 +43,7 @@
     </form>
 </c:if>
 <c:if test="${not empty password}">
-    <form method="post" action="${pageContext.request.contextPath}/gowithme/app/profile/edit/editData">
+    <form method="post" action="${pageContext.request.contextPath}/gowithme/app/profile/edit/editPassword">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <p>Nowy hasło: <input name="password" type="password"></p>
         <c:if test="${not empty messageError}">

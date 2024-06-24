@@ -22,13 +22,13 @@ public class UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 30)
     private String firstName;
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 30)
     private String lastName;
     @NotBlank
-    @Size(max=100)
+    @Size(max=30)
     private String city;
     @Min(0)
     private int age;

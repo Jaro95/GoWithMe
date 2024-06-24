@@ -18,8 +18,7 @@ public class RegistrationDTO {
     @Size(max = 50)
     private String email;
     @NotBlank
-    @Size(min = 5)
-    @Size(max = 50)
+    @Size(min = 5, max = 50, message = "{Size.user.password}")
     private String password;
     @NotBlank
     private String repeatPassword;

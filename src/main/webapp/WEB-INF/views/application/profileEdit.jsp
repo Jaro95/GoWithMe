@@ -25,15 +25,17 @@
                 <p>
                     <form:input class="input-contact w3-border w3-center" type="text" placeholder="Imię"
                                 path="firstName"/>
+                    <form:errors path="firstName" cssClass="alert alert-error"/>
                     <form:input class="input-contact w3-border w3-center" type="text" placeholder="Nazwisko"
                                 path="lastName"/>
-                </p>
-                <p>
-                    <form:errors path="firstName" cssClass="alert alert-error"/>
                     <form:errors path="lastName" cssClass="alert alert-error"/>
                 </p>
+<%--                <p>--%>
+<%--                    --%>
+<%--                </p>--%>
             </h3>
-            <p><form:input class="input-contact w3-border w3-center" type="text" placeholder="Miasto"
+            <ul id="suggestions"></ul>
+            <p><form:input id="cityInput" class="input-contact w3-border w3-center" type="text" placeholder="Miasto"
                            path="city"/>
             </p>
             <p><form:errors path="city" cssClass="alert alert-error"/></p>
@@ -41,11 +43,12 @@
                 <form:input class="input-contact w3-border w3-center" type="number" placeholder="Wiek"
                                   path="age"/>
             </p>
-            <p><form:errors path="city" cssClass="alert alert-error"/></p>
+            <p><form:errors path="age" cssClass="alert alert-error"/></p>
             <p>Kilka słów o mnie: </p>
             <p><form:textarea class="w3-border edit-about-user" type="text" placeholder="Coś o sobie"
                               path="description"/></p>
             </p>
+            <p><form:errors path="description" cssClass="alert alert-error"/></p>
                 <button class="w3-button w3-black" type="submit">
                     <i class="fa fa-check"></i> Aktualizuj
                 </button>

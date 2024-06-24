@@ -125,7 +125,7 @@ public class HomeController {
         }
 
         if (!wrapper.getPassword().equals(wrapper.getRepeatPassword())) {
-            model.addAttribute("wrongPassword", "Hasła nie są takie same");
+            model.addAttribute("wrongPassword", "Hasla nie sa takie same");
             model.addAttribute("registrationDTO", wrapper);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "home/registration";

@@ -23,7 +23,7 @@
                 ${messageDelete}
         </div>
     </c:if>
-    <form:form method="post" modelAttribute="activitiesPLan">
+    <form:form method="post" modelAttribute="activitiesPlan">
         <table id="assignTable" class="display">
             <thead>
             <tr>
@@ -39,6 +39,7 @@
 
             <tbody>
             <tr>
+                <form:input path="id" type="hidden"/>
                 <td>
                     <form:select class="input-contact w3-border" path="category.id" items="${categories}"
                                  itemLabel="name" itemValue="id"/>
@@ -47,25 +48,25 @@
                 <td>
                     <form:textarea class="edit-about-user w3-border" type="text" placeholder="Opis"
                                    path="description"/>
-                    <p><form:errors path="description" cssClass="alert alert-error"/></p>
+                    <p><form:errors path="description" cssClass="alert-activity-edit alert-error"/></p>
                 </td>
                 <td>
                     <ul id="suggestions"></ul>
                     <form:input id="cityInput" class=" w3-border" type="text" placeholder="Miejscowość" path="city"/>
-                    <p><form:errors path="city" cssClass="alert alert-error"/></p>
+                    <p><form:errors path="city" cssClass="alert-activity-edit alert-error"/></p>
                 </td>
                 <td>
                     <form:textarea class="edit-about-user w3-border" type="text"
                                    placeholder="Dokładna lokalizacja"
                                    path="location"/>
-                    <p><form:errors path="location" cssClass="alert alert-error"/></p>
+                    <p><form:errors path="location" cssClass="alert-activity-edit alert-error"/></p>
                 </td>
                 <td>
                     <form:select class="w3-border" path="enabled">
                         <form:option value="true">Tak</form:option>
                         <form:option value="false">Nie</form:option>
                     </form:select>
-                    <p><form:errors path="category.name" cssClass="alert alert-error"/></p>
+                    <p><form:errors path="category.name" cssClass="alert-activity-edit alert-error"/></p>
                 </td>
                 <form:input path="usersJoined" type="hidden"/>
                 <td>
