@@ -13,13 +13,17 @@ import java.util.List;
 public interface WaitOnAccessToActivityRepository extends JpaRepository<WaitOnAccessToActivity, Long> {
     @Query("from WaitOnAccessToActivity w where w.activityPlan = ?1 AND w.userDetails = ?2")
     WaitOnAccessToActivity validateContainInList(ActivitiesPlan activitiesPlan, UserDetails userDetails);
+
     WaitOnAccessToActivity findByActivityPlan_Id(long id);
+
     @Query("select w.userDetails from WaitOnAccessToActivity w where w.activityPlan.id = ?1")
     List<UserDetails> allWaitingUsersInActivity(long id);
+
     @Modifying
     @Transactional
     @Query("delete WaitOnAccessToActivity w where w.activityPlan.id = ?1 and w.userDetails.id = ?2")
     void deleteFromWaitingList(long activitiesPlanId, long userDetailsId);
-   @Query("select w.activityPlan from WaitOnAccessToActivity w where w.userDetails.id = ?1")
+
+    @Query("select w.activityPlan from WaitOnAccessToActivity w where w.userDetails.id = ?1")
     List<ActivitiesPlan> findByUserDetailsId(long id);
 }

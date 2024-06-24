@@ -3,11 +3,9 @@ package pl.coderslab.model;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 
 @Getter
@@ -23,7 +21,8 @@ public class Role implements GrantedAuthority {
     private int id;
     @NotBlank
     private String name;
-
+    @ManyToMany(mappedBy = "roles")
+    private List<User> user;
     @Override
     public String getAuthority() {
         return name;

@@ -1,6 +1,5 @@
-package pl.coderslab.Service;
+package pl.coderslab.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.coderslab.model.Category;
 import pl.coderslab.model.Notification;
