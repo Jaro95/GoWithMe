@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp"/>
 
-<div class="w3-display-container w3-light-grey contact" id="contact">
+<div class="w3-display-container w3-light-grey main-height" id="contact">
     <p class="w3-center w3-jumbo cantact-info">Napisz do nas:</p>
     <c:if test="${not empty message}">
         <div class="alert alert-success">

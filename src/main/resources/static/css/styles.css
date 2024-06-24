@@ -3,8 +3,10 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 body, html {
+    margin: 0;
     height: 97.25%;
     line-height: 1.8;
+    background-color: #f1f1f1;
     /*overflow: hidden;*/
 }
 
@@ -13,7 +15,7 @@ body, html {
     background-position: center;
     background-size: cover;
     background-image: url("/images/mainPeople.jpg");
-    min-height: 100.7%;
+    min-height: 100.2%;
 }
 
 .w3-bar .w3-button {
@@ -336,4 +338,71 @@ a {
 
 .message-start {
     top:60px;
+}
+
+.main-height {
+    height: 86%;
+}
+.footer-height {
+    height:12.4%;
+}
+
+
+
+.chat-bubble {
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 20px;
+    position: relative;
+    max-width: 50%;
+    word-wrap: break-word;
+}
+
+.user1 {
+    background-color: #d1e7dd;
+    align-self: flex-start;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.user2 {
+    background-color: #f8d7da;
+    align-self: flex-end;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.chat-bubble p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.input-container {
+    margin-bottom: 20px; /* Odstęp od dołu strony */
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #f0f0f0;
+    padding: 10px 0;
+}
+
+.chat-input {
+    width: 75%;
+
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    resize: none;
+    overflow: hidden;
+    max-height: 100px; /* Limit the height to prevent excessive growth */
 }

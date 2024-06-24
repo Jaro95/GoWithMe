@@ -201,4 +201,13 @@ $(document).ready(function() {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    const chatInput = document.getElementById('chatInput');
 
+    chatInput.addEventListener('input', function() {
+        // Reset textarea height to auto to correctly calculate the new height
+        chatInput.style.height = 'auto';
+        // Set the height according to the scroll height
+        chatInput.style.height = chatInput.scrollHeight + 'px';
+    });
+});
