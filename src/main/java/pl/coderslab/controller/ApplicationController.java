@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.coderslab.dto.SendMessageDTO;
+import pl.coderslab.model.chat.ChatMessages;
+import pl.coderslab.model.chat.Messages;
 import pl.coderslab.service.CurrentUser;
 import pl.coderslab.service.NotificationService;
 import pl.coderslab.service.UserServiceImpl;
@@ -37,6 +40,8 @@ public class ApplicationController {
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
     private final UserServiceImpl userServiceImpl;
+    private final ChatMessagesRepository chatMessagesRepository;
+    private final MessagesRepository messagesRepository;
 
 
     @ModelAttribute
@@ -143,6 +148,9 @@ public class ApplicationController {
         model.addAttribute("description", userDetails.getDescription());
         model.addAttribute("activities", activitiesPlanRepository.findById(activityId).stream().toList());
         model.addAttribute("waitOnAccessToActivityDTO", new WaitingOnAccessToActivityDTO(activityId, id));
+        model.addAttribute("id", id);
+        model.addAttribute("activityId", activityId);
+        model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(userDetails.getUser()).build());
         return "application/detailsUserActivity";
     }
 
@@ -310,7 +318,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/profile/edit/editPassword")
-    public String postProfileEditPassword( @RequestParam String password,
+    public String postProfileEditPassword(@RequestParam String password,
                                           @RequestParam String repeatPassword,
                                           @AuthenticationPrincipal CurrentUser currentUser, RedirectAttributes redirectAttributes) {
         if (password.length() < 5) {
@@ -346,6 +354,22 @@ public class ApplicationController {
         redirectAttributes.addFlashAttribute("messageUpdate", "Konto zaktualizowane ");
         userDetailsRepository.save(userDetails);
         return "redirect:/gowithme/app/profile";
+    }
+
+    @PostMapping("/sendMessage")
+    public String postSendMessage(SendMessageDTO sendMessageDTO,@RequestParam String url ,
+                                  @AuthenticationPrincipal CurrentUser currentUser,
+                                  RedirectAttributes redirectAttributes) {
+        messagesRepository.save(Messages.builder()
+                .senderMessage(userDetailsRepository.findByUser(currentUser.getUser()))
+                .content(sendMessageDTO.content())
+                .sendTime(LocalDateTime.now())
+                .chatMessages(chatMessagesRepository.findByUserChat(sendMessageDTO.userReceiver()))
+                .build());
+
+        System.out.println(sendMessageDTO.userReceiver().toString() + " " + sendMessageDTO.content());
+        redirectAttributes.addFlashAttribute("messageSend", "Wiadomość wysłana");
+        return "redirect:" + url;
     }
 
     @GetMapping("/chat")

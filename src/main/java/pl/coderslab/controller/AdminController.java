@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.coderslab.model.chat.ChatMessages;
 import pl.coderslab.service.UserService;
 import pl.coderslab.model.*;
 import pl.coderslab.repository.*;
@@ -24,6 +25,7 @@ public class AdminController {
     private final RoleRepository roleRepository;
     private final ContactRepository contactRepository;
     private final CategoryRepository categoryRepository;
+    private final ChatMessagesRepository chatMessagesRepository;
 
     @GetMapping("/create-start")
     public String createStart() {
@@ -53,6 +55,12 @@ public class AdminController {
                 .city("Poznań")
                 .user(userRepository.findByEmail(admin.getEmail())).build();
         userDetailsRepository.save(adminDetails);
+        chatMessagesRepository.save(ChatMessages.builder()
+                .userChat(userRepository.findByEmail(god.getEmail()))
+                .build());
+        chatMessagesRepository.save(ChatMessages.builder()
+                .userChat(userRepository.findByEmail(admin.getEmail()))
+                .build());
         createContact();
         createCategories();
         return "redirect:/gowithme/admin";

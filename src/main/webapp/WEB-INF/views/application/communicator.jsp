@@ -27,10 +27,10 @@
             <div class="w3-container">
                 <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span
                     class="w3-opacity w3-large">Borge Refsnes</span>
-                <h6>Subject: Remember Me</h6>
-                <p>Hello, i just wanted to let you know that i'll be home at...</p>
+                <h6>this place is for "City: category"</h6>
             </div>
         </a>
+
 
 
         <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
@@ -49,6 +49,7 @@
                 <p>Welcome!</p>
             </div>
         </a>
+
     </div>
 </nav>
 
@@ -161,28 +162,50 @@
                 W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
         </div>
         <div class="input-container">
-            <textarea id="chat-input" placeholder="Napisz wiadomość..."></textarea>
+            <textarea class="chat-input" placeholder="Napisz wiadomość..."></textarea>
             <button class="w3-button w3-black send-button" type="submit">
                 <i class="fa fa-paper-plane"></i> Wyślij
             </button>
         </div>
     </div>
 
-    <div id="Jane" class="w3-container person">
+    <div id="Jane" class="w3-container person chat-wrapper">
         <br>
 
-        <h5 class="w3-opacity">Subject: None</h5>
-        <h4><i class="fa fa-clock-o"></i> From Jane Doe, Sep 25, 2015.</h4>
-        <a class="w3-button w3-light-grey">Reply<i class="w3-margin-left fa fa-mail-reply"></i></a>
-        <a class="w3-button w3-light-grey">Forward<i class="w3-margin-left fa fa-arrow-right"></i></a>
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.</p>
-        <p>Forever yours,<br>Jane</p>
+        <div class="chat-bubble user1">
+            <p>Cześć, jak się masz?</p>
+        </div>
+
+
+
+        <div class="chat-bubble user2">
+            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
+                Ty
+                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+        </div>
+
+        <div class="chat-bubble user1">
+            <p>Też dobrze, dzięki za zapytanie.</p>
+        </div>
+        <div class="chat-bubble user1">
+            <p>Też dobrze, dzięki za zapytanie.</p>
+        </div>
+        <div class="chat-bubble user1">
+            <p>Też dobrze, dzięki za zapytanie.</p>
+        </div>
+        <div class="chat-bubble user2">
+            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
+                Ty
+                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+        </div>
+        <div class="input-container">
+            <textarea class="chat-input" placeholder="Napisz wiadomość..."></textarea>
+            <button class="w3-button w3-black send-button" type="submit">
+                <i class="fa fa-paper-plane"></i> Wyślij
+            </button>
+        </div>
     </div>
 
     <div id="John" class="w3-container person">

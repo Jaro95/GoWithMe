@@ -6,6 +6,8 @@ import pl.coderslab.dto.RegistrationDTO;
 import pl.coderslab.model.Role;
 import pl.coderslab.model.User;
 import pl.coderslab.model.UserDetails;
+import pl.coderslab.model.chat.ChatMessages;
+import pl.coderslab.repository.ChatMessagesRepository;
 import pl.coderslab.repository.RoleRepository;
 import pl.coderslab.repository.UserDetailsRepository;
 import pl.coderslab.repository.UserRepository;
@@ -23,14 +25,16 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserDetailsRepository userDetailsRepository;
     private final EmailService emailService;
+    private final ChatMessagesRepository chatMessagesRepository;
 
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
-                           BCryptPasswordEncoder passwordEncoder, UserDetailsRepository userDetailsRepository, EmailService emailService) {
+                           BCryptPasswordEncoder passwordEncoder, UserDetailsRepository userDetailsRepository, EmailService emailService, ChatMessagesRepository chatMessagesRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.userDetailsRepository = userDetailsRepository;
         this.emailService = emailService;
+        this.chatMessagesRepository = chatMessagesRepository;
     }
 
     @Override
@@ -54,6 +58,9 @@ public class UserServiceImpl implements UserService {
                 .lastName(user.getLastName())
                 .city(user.getCity())
                 .user(userRepository.findByEmail(user.getEmail())).build());
+        chatMessagesRepository.save(ChatMessages.builder()
+                .userChat(userRepository.findByEmail(user.getEmail()))
+                .build());
        // emailService.sendVerificationEmail(user.getEmail(),userRepository.findByEmail(user.getEmail()).getToken());
     }
 
