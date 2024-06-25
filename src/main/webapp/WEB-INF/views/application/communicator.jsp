@@ -90,7 +90,7 @@
     <a href="javascript:void(0)" class="w3-hide-large w3-red w3-button w3-right w3-margin-top w3-margin-right"
        onclick="document.getElementById('id01').style.display='block'"><i class="fa fa-pencil"></i></a>
 
-    <div id="Borge" class="w3-container person">
+    <div id="Borge" class="w3-container person chat-wrapper">
         <br>
 
         <div class="chat-bubble user1">
@@ -102,7 +102,48 @@
                 ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
                 W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
         </div>
-
+        <div class="chat-bubble user2">
+            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
+                Ty
+                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+        </div>
+        <div class="chat-bubble user2">
+            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
+                Ty
+                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+        </div>
+        <div class="chat-bubble user2">
+            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
+                Ty
+                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+        </div>
+        <div class="chat-bubble user2">
+            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
+                Ty
+                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+        </div>
+        <div class="chat-bubble user2">
+            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
+                Ty
+                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+        </div>
+        <div class="chat-bubble user2">
+            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
+                Ty
+                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+        </div>
+        <div class="chat-bubble user2">
+            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
+                Ty
+                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+        </div>
 
         <div class="chat-bubble user1">
             <p>Też dobrze, dzięki za zapytanie.</p>
@@ -113,10 +154,15 @@
         <div class="chat-bubble user1">
             <p>Też dobrze, dzięki za zapytanie.</p>
         </div>
-
+        <div class="chat-bubble user2">
+            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
+                Ty
+                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+        </div>
         <div class="input-container">
-            <textarea id="chatInput" placeholder="Napisz wiadomość..."></textarea>
-            <button class="w3-button w3-black" type="submit">
+            <textarea id="chat-input" placeholder="Napisz wiadomość..."></textarea>
+            <button class="w3-button w3-black send-button" type="submit">
                 <i class="fa fa-paper-plane"></i> Wyślij
             </button>
         </div>
