@@ -22,34 +22,54 @@
             class="fa fa-inbox w3-margin-right"></i>Inbox (3)<i class="fa fa-caret-down w3-margin-left"></i></a>
     <div id="Demo1" class="w3-hide w3-animate-left">
 
-        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
-           onclick="openMail('Borge');w3_close();" id="33">
+        <c:if test="${not empty emptyChat}">
+
             <div class="w3-container">
-                <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span
-                    class="w3-opacity w3-large">Borge Refsnes</span>
-                <h6>this place is for "City: category"</h6>
+                <span>${emptyChat}</span>
             </div>
-        </a>
+        </c:if>
+
+        <c:if test="${empty emptyChat}">
+
+            <c:forEach items="${userList}" var="user">
+                    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
+                       onclick="openMail('${user.firstName}');w3_close();">
+                        <div class="w3-container">
+                            <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span
+                                class="w3-opacity w3-large">${user.firstName} ${user.lastName}</span>
+                            <h6>${user.city}: ${user.age}"</h6>
+                        </div>
+                    </a>
+            </c:forEach>
 
 
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
+               onclick="openMail('Borge');w3_close();" id="33">
+                <div class="w3-container">
+                    <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span
+                        class="w3-opacity w3-large">Borge Refsnes</span>
+                    <h6>this place is for "City: category"</h6>
+                </div>
+            </a>
 
-        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
-           onclick="openMail('Jane');w3_close();">
-            <div class="w3-container">
-                <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span
-                    class="w3-opacity w3-large">Jane Doe</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-            </div>
-        </a>
-        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
-           onclick="openMail('John');w3_close();">
-            <div class="w3-container">
-                <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span
-                    class="w3-opacity w3-large">John Doe</span>
-                <p>Welcome!</p>
-            </div>
-        </a>
 
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
+               onclick="openMail('Jane');w3_close();">
+                <div class="w3-container">
+                    <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span
+                        class="w3-opacity w3-large">Jane Doe</span>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                </div>
+            </a>
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
+               onclick="openMail('John');w3_close();">
+                <div class="w3-container">
+                    <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span
+                        class="w3-opacity w3-large">John Doe</span>
+                    <p>Welcome!</p>
+                </div>
+            </a>
+        </c:if>
     </div>
 </nav>
 
@@ -177,7 +197,6 @@
         </div>
 
 
-
         <div class="chat-bubble user2">
             <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
                 Ty
@@ -248,7 +267,7 @@
         }
     }
 
-    openMail("Borge")
+    openMail()
 
     function openMail(personName) {
         var i;

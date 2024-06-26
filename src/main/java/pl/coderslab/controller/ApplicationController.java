@@ -21,9 +21,7 @@ import pl.coderslab.repository.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -150,7 +148,7 @@ public class ApplicationController {
         model.addAttribute("waitOnAccessToActivityDTO", new WaitingOnAccessToActivityDTO(activityId, id));
         model.addAttribute("id", id);
         model.addAttribute("activityId", activityId);
-        model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(userDetails.getUser()).build());
+        model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(userDetails).build());
         return "application/detailsUserActivity";
     }
 
@@ -357,24 +355,47 @@ public class ApplicationController {
     }
 
     @PostMapping("/sendMessage")
-    public String postSendMessage(SendMessageDTO sendMessageDTO,@RequestParam String url ,
+    public String postSendMessage(SendMessageDTO sendMessageDTO, @RequestParam String url,
                                   @AuthenticationPrincipal CurrentUser currentUser,
                                   RedirectAttributes redirectAttributes) {
         messagesRepository.save(Messages.builder()
                 .senderMessage(userDetailsRepository.findByUser(currentUser.getUser()))
                 .content(sendMessageDTO.content())
                 .sendTime(LocalDateTime.now())
-                .chatMessages(chatMessagesRepository.findByUserChat(sendMessageDTO.userReceiver()))
+                .chat(chatMessagesRepository.findByUserChat(sendMessageDTO.userReceiver()))
                 .build());
-
-        System.out.println(sendMessageDTO.userReceiver().toString() + " " + sendMessageDTO.content());
+        UserDetails sender = userDetailsRepository.findByUser(currentUser.getUser());
+        ChatMessages chatMessages = chatMessagesRepository.findByUserChat(sender);
+        List<Messages> messagesSender = chatMessages.getMessages();
+        messagesSender.add(messagesRepository.findFirstBySenderMessageOrderBySendTimeDesc(sender));
+        chatMessages.setMessages(messagesSender);
+        chatMessagesRepository.save(chatMessages);
         redirectAttributes.addFlashAttribute("messageSend", "Wiadomość wysłana");
         return "redirect:" + url;
     }
 
     @GetMapping("/chat")
     public String getChat(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
-        model.addAttribute("userDetails", userDetailsRepository.findByUserId(currentUser.getUser().getId()));
+        ChatMessages userMessages = chatMessagesRepository
+                .findByUserChat(userDetailsRepository.findByUser(currentUser.getUser()));
+        List<Messages> recipientMessage = messagesRepository.findByChat(userMessages);
+        if(userMessages.getMessages().isEmpty() && recipientMessage.isEmpty()) {
+            model.addAttribute("emptyChat", "Nie posiadasz żadnych konwersacji");
+            return "application/communicator";
+        }
+        for (Messages message : userMessages.getMessages()) {
+            System.out.println(message.toString());
+        }
+        Set<UserDetails> userSender = userMessages.getMessages()
+                .stream()
+                .map(el-> el.getChat().getUserChat())
+                .collect(Collectors.toSet());
+
+        Set<UserDetails> recipientMessages = messagesRepository.allUserMessages(userMessages);
+        recipientMessages.addAll(userSender);
+        System.out.println(userMessages.getUserChat().getId() + " user id");
+        model.addAttribute("userId", userMessages.getUserChat().getId());
+        model.addAttribute("userList",recipientMessages);
         return "application/communicator";
     }
 

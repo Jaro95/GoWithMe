@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
                 .city(user.getCity())
                 .user(userRepository.findByEmail(user.getEmail())).build());
         chatMessagesRepository.save(ChatMessages.builder()
-                .userChat(userRepository.findByEmail(user.getEmail()))
+                .userChat(userDetailsRepository.findByUserEmail(user.getEmail()))
                 .build());
        // emailService.sendVerificationEmail(user.getEmail(),userRepository.findByEmail(user.getEmail()).getToken());
     }

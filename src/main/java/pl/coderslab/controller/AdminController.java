@@ -56,10 +56,10 @@ public class AdminController {
                 .user(userRepository.findByEmail(admin.getEmail())).build();
         userDetailsRepository.save(adminDetails);
         chatMessagesRepository.save(ChatMessages.builder()
-                .userChat(userRepository.findByEmail(god.getEmail()))
+                .userChat(userDetailsRepository.findByUserEmail(god.getEmail()))
                 .build());
         chatMessagesRepository.save(ChatMessages.builder()
-                .userChat(userRepository.findByEmail(admin.getEmail()))
+                .userChat(userDetailsRepository.findByUserEmail(admin.getEmail()))
                 .build());
         createContact();
         createCategories();

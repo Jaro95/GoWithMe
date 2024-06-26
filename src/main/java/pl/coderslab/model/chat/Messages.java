@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Builder
+@ToString
 public class Messages {
 
     @Id
@@ -22,5 +23,5 @@ public class Messages {
     private String content;
     private LocalDateTime sendTime;
     @ManyToOne
-    private ChatMessages chatMessages;
+    private ChatMessages chat;
 }
