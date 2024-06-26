@@ -375,28 +375,55 @@ public class ApplicationController {
     }
 
     @GetMapping("/chat")
-    public String getChat(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
-        ChatMessages userMessages = chatMessagesRepository
+    public String getChat(@RequestParam(required = false) Integer page,
+                          @RequestParam(required = false) Integer size,
+                          Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+        ChatMessages userChat = chatMessagesRepository
                 .findByUserChat(userDetailsRepository.findByUser(currentUser.getUser()));
-        List<Messages> recipientMessage = messagesRepository.findByChat(userMessages);
-        if(userMessages.getMessages().isEmpty() && recipientMessage.isEmpty()) {
+        List<Messages> recipientMessage = messagesRepository.findByChat(userChat);
+        if(userChat.getMessages().isEmpty() && recipientMessage.isEmpty()) {
             model.addAttribute("emptyChat", "Nie posiadasz żadnych konwersacji");
             return "application/communicator";
         }
-        for (Messages message : userMessages.getMessages()) {
-            System.out.println(message.toString());
-        }
-        Set<UserDetails> userSender = userMessages.getMessages()
+        Set<UserDetails> userSender = userChat.getMessages()
                 .stream()
                 .map(el-> el.getChat().getUserChat())
                 .collect(Collectors.toSet());
-
-        Set<UserDetails> recipientMessages = messagesRepository.allUserMessages(userMessages);
+        Set<UserDetails> recipientMessages = messagesRepository.allUserMessages(userChat);
         recipientMessages.addAll(userSender);
-        System.out.println(userMessages.getUserChat().getId() + " user id");
-        model.addAttribute("userId", userMessages.getUserChat().getId());
-        model.addAttribute("userList",recipientMessages);
+        List<UserDetails> allSender = new ArrayList<>(recipientMessages);
+        int pageNumber = (page != null && page >= 0) ? page : 1;
+        int pageSize = (size != null && size > 0) ? size : 6;
+        List<UserDetails> paginatedList = getPaginatedList(allSender, pageNumber, pageSize);
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("userId", userChat.getUserChat().getId());
+        model.addAttribute("totalPages", (int) Math.ceil((double) allSender.size() / pageSize));
+        model.addAttribute("userList",paginatedList);
         return "application/communicator";
     }
 
+    private List<UserDetails> getPaginatedList(List<UserDetails> dataList, int pageNumber, int pageSize) {
+        int fromIndex = (pageNumber - 1) * pageSize;
+        int toIndex = Math.min(fromIndex + pageSize, dataList.size());
+
+        if (fromIndex >= dataList.size() || fromIndex < 0) {
+            return Collections.emptyList(); // Zwraca pustą listę jeśli indeks jest poza zakresem
+        }
+
+        return dataList.subList(fromIndex, toIndex);
+    }
+/*
+@ModelAttribute
+    public void setNotificationList(@RequestParam Optional<Integer> page,
+                                    @RequestParam Optional<Integer> size,
+                                    @AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(6);
+        Page<Notification> notificationPage = notificationRepository.findAllByUserDetailsIdOrderByCreateDateTimeDesc
+                (userDetailsRepository.findByUser(currentUser.getUser()).getId(), PageRequest.of(currentPage - 1, pageSize));
+        model.addAttribute("notificationsList", notificationPage);
+        // return notificationRepository.findAllByUserDetailsOrderByCreateDateTimeDesc(userDetailsRepository.findByUser(currentUser.getUser()));
+    }
+ */
 }

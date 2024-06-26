@@ -201,6 +201,21 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    $(document).on('click', '.prev-user, .next-user', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $.get(url, function(data) {
+            var newContent = $(data).find('.user-list').html();
+            var newNavigation = $(data).find('.user-buttons').html();
+            $('.user-list').html(newContent);
+            $('.user-buttons').html(newNavigation);
+        }).fail(function() {
+            alert('Wystąpił błąd podczas ładowania danych.');
+        });
+    });
+});
+
 document.addEventListener("DOMContentLoaded", function() {
     const chatInput = document.getElementById('chatInput');
 
