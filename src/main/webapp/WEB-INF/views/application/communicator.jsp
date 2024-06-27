@@ -15,9 +15,9 @@
 
     <a href="javascript:void(0)" onclick="w3_close()" title="Close Sidemenu"
        class="w3-bar-item w3-button w3-hide-large w3-large">Close <i class="fa fa-remove"></i></a>
-<%--    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"--%>
-<%--       onclick="document.getElementById('id01').style.display='block'">New Message <i--%>
-<%--            class="w3-padding fa fa-pencil"></i></a>--%>
+    <%--    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"--%>
+    <%--       onclick="document.getElementById('id01').style.display='block'">New Message <i--%>
+    <%--            class="w3-padding fa fa-pencil"></i></a>--%>
     <a id="myBtn" onclick="myFunc('Demo1')" href="javascript:void(0)" class="w3-bar-item w3-button"><i
             class="fa fa-inbox w3-margin-right"></i>Inbox<i class="fa fa-caret-down w3-margin-left"></i></a>
     <div id="Demo1" class="w3-hide w3-animate-left user-list user-buttons">
@@ -38,7 +38,8 @@
                 </c:if>
             </div>
             <c:forEach items="${userList}" var="user">
-                <a href="/gowithme/app" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
+                <a href="/gowithme/app/chat?userMessageId=${user.id}"
+                   class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
                    onclick="openMail('${user.firstName}');w3_close();">
                     <div class="w3-container">
                         <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span
@@ -118,165 +119,53 @@
      title="Close Sidemenu" id="myOverlay"></div>
 
 <!-- Page content -->
-<div class="w3-main">
+<div class="w3-main chat-wrapper">
     <i class="fa fa-bars w3-button w3-white w3-hide-large w3-xlarge w3-margin-left w3-margin-top"
        onclick="w3_open()"></i>
-<%--    <a href="javascript:void(0)" class="w3-hide-large w3-red w3-button w3-right w3-margin-top w3-margin-right"--%>
-<%--       onclick="document.getElementById('id01').style.display='block'"><i class="fa fa-pencil"></i></a>--%>
 
-<%--    <div id="Borge" class="w3-container person chat-wrapper">--%>
-<%--        <br>--%>
-
-<%--        <div class="chat-bubble user1">--%>
-<%--            <p>Cześć, jak się masz?</p>--%>
-<%--        </div>--%>
-<%--        <div class="chat-bubble user2">--%>
-<%--            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A--%>
-<%--                Ty--%>
-<%--                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?--%>
-<%--                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>--%>
-<%--        </div>--%>
-<%--        <div class="chat-bubble user2">--%>
-<%--            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A--%>
-<%--                Ty--%>
-<%--                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?--%>
-<%--                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>--%>
-<%--        </div>--%>
-<%--        <div class="chat-bubble user2">--%>
-<%--            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A--%>
-<%--                Ty--%>
-<%--                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?--%>
-<%--                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>--%>
-<%--        </div>--%>
-<%--        <div class="chat-bubble user2">--%>
-<%--            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A--%>
-<%--                Ty--%>
-<%--                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?--%>
-<%--                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>--%>
-<%--        </div>--%>
-<%--        <div class="chat-bubble user2">--%>
-<%--            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A--%>
-<%--                Ty--%>
-<%--                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?--%>
-<%--                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>--%>
-<%--        </div>--%>
-<%--        <div class="chat-bubble user2">--%>
-<%--            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A--%>
-<%--                Ty--%>
-<%--                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?--%>
-<%--                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>--%>
-<%--        </div>--%>
-<%--        <div class="chat-bubble user2">--%>
-<%--            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A--%>
-<%--                Ty--%>
-<%--                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?--%>
-<%--                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>--%>
-<%--        </div>--%>
-<%--        <div class="chat-bubble user2">--%>
-<%--            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A--%>
-<%--                Ty--%>
-<%--                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?--%>
-<%--                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>--%>
-<%--        </div>--%>
-
-<%--        <div class="chat-bubble user1">--%>
-<%--            <p>Też dobrze, dzięki za zapytanie.</p>--%>
-<%--        </div>--%>
-<%--        <div class="chat-bubble user1">--%>
-<%--            <p>Też dobrze, dzięki za zapytanie.</p>--%>
-<%--        </div>--%>
-<%--        <div class="chat-bubble user1">--%>
-<%--            <p>Też dobrze, dzięki za zapytanie.</p>--%>
-<%--        </div>--%>
-<%--        <div class="chat-bubble user2">--%>
-<%--            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A--%>
-<%--                Ty--%>
-<%--                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?--%>
-<%--                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>--%>
-<%--        </div>--%>
-<%--        <div class="input-container">--%>
-<%--            <textarea class="chat-input" placeholder="Napisz wiadomość..."></textarea>--%>
-<%--            <button class="w3-button w3-black send-button" type="submit">--%>
-<%--                <i class="fa fa-paper-plane"></i> Wyślij--%>
-<%--            </button>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-
-    <c:forEach items="${userConversation}" var="user">
-    <div id="${user.firstName}" class="w3-container person chat-wrapper">
-        <c:forEach items="${user.meesages}" var="message" >
-            <br>
-
-            <div class="chat-bubble user1">
-                <p>Cześć, jak się masz?</p>
+    <c:if test="${not empty userSenderMessage}">
+        <div id="${userSenderMessage}" class="w3-container person chat-container">
+            <c:forEach items="${userConversation}" var="message">
+                <c:if test="${message.senderMessage != currentUserMessage}">
+                    <div class="chat-bubble user1">
+                        <p>${message.content}</p>
+                    </div>
+                </c:if>
+                <c:if test="${message.senderMessage eq currentUserMessage}">
+                    <div class="chat-bubble user2">
+                        <p>${message.content}</p>
+                    </div>
+                </c:if>
+                <div class="chat-bubble user2">
+                    <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku,
+                        dziękuję! A
+                        Ty
+                        ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                        W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+                </div>
+                <div class="chat-bubble user2">
+                    <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku,
+                        dziękuję! A
+                        Ty
+                        ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                        W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+                </div>
+                <div class="chat-bubble user2">
+                    <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku,
+                        dziękuję! A
+                        Ty
+                        ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
+                        W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
+                </div>
+            </c:forEach>
+            <div class="input-container">
+                <textarea class="chat-input" placeholder="Napisz wiadomość..."></textarea>
+                <button class="w3-button w3-black send-button" type="submit">
+                    <i class="fa fa-paper-plane"></i> Wyślij
+                </button>
             </div>
-
-
-            <div class="chat-bubble user2">
-                <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
-                    Ty
-                    ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
-                    W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
-            </div>
-        </c:forEach>
-        <div class="input-container">
-            <textarea class="chat-input" placeholder="Napisz wiadomość..."></textarea>
-            <button class="w3-button w3-black send-button" type="submit">
-                <i class="fa fa-paper-plane"></i> Wyślij
-            </button>
         </div>
-    </div>
-    </c:forEach>
-
-    <div id="b" class="w3-container person chat-wrapper">
-        <br>
-
-        <div class="chat-bubble user1">
-            <p>Cześć, jak się masz?</p>
-        </div>
-
-
-        <div class="chat-bubble user2">
-            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
-                Ty
-                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
-                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
-        </div>
-
-        <div class="chat-bubble user1">
-            <p>Też dobrze, dzięki za zapytanie.</p>
-        </div>
-        <div class="chat-bubble user1">
-            <p>Też dobrze, dzięki za zapytanie.</p>
-        </div>
-        <div class="chat-bubble user1">
-            <p>Też dobrze, dzięki za zapytanie.</p>
-        </div>
-        <div class="chat-bubble user2">
-            <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A
-                Ty
-                ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
-                W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
-        </div>
-        <div class="input-container">
-            <textarea class="chat-input" placeholder="Napisz wiadomość..."></textarea>
-            <button class="w3-button w3-black send-button" type="submit">
-                <i class="fa fa-paper-plane"></i> Wyślij
-            </button>
-        </div>
-    </div>
-
-    <div id="John" class="w3-container person">
-        <br>
-
-        <h5 class="w3-opacity">Subject: None</h5>
-        <h4><i class="fa fa-clock-o"></i> From John Doe, Sep 23, 2015.</h4>
-        <a class="w3-button w3-light-grey">Reply<i class="w3-margin-left fa fa-mail-reply"></i></a>
-        <a class="w3-button w3-light-grey">Forward<i class="w3-margin-left fa fa-arrow-right"></i></a>
-        <hr>
-        <p>Welcome.</p>
-        <p>That's it!</p>
-    </div>
+    </c:if>
 
 </div>
 

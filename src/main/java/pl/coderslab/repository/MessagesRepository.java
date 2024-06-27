@@ -14,4 +14,6 @@ public interface MessagesRepository extends JpaRepository<Messages, Long> {
     Set<UserDetails> allUserMessages(ChatMessages chatMessages);
     Messages findFirstBySenderMessageOrderBySendTimeDesc(UserDetails userDetails);
     List<Messages> findByChat(ChatMessages chatMessages);
+    @Query("select m from Messages m where m.chat = ?1 and m.senderMessage.id = ?2 ")
+    List<Messages> allConversationWithUser(ChatMessages chatMessages,long id);
 }

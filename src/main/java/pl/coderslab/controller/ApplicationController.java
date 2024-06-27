@@ -13,12 +13,13 @@ import pl.coderslab.dto.SendMessageDTO;
 import pl.coderslab.model.chat.ChatMessages;
 import pl.coderslab.model.chat.Messages;
 import pl.coderslab.service.CurrentUser;
-import pl.coderslab.service.NotificationService;
+import pl.coderslab.service.ApplicationService;
 import pl.coderslab.service.UserServiceImpl;
 import pl.coderslab.dto.WaitingOnAccessToActivityDTO;
 import pl.coderslab.model.*;
 import pl.coderslab.repository.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -34,7 +35,7 @@ public class ApplicationController {
     private final ActivitiesPlanRepository activitiesPlanRepository;
     private final CategoryRepository categoryRepository;
     private final WaitOnAccessToActivityRepository waitOnAccessToActivityRepository;
-    private final NotificationService notificationService;
+    private final ApplicationService applicationService;
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
     private final UserServiceImpl userServiceImpl;
@@ -122,7 +123,7 @@ public class ApplicationController {
         activitiesPlan.setUsersJoined(activitiesPlan.getUsersJoined()
                 .stream().filter(el -> !el.equals(userDetailsRepository.findById(userId).get())).collect(Collectors.toList()));
         activitiesPlanRepository.save(activitiesPlan);
-        notificationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(), userDetailsRepository.findByUserId(currentUser.getUser().getId())
+        applicationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(), userDetailsRepository.findByUserId(currentUser.getUser().getId())
                 , " usunął Cię z aktywności ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageDelete", "Usunięto użytkownika z aktywności");
         return "redirect:/gowithme/app/activity/edit?id=" + activityId;
@@ -170,7 +171,7 @@ public class ApplicationController {
                 .requestDate(LocalDateTime.now()).build();
 
         waitOnAccessToActivityRepository.save(waitOnAccessToActivity);
-        notificationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(), userDetailsRepository.findByUserId(currentUser.getUser().getId()),
+        applicationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(), userDetailsRepository.findByUserId(currentUser.getUser().getId()),
                 " wysłał prośbę o dołączenie do ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageAssign", "Wysłano prośbę o dołączenie");
         return "redirect:/gowithme/app/activity/details?id=" + waitingOnAccessToActivityDTO.userCreatedActivityId() + "&activityId=" + waitingOnAccessToActivityDTO.activityPlanId();
@@ -195,7 +196,7 @@ public class ApplicationController {
         userDetailsList.add(userDetailsRepository.findById(userId).get());
         activitiesPlan.setUsersJoined(userDetailsList);
         activitiesPlanRepository.save(activitiesPlan);
-        notificationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(),
+        applicationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(),
                 activitiesPlan.getUser(), " dodał Cię do aktywności ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageSuccess", "Dodano użytkownika do aktywności");
         return "redirect:/gowithme/app/activity/assign?id=" + activityId;
@@ -206,7 +207,7 @@ public class ApplicationController {
                                                RedirectAttributes redirectAttributes) {
         waitOnAccessToActivityRepository.deleteFromWaitingList(activityId, userId);
         ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activityId).get();
-        notificationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(),
+        applicationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(),
                 activitiesPlan.getUser(), " usunął Cię z listy oczekujących dla aktywności ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageDelete", "Usunięto użytkownika z listy oczekujących");
         return "redirect:/gowithme/app/activity/assign?id=" + activityId;
@@ -251,7 +252,7 @@ public class ApplicationController {
         waitOnAccessToActivityRepository.deleteFromWaitingList(activitiesPlan.getId(), userDetails.getId());
         redirectAttributes.addFlashAttribute("messageActivity",
                 "Wypisałeś się z aktywności " + activitiesPlan.getCategory().getName());
-        notificationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(),
+        applicationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(),
                 userDetails, " wypisał się z aktywności ", activitiesPlan.getCategory());
         return "redirect:/gowithme/app/activities/userAssigned";
     }
@@ -265,7 +266,7 @@ public class ApplicationController {
                 userDetailsRepository.findByUser(currentUser.getUser()).getId());
         redirectAttributes.addFlashAttribute("messageActivity",
                 "Usunąłeś prośbę o dołączenie do aktywności " + activitiesPlan.getCategory().getName());
-        notificationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(),
+        applicationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(),
                 userDetails, " usunął prośbę o dołączenie do aktywności ", activitiesPlan.getCategory());
         return "redirect:/gowithme/app/activities/userWaitingList";
     }
@@ -381,49 +382,42 @@ public class ApplicationController {
         ChatMessages userChat = chatMessagesRepository
                 .findByUserChat(userDetailsRepository.findByUser(currentUser.getUser()));
         List<Messages> recipientMessage = messagesRepository.findByChat(userChat);
-        if(userChat.getMessages().isEmpty() && recipientMessage.isEmpty()) {
+        if (userChat.getMessages().isEmpty() && recipientMessage.isEmpty()) {
             model.addAttribute("emptyChat", "Nie posiadasz żadnych konwersacji");
             return "application/communicator";
         }
         Set<UserDetails> userSender = userChat.getMessages()
                 .stream()
-                .map(el-> el.getChat().getUserChat())
+                .map(el -> el.getChat().getUserChat())
                 .collect(Collectors.toSet());
         Set<UserDetails> recipientMessages = messagesRepository.allUserMessages(userChat);
         recipientMessages.addAll(userSender);
         List<UserDetails> allSender = new ArrayList<>(recipientMessages);
         int pageNumber = (page != null && page >= 0) ? page : 1;
         int pageSize = (size != null && size > 0) ? size : 6;
-        List<UserDetails> paginatedList = getPaginatedList(allSender, pageNumber, pageSize);
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("userId", userChat.getUserChat().getId());
         model.addAttribute("totalPages", (int) Math.ceil((double) allSender.size() / pageSize));
-        model.addAttribute("userList",paginatedList);
+        model.addAttribute("userList", applicationService.getPaginatedList(allSender, pageNumber, pageSize));
         return "application/communicator";
     }
 
-    private List<UserDetails> getPaginatedList(List<UserDetails> dataList, int pageNumber, int pageSize) {
-        int fromIndex = (pageNumber - 1) * pageSize;
-        int toIndex = Math.min(fromIndex + pageSize, dataList.size());
+    @ModelAttribute
+    public void setConversationUser(@RequestParam(required = false) Integer userMessageId, Model model, @AuthenticationPrincipal CurrentUser currentUser,
+                                    HttpServletRequest request) {
+        if (request.getRequestURI().endsWith("/chat") && userMessageId != null) {
 
-        if (fromIndex >= dataList.size() || fromIndex < 0) {
-            return Collections.emptyList(); // Zwraca pustą listę jeśli indeks jest poza zakresem
+            ChatMessages userChat = chatMessagesRepository
+                    .findByUserChat(userDetailsRepository.findByUser(currentUser.getUser()));
+            UserDetails sender = userDetailsRepository.findByUserId(userMessageId);
+            List<Messages> messagesFromUser = messagesRepository.allConversationWithUser(userChat, userMessageId);
+            messagesFromUser.addAll(userChat.getMessages().stream().filter(el -> el.getChat().getUserChat().equals(sender)).toList());
+            messagesFromUser.sort(Comparator.comparing(Messages::getSendTime));
+            model.addAttribute("userSenderMessage", sender.getFirstName());
+            model.addAttribute("currentUserMessage", userChat.getUserChat());
+            model.addAttribute("userConversation", messagesFromUser);
+
         }
-
-        return dataList.subList(fromIndex, toIndex);
     }
-/*
-@ModelAttribute
-    public void setNotificationList(@RequestParam Optional<Integer> page,
-                                    @RequestParam Optional<Integer> size,
-                                    @AuthenticationPrincipal CurrentUser currentUser, Model model) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(6);
-        Page<Notification> notificationPage = notificationRepository.findAllByUserDetailsIdOrderByCreateDateTimeDesc
-                (userDetailsRepository.findByUser(currentUser.getUser()).getId(), PageRequest.of(currentPage - 1, pageSize));
-        model.addAttribute("notificationsList", notificationPage);
-        // return notificationRepository.findAllByUserDetailsOrderByCreateDateTimeDesc(userDetailsRepository.findByUser(currentUser.getUser()));
-    }
- */
 }

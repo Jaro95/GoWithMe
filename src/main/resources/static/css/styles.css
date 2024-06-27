@@ -347,7 +347,22 @@ a {
     height:12.4%;
 }
 
-
+.chat-wrapper {
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: flex-end; !* Utrzymywanie pola tekstowego na dole *!*/
+    /*width: 100%;*/
+    /*height: 93%;*/
+    /*max-width: 83%; !*!* Maksymalna szerokość *!*!*/
+    /*padding-bottom: 60px; !* Odstęp dla pola tekstowego *!*/
+    /*box-sizing: border-box;*/
+    /*overflow-y: auto; !* Przewijanie dla wiadomości *!*/
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Domyślnie wyrównuje wiadomości po lewej stronie */
+    gap: 10px; /* Odstęp między dymkami czatu */
+    padding: 20px; /* Padding wokół kontenera */
+}
 
 .chat-bubble {
     padding: 10px 20px;
@@ -419,14 +434,3 @@ textarea {
     max-height: 100px; /* Limit the height to prevent excessive growth */
 }
 
-.chat-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end; /* Utrzymywanie pola tekstowego na dole */
-    width: 100%;
-    height: 93%;
-    max-width: 83%; /*!* Maksymalna szerokość *!*/
-    padding-bottom: 60px; /* Odstęp dla pola tekstowego */
-    box-sizing: border-box;
-    overflow-y: auto; /* Przewijanie dla wiadomości */
-}
