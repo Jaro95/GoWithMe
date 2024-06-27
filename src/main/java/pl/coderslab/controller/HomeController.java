@@ -68,7 +68,7 @@ public class HomeController {
             return "redirect:/gowithme/login";
         }
         user.setEnabled(true);
-        user.setToken("verificated");
+        user.setToken("verified");
         userRepository.save(user);
         redirectAttributes.addFlashAttribute("message", "Konto zostało aktywowane");
         return "redirect:/gowithme/login";

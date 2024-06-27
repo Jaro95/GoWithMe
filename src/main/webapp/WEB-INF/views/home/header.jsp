@@ -47,13 +47,13 @@
     </div>
 </div>
 
-<!-- Sidebar on small screens when clicking the menu icon -->
-<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium " style="display:none"
-     id="mySidebar">
-    <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
-    <a href="/gowithme/home" onclick="w3_close()" class="fa fa-user w3-button">Home</a>
-    <a href="/gowithme/contact" onclick="w3_close()" class="w3-bar-item w3-button">Kontakt</a>
-    <a href="/gowithme/login" onclick="w3_close()" class="fa fa-user w3-button">Logowanie</a>
-    <a href="/gowithme/registration" onclick="w3_close()" class="w3-bar-item w3-button">Rejestracja</a>
+<%--<!-- Sidebar on small screens when clicking the menu icon -->--%>
+<%--<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium " style="display:none"--%>
+<%--     id="mySidebar">--%>
+<%--    <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>--%>
+<%--    <a href="/gowithme/home" onclick="w3_close()" class="fa fa-user w3-button">Home</a>--%>
+<%--    <a href="/gowithme/contact" onclick="w3_close()" class="w3-bar-item w3-button">Kontakt</a>--%>
+<%--    <a href="/gowithme/login" onclick="w3_close()" class="fa fa-user w3-button">Logowanie</a>--%>
+<%--    <a href="/gowithme/registration" onclick="w3_close()" class="w3-bar-item w3-button">Rejestracja</a>--%>
 
-</nav>
+<%--</nav>--%>

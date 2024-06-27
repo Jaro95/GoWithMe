@@ -201,4 +201,28 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    $(document).on('click', '.prev-user, .next-user', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $.get(url, function(data) {
+            var newContent = $(data).find('.user-list').html();
+            var newNavigation = $(data).find('.user-buttons').html();
+            $('.user-list').html(newContent);
+            $('.user-buttons').html(newNavigation);
+        }).fail(function() {
+            alert('Wystąpił błąd podczas ładowania danych.');
+        });
+    });
+});
 
+document.addEventListener("DOMContentLoaded", function() {
+    const chatInput = document.getElementById('chatInput');
+
+    chatInput.addEventListener('input', function() {
+        // Reset textarea height to auto to correctly calculate the new height
+        chatInput.style.height = 'auto';
+        // Set the height according to the scroll height
+        chatInput.style.height = chatInput.scrollHeight + 'px';
+    });
+});

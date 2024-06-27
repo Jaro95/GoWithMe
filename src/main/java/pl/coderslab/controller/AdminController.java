@@ -6,10 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.coderslab.model.chat.ChatMessages;
 import pl.coderslab.service.UserService;
 import pl.coderslab.model.*;
 import pl.coderslab.repository.*;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class AdminController {
     private final RoleRepository roleRepository;
     private final ContactRepository contactRepository;
     private final CategoryRepository categoryRepository;
+    private final ChatMessagesRepository chatMessagesRepository;
 
     @GetMapping("/create-start")
     public String createStart() {
@@ -31,9 +34,17 @@ public class AdminController {
             return "redirect:/gowithme/admin";
         }
         User god = User.builder().email("god@god")
-                .password("qwerty").build();
+                .password("qwerty")
+                .createdAccount(LocalDateTime.now())
+                .enabled(true)
+                .token("verified")
+                .build();
         User admin = User.builder().email("admin@admin")
-                .password("admin").build();
+                .password("admin")
+                .createdAccount(LocalDateTime.now())
+                .enabled(true)
+                .token("verified")
+                .build();
         Role adminRole = Role.builder().name("ROLE_SUPER_ADMIN").build();
         Role godRole = Role.builder().name("ROLE_ADMIN").build();
         Role userRole = Role.builder().name("ROLE_USER").build();
@@ -53,6 +64,12 @@ public class AdminController {
                 .city("Poznań")
                 .user(userRepository.findByEmail(admin.getEmail())).build();
         userDetailsRepository.save(adminDetails);
+        chatMessagesRepository.save(ChatMessages.builder()
+                .userChat(userDetailsRepository.findByUserEmail(god.getEmail()))
+                .build());
+        chatMessagesRepository.save(ChatMessages.builder()
+                .userChat(userDetailsRepository.findByUserEmail(admin.getEmail()))
+                .build());
         createContact();
         createCategories();
         return "redirect:/gowithme/admin";

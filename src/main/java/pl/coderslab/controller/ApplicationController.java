@@ -9,18 +9,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.coderslab.dto.SendMessageDTO;
+import pl.coderslab.model.chat.ChatMessages;
+import pl.coderslab.model.chat.Messages;
 import pl.coderslab.service.CurrentUser;
-import pl.coderslab.service.NotificationService;
+import pl.coderslab.service.ApplicationService;
 import pl.coderslab.service.UserServiceImpl;
 import pl.coderslab.dto.WaitingOnAccessToActivityDTO;
 import pl.coderslab.model.*;
 import pl.coderslab.repository.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -33,10 +35,12 @@ public class ApplicationController {
     private final ActivitiesPlanRepository activitiesPlanRepository;
     private final CategoryRepository categoryRepository;
     private final WaitOnAccessToActivityRepository waitOnAccessToActivityRepository;
-    private final NotificationService notificationService;
+    private final ApplicationService applicationService;
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
     private final UserServiceImpl userServiceImpl;
+    private final ChatMessagesRepository chatMessagesRepository;
+    private final MessagesRepository messagesRepository;
 
 
     @ModelAttribute
@@ -44,7 +48,7 @@ public class ApplicationController {
                                     @RequestParam Optional<Integer> size,
                                     @AuthenticationPrincipal CurrentUser currentUser, Model model) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(3);
+        int pageSize = size.orElse(6);
         Page<Notification> notificationPage = notificationRepository.findAllByUserDetailsIdOrderByCreateDateTimeDesc
                 (userDetailsRepository.findByUser(currentUser.getUser()).getId(), PageRequest.of(currentPage - 1, pageSize));
         model.addAttribute("notificationsList", notificationPage);
@@ -119,7 +123,7 @@ public class ApplicationController {
         activitiesPlan.setUsersJoined(activitiesPlan.getUsersJoined()
                 .stream().filter(el -> !el.equals(userDetailsRepository.findById(userId).get())).collect(Collectors.toList()));
         activitiesPlanRepository.save(activitiesPlan);
-        notificationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(), userDetailsRepository.findByUserId(currentUser.getUser().getId())
+        applicationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(), userDetailsRepository.findByUserId(currentUser.getUser().getId())
                 , " usunął Cię z aktywności ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageDelete", "Usunięto użytkownika z aktywności");
         return "redirect:/gowithme/app/activity/edit?id=" + activityId;
@@ -133,7 +137,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/details")
-    public String getDetailsUserActivity(Model model, @RequestParam long id, @RequestParam long activityId, @AuthenticationPrincipal CurrentUser currentUser) {
+    public String getDetailsUserActivity(Model model, @RequestParam long id, @RequestParam long activityId) {
 
         UserDetails userDetails = userDetailsRepository.findByUserId(id);
         model.addAttribute("firstName", userDetails.getFirstName());
@@ -143,11 +147,15 @@ public class ApplicationController {
         model.addAttribute("description", userDetails.getDescription());
         model.addAttribute("activities", activitiesPlanRepository.findById(activityId).stream().toList());
         model.addAttribute("waitOnAccessToActivityDTO", new WaitingOnAccessToActivityDTO(activityId, id));
+        model.addAttribute("id", id);
+        model.addAttribute("activityId", activityId);
+        model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(userDetails).build());
         return "application/detailsUserActivity";
     }
 
     @PostMapping("/activity/details")
-    public String postDetailsUserActivity(WaitingOnAccessToActivityDTO waitingOnAccessToActivityDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CurrentUser currentUser) {
+    public String postDetailsUserActivity(WaitingOnAccessToActivityDTO waitingOnAccessToActivityDTO, RedirectAttributes redirectAttributes,
+                                          @AuthenticationPrincipal CurrentUser currentUser) {
         ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(waitingOnAccessToActivityDTO.activityPlanId()).get();
         if (currentUser.getUser().getId().equals(activitiesPlan.getUser().getId())) {
             redirectAttributes.addFlashAttribute("messageError", "Nie możesz wysłać prośby o dołączenie do swojej aktywności");
@@ -164,7 +172,7 @@ public class ApplicationController {
                 .requestDate(LocalDateTime.now()).build();
 
         waitOnAccessToActivityRepository.save(waitOnAccessToActivity);
-        notificationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(), userDetailsRepository.findByUserId(currentUser.getUser().getId()),
+        applicationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(), userDetailsRepository.findByUserId(currentUser.getUser().getId()),
                 " wysłał prośbę o dołączenie do ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageAssign", "Wysłano prośbę o dołączenie");
         return "redirect:/gowithme/app/activity/details?id=" + waitingOnAccessToActivityDTO.userCreatedActivityId() + "&activityId=" + waitingOnAccessToActivityDTO.activityPlanId();
@@ -189,7 +197,7 @@ public class ApplicationController {
         userDetailsList.add(userDetailsRepository.findById(userId).get());
         activitiesPlan.setUsersJoined(userDetailsList);
         activitiesPlanRepository.save(activitiesPlan);
-        notificationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(),
+        applicationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(),
                 activitiesPlan.getUser(), " dodał Cię do aktywności ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageSuccess", "Dodano użytkownika do aktywności");
         return "redirect:/gowithme/app/activity/assign?id=" + activityId;
@@ -200,7 +208,7 @@ public class ApplicationController {
                                                RedirectAttributes redirectAttributes) {
         waitOnAccessToActivityRepository.deleteFromWaitingList(activityId, userId);
         ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(activityId).get();
-        notificationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(),
+        applicationService.addNotificationRejectActivity(notificationRepository, userDetailsRepository.findById(userId).get(),
                 activitiesPlan.getUser(), " usunął Cię z listy oczekujących dla aktywności ", activitiesPlan.getCategory());
         redirectAttributes.addFlashAttribute("messageDelete", "Usunięto użytkownika z listy oczekujących");
         return "redirect:/gowithme/app/activity/assign?id=" + activityId;
@@ -245,7 +253,7 @@ public class ApplicationController {
         waitOnAccessToActivityRepository.deleteFromWaitingList(activitiesPlan.getId(), userDetails.getId());
         redirectAttributes.addFlashAttribute("messageActivity",
                 "Wypisałeś się z aktywności " + activitiesPlan.getCategory().getName());
-        notificationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(),
+        applicationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(),
                 userDetails, " wypisał się z aktywności ", activitiesPlan.getCategory());
         return "redirect:/gowithme/app/activities/userAssigned";
     }
@@ -259,7 +267,7 @@ public class ApplicationController {
                 userDetailsRepository.findByUser(currentUser.getUser()).getId());
         redirectAttributes.addFlashAttribute("messageActivity",
                 "Usunąłeś prośbę o dołączenie do aktywności " + activitiesPlan.getCategory().getName());
-        notificationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(),
+        applicationService.addNotificationRejectActivity(notificationRepository, activitiesPlan.getUser(),
                 userDetails, " usunął prośbę o dołączenie do aktywności ", activitiesPlan.getCategory());
         return "redirect:/gowithme/app/activities/userWaitingList";
     }
@@ -310,7 +318,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/profile/edit/editPassword")
-    public String postProfileEditPassword( @RequestParam String password,
+    public String postProfileEditPassword(@RequestParam String password,
                                           @RequestParam String repeatPassword,
                                           @AuthenticationPrincipal CurrentUser currentUser, RedirectAttributes redirectAttributes) {
         if (password.length() < 5) {
@@ -348,5 +356,83 @@ public class ApplicationController {
         return "redirect:/gowithme/app/profile";
     }
 
+    @GetMapping("/user/{id}")
+    public String getUserDetails(@PathVariable long id, Model model) {
 
+        UserDetails userDetails = userDetailsRepository.findByUserId(id);
+        model.addAttribute("firstName", userDetails.getFirstName());
+        model.addAttribute("lastName", userDetails.getLastName());
+        model.addAttribute("city", userDetails.getCity());
+        model.addAttribute("age", userDetails.getAge());
+        model.addAttribute("description", userDetails.getDescription());
+        model.addAttribute("id", id);
+        model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(userDetails).build());
+        return "application/detailsUser";
+    }
+
+    @PostMapping("/sendMessage")
+    public String postSendMessage(SendMessageDTO sendMessageDTO, @RequestParam String url,
+                                  @AuthenticationPrincipal CurrentUser currentUser,
+                                  RedirectAttributes redirectAttributes) {
+        messagesRepository.save(Messages.builder()
+                .senderMessage(userDetailsRepository.findByUser(currentUser.getUser()))
+                .content(sendMessageDTO.content())
+                .sendTime(LocalDateTime.now())
+                .chat(chatMessagesRepository.findByUserChat(sendMessageDTO.userReceiver()))
+                .build());
+        UserDetails sender = userDetailsRepository.findByUser(currentUser.getUser());
+        ChatMessages chatMessages = chatMessagesRepository.findByUserChat(sender);
+        List<Messages> messagesSender = chatMessages.getMessages();
+        messagesSender.add(messagesRepository.findFirstBySenderMessageOrderBySendTimeDesc(sender));
+        chatMessages.setMessages(messagesSender);
+        chatMessagesRepository.save(chatMessages);
+        redirectAttributes.addFlashAttribute("messageSend", "Wiadomość wysłana");
+        return "redirect:" + url;
+    }
+
+    @GetMapping("/chat")
+    public String getChat(@RequestParam(required = false) Integer page,
+                          @RequestParam(required = false) Integer size,
+                          Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+        ChatMessages userChat = chatMessagesRepository
+                .findByUserChat(userDetailsRepository.findByUser(currentUser.getUser()));
+        List<Messages> recipientMessage = messagesRepository.findByChat(userChat);
+        if (userChat.getMessages().isEmpty() && recipientMessage.isEmpty()) {
+            model.addAttribute("emptyChat", "Nie posiadasz żadnych konwersacji");
+            return "application/communicator";
+        }
+        Set<UserDetails> userSender = userChat.getMessages()
+                .stream()
+                .map(el -> el.getChat().getUserChat())
+                .collect(Collectors.toSet());
+        Set<UserDetails> recipientMessages = messagesRepository.allUserMessages(userChat);
+        recipientMessages.addAll(userSender);
+        List<UserDetails> allSender = new ArrayList<>(recipientMessages);
+        int pageNumber = (page != null && page >= 0) ? page : 1;
+        int pageSize = (size != null && size > 0) ? size : 6;
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("userId", userChat.getUserChat().getId());
+        model.addAttribute("totalPages", (int) Math.ceil((double) allSender.size() / pageSize));
+        model.addAttribute("userList", applicationService.getPaginatedList(allSender, pageNumber, pageSize));
+        return "application/communicator";
+    }
+
+    @ModelAttribute
+    public void setConversationUser(@RequestParam(required = false) Integer userReceiverId, Model model, @AuthenticationPrincipal CurrentUser currentUser,
+                                    HttpServletRequest request) {
+        if (request.getRequestURI().endsWith("/chat") && userReceiverId != null) {
+            ChatMessages userChat = chatMessagesRepository
+                    .findByUserChat(userDetailsRepository.findByUser(currentUser.getUser()));
+            UserDetails sender = userDetailsRepository.findByUserId(userReceiverId);
+            List<Messages> messagesFromUser = messagesRepository.allConversationWithUser(userChat, userReceiverId);
+            messagesFromUser.addAll(userChat.getMessages().stream().filter(el -> el.getChat().getUserChat().equals(sender)).toList());
+            messagesFromUser.sort(Comparator.comparing(Messages::getSendTime));
+            model.addAttribute("userSenderMessage", sender.getFirstName());
+            model.addAttribute("currentUserMessage", userChat.getUserChat());
+            model.addAttribute("userConversation", messagesFromUser);
+            model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(sender).build());
+            model.addAttribute("userReceiverId", userReceiverId);
+        }
+    }
 }

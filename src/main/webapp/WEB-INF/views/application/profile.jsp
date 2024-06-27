@@ -74,7 +74,10 @@
                 <td>${activity.location}</td>
                 <td>
                     <c:forEach var="user" items="${activity.usersJoined}">
-                        <p>${user.firstName} ${user.lastName}</p>
+                        <a class="w3-button w3-light-grey w3-block"
+                           href="/gowithme/app/user/${user.id}" target="_blank"><i
+                                class="fa fa-eye"></i> ${user.firstName} ${user.lastName}
+                        </a>
                     </c:forEach>
                 </td>
                 <c:if test="${activity.enabled}">
