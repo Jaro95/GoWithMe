@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -38,7 +39,7 @@
                 </c:if>
             </div>
             <c:forEach items="${userList}" var="user">
-                <a href="/gowithme/app/chat?userMessageId=${user.id}"
+                <a href="/gowithme/app/chat?userReceiverId=${user.id}"
                    class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
                    onclick="openMail('${user.firstName}');w3_close();">
                     <div class="w3-container">
@@ -84,12 +85,19 @@
                     </div>
                 </c:if>
             </c:forEach>
-            <div class="input-container">
-                <textarea class="chat-input" placeholder="Napisz wiadomość..."></textarea>
-                <button class="w3-button w3-black send-button" type="submit">
-                    <i class="fa fa-paper-plane"></i> Wyślij
-                </button>
-            </div>
+<%--Add send message--%>
+            <form:form modelAttribute="SendMessageDTO" action="/gowithme/app/sendMessage">
+                <div class="input-container">
+                <form:input path="userReceiver" type="hidden"/>
+                <input type="hidden" name="url" value="/gowithme/app/chat?userReceiverId=${userReceiverId}">
+
+                    <form:textarea path="content" class="chat-input"
+                                   placeholder="Napisz wiadomość..."></form:textarea>
+                    <button class="w3-button w3-black send-button" type="submit">
+                        <i class="fa fa-paper-plane"></i> Wyślij
+                    </button>
+                </div>
+            </form:form>
         </div>
     </c:if>
 

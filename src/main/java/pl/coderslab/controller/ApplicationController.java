@@ -419,20 +419,20 @@ public class ApplicationController {
     }
 
     @ModelAttribute
-    public void setConversationUser(@RequestParam(required = false) Integer userMessageId, Model model, @AuthenticationPrincipal CurrentUser currentUser,
+    public void setConversationUser(@RequestParam(required = false) Integer userReceiverId, Model model, @AuthenticationPrincipal CurrentUser currentUser,
                                     HttpServletRequest request) {
-        if (request.getRequestURI().endsWith("/chat") && userMessageId != null) {
-
+        if (request.getRequestURI().endsWith("/chat") && userReceiverId != null) {
             ChatMessages userChat = chatMessagesRepository
                     .findByUserChat(userDetailsRepository.findByUser(currentUser.getUser()));
-            UserDetails sender = userDetailsRepository.findByUserId(userMessageId);
-            List<Messages> messagesFromUser = messagesRepository.allConversationWithUser(userChat, userMessageId);
+            UserDetails sender = userDetailsRepository.findByUserId(userReceiverId);
+            List<Messages> messagesFromUser = messagesRepository.allConversationWithUser(userChat, userReceiverId);
             messagesFromUser.addAll(userChat.getMessages().stream().filter(el -> el.getChat().getUserChat().equals(sender)).toList());
             messagesFromUser.sort(Comparator.comparing(Messages::getSendTime));
             model.addAttribute("userSenderMessage", sender.getFirstName());
             model.addAttribute("currentUserMessage", userChat.getUserChat());
             model.addAttribute("userConversation", messagesFromUser);
-
+            model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(sender).build());
+            model.addAttribute("userReceiverId", userReceiverId);
         }
     }
 }
