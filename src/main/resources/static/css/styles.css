@@ -348,43 +348,44 @@ a {
 }
 
 .chat-wrapper {
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*justify-content: flex-end; !* Utrzymywanie pola tekstowego na dole *!*/
-    /*width: 100%;*/
-    /*height: 93%;*/
-    /*max-width: 83%; !*!* Maksymalna szerokość *!*!*/
-    /*padding-bottom: 60px; !* Odstęp dla pola tekstowego *!*/
-    /*box-sizing: border-box;*/
-    /*overflow-y: auto; !* Przewijanie dla wiadomości *!*/
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Domyślnie wyrównuje wiadomości po lewej stronie */
-    gap: 10px; /* Odstęp między dymkami czatu */
-    padding: 20px; /* Padding wokół kontenera */
+    overflow-y: auto;
 }
 
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    /*padding-bottom: 0px; !* Dodanie przestrzeni dla input-container *!*/
+    overflow-y: auto;
+    box-sizing: border-box;
+}
 .chat-bubble {
-    padding: 10px 20px;
-    margin: 10px 0;
-    border-radius: 20px;
-    position: relative;
-    max-width: 50%;
-    word-wrap: break-word;
+    align-self: flex-start;
+    max-width: 60%; /* Maksymalna szerokość dymku */
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    word-wrap: break-word; /* Zawijanie tekstu */
+    white-space: normal; /* Zawijanie tekstu */
+   /* Ustawia każdy dymek w osobnej linii */
+    overflow-wrap: break-word; /* Zawijanie tekstu */
+    margin-left: 10px; /* Dodatkowy margines dla dymków po lewej */
+    margin-right: 10px; /* Dodatkowy margines dla dymków po prawej */
 }
 
 .user1 {
     background-color: #d1e7dd;
     align-self: flex-start;
-    margin-left: 0;
-    margin-right: auto;
+
 }
 
 .user2 {
     background-color: #f8d7da;
     align-self: flex-end;
-    margin-left: auto;
-    margin-right: 0;
 }
 
 .chat-bubble p {
@@ -419,7 +420,6 @@ a {
     border: none;
     border-radius: 20px;
     cursor: pointer;
-
 }
 
 textarea {

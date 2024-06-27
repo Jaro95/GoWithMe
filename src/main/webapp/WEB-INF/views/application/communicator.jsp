@@ -136,27 +136,8 @@
                         <p>${message.content}</p>
                     </div>
                 </c:if>
-                <div class="chat-bubble user2">
-                    <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku,
-                        dziękuję! A
-                        Ty
-                        ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
-                        W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
-                </div>
-                <div class="chat-bubble user2">
-                    <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku,
-                        dziękuję! A
-                        Ty
-                        ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
-                        W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
-                </div>
-                <div class="chat-bubble user2">
-                    <p>W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku,
-                        dziękuję! A
-                        Ty
-                        ?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?
-                        W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?W porządku, dziękuję! A Ty?</p>
-                </div>
+
+
             </c:forEach>
             <div class="input-container">
                 <textarea class="chat-input" placeholder="Napisz wiadomość..."></textarea>
