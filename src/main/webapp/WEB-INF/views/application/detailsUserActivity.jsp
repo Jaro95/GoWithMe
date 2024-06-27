@@ -45,7 +45,7 @@
                 <form:input path="userReceiver" type="hidden"/>
                 <form:textarea path="content" class="w3-input w3-border w3-margin-bottom" style="height:150px"
                                placeholder="What's on your mind?"></form:textarea>
-                <input type="hidden" name="url" value="/gowithme/app/activity/details?id=${id}&activityId=${activityId}"
+                <input type="hidden" name="url" value="/gowithme/app/activity/details?id=${id}&activityId=${activityId}">
                 <div class="w3-section">
                     <a class="w3-button w3-red" onclick="document.getElementById('id01').style.display='none'"> Zamknij<i
                             class="fa fa-remove"></i>

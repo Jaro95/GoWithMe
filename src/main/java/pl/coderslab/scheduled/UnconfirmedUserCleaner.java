@@ -20,10 +20,10 @@ public class UnconfirmedUserCleaner {
     @Scheduled(fixedRate = 86400000) //86400000 1000->1s
     public void cleanUnconfirmedUsers() {
         LocalDateTime timeBeforeUserDelete = LocalDateTime.now().minusDays(1);
-        List<User> unconfirmedUsers = userRepository.unconfirmedUsers("verificated",timeBeforeUserDelete);
-        unconfirmedUsers.forEach(user -> user.getRoles().clear());
-        System.out.println("sprawdzamy");
+        List<User> unconfirmedUsers = userRepository.unconfirmedUsers("verified",timeBeforeUserDelete);
+        System.out.println("Użytkownicy do usunięcia \nIlość: " + unconfirmedUsers.size());
         unconfirmedUsers.forEach(System.out::println);
+        unconfirmedUsers.forEach(user -> user.getRoles().clear());
         userRepository.deleteAll(unconfirmedUsers);
     }
 }

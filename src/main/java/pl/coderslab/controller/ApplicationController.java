@@ -137,7 +137,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/details")
-    public String getDetailsUserActivity(Model model, @RequestParam long id, @RequestParam long activityId, @AuthenticationPrincipal CurrentUser currentUser) {
+    public String getDetailsUserActivity(Model model, @RequestParam long id, @RequestParam long activityId) {
 
         UserDetails userDetails = userDetailsRepository.findByUserId(id);
         model.addAttribute("firstName", userDetails.getFirstName());
@@ -154,7 +154,8 @@ public class ApplicationController {
     }
 
     @PostMapping("/activity/details")
-    public String postDetailsUserActivity(WaitingOnAccessToActivityDTO waitingOnAccessToActivityDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CurrentUser currentUser) {
+    public String postDetailsUserActivity(WaitingOnAccessToActivityDTO waitingOnAccessToActivityDTO, RedirectAttributes redirectAttributes,
+                                          @AuthenticationPrincipal CurrentUser currentUser) {
         ActivitiesPlan activitiesPlan = activitiesPlanRepository.findById(waitingOnAccessToActivityDTO.activityPlanId()).get();
         if (currentUser.getUser().getId().equals(activitiesPlan.getUser().getId())) {
             redirectAttributes.addFlashAttribute("messageError", "Nie możesz wysłać prośby o dołączenie do swojej aktywności");
@@ -353,6 +354,20 @@ public class ApplicationController {
         redirectAttributes.addFlashAttribute("messageUpdate", "Konto zaktualizowane ");
         userDetailsRepository.save(userDetails);
         return "redirect:/gowithme/app/profile";
+    }
+
+    @GetMapping("/user/{id}")
+    public String getUserDetails(@PathVariable long id, Model model) {
+
+        UserDetails userDetails = userDetailsRepository.findByUserId(id);
+        model.addAttribute("firstName", userDetails.getFirstName());
+        model.addAttribute("lastName", userDetails.getLastName());
+        model.addAttribute("city", userDetails.getCity());
+        model.addAttribute("age", userDetails.getAge());
+        model.addAttribute("description", userDetails.getDescription());
+        model.addAttribute("id", id);
+        model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(userDetails).build());
+        return "application/detailsUser";
     }
 
     @PostMapping("/sendMessage")

@@ -95,6 +95,10 @@
                             <p>${user.description}</p>
                             <p>
                                 <a class="w3-button w3-light-grey w3-block"
+                                   href="/gowithme/app/user/${user.id}" target="_blank"><i
+                                        class="fa fa-eye"></i> Szczegóły
+                                </a>
+                                <a class="w3-button w3-light-grey w3-block"
                                    href="/gowithme/app/activity/assignUser?activityId=${activityId}&userId=${user.id}"><i
                                         class="fa fa-plus"></i> Dodaj
                                 </a>

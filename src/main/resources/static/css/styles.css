@@ -30,6 +30,11 @@ body, html {
     margin-top: 50px;
 }
 
+.contact-info {
+    margin-top: 50px;
+    margin-bottom: 0px ;
+}
+
 .contact-details {
     margin: 25px;
     border-collapse: collapse;
@@ -348,14 +353,14 @@ a {
 }
 
 .chat-wrapper {
-    flex: 1;
-    display: flex;
+
+
     flex-direction: column;
     overflow-y: auto;
 }
 
 .chat-container {
-    flex: 1;
+
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -411,6 +416,7 @@ a {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
+
 
 .send-button {
     margin-left: 10px;

@@ -57,62 +57,9 @@
                 </c:if>
             </div>
 
-            <%--            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"--%>
-            <%--               onclick="openMail('Borge');w3_close();" id="33">--%>
-            <%--                <div class="w3-container">--%>
-            <%--                    <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span--%>
-            <%--                        class="w3-opacity w3-large">Borge Refsnes</span>--%>
-            <%--                    <h6>this place is for "City: category"</h6>--%>
-            <%--                </div>--%>
-            <%--            </a>--%>
-
-
-            <%--            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"--%>
-            <%--               onclick="openMail('Jane');w3_close();">--%>
-            <%--                <div class="w3-container">--%>
-            <%--                    <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span--%>
-            <%--                        class="w3-opacity w3-large">Jane Doe</span>--%>
-            <%--                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>--%>
-            <%--                </div>--%>
-            <%--            </a>--%>
-            <%--            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"--%>
-            <%--               onclick="openMail('John');w3_close();">--%>
-            <%--                <div class="w3-container">--%>
-            <%--                    <img class="w3-round w3-margin-right" src="/images/mainPeople.jpg" style="width:15%;"><span--%>
-            <%--                        class="w3-opacity w3-large">John Doe</span>--%>
-            <%--                    <p>Welcome!</p>--%>
-            <%--                </div>--%>
-            <%--            </a>--%>
         </c:if>
     </div>
 </nav>
-
-<!-- Modal that pops up when you click on "New Message" -->
-<%--<div id="id01" class="w3-modal" style="z-index:4">--%>
-<%--    <div class="w3-modal-content w3-animate-zoom">--%>
-<%--        <div class="w3-container w3-padding w3-red">--%>
-<%--       <span onclick="document.getElementById('id01').style.display='none'"--%>
-<%--             class="w3-button w3-red w3-right w3-xxlarge"><i class="fa fa-remove"></i></span>--%>
-<%--            <h2>Send Mail</h2>--%>
-<%--        </div>--%>
-<%--        <div class="w3-panel">--%>
-<%--            <label>To</label>--%>
-<%--            <input class="w3-input w3-border w3-margin-bottom" type="text">--%>
-<%--            <label>From</label>--%>
-<%--            <input class="w3-input w3-border w3-margin-bottom" type="text">--%>
-<%--            <label>Subject</label>--%>
-<%--            <input class="w3-input w3-border w3-margin-bottom" type="text">--%>
-<%--            <input class="w3-input w3-border w3-margin-bottom" style="height:150px" placeholder="What's on your mind?">--%>
-<%--            <div class="w3-section">--%>
-<%--                <a class="w3-button w3-red" onclick="document.getElementById('id01').style.display='none'">Cancel  <i--%>
-<%--                        class="fa fa-remove"></i></a>--%>
-<%--                <a class="w3-button w3-light-grey w3-right"--%>
-<%--                   onclick="document.getElementById('id01').style.display='none'">Send  <i--%>
-<%--                        class="fa fa-paper-plane"></i></a>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
 
 <!-- Overlay effect when opening the side navigation on small screens -->
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
@@ -136,8 +83,6 @@
                         <p>${message.content}</p>
                     </div>
                 </c:if>
-
-
             </c:forEach>
             <div class="input-container">
                 <textarea class="chat-input" placeholder="Napisz wiadomość..."></textarea>

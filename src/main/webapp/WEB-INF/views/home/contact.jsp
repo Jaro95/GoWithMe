@@ -11,17 +11,16 @@
 <jsp:include page="header.jsp"/>
 
 <div class="w3-display-container w3-light-grey main-height" id="contact">
-    <p class="w3-center w3-jumbo cantact-info">Napisz do nas:</p>
+    <p class="w3-center w3-jumbo contact-info">Napisz do nas:</p>
     <c:if test="${not empty message}">
         <div class="alert alert-success">
                 ${message}
         </div>
     </c:if>
-    <div class="w3-center cantact-info">
+    <div class="w3-center ">
         <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>Addres: ${address}</p>
         <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>Telefon: +48 ${phone}</p>
         <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"></i>Email: ${email}</p>
-        <br>
         <form:form method="post" class="cantact-details" modelAttribute="contactForm">
             <p>
                 <form:input class="input-contact w3-border" type="text" placeholder="Imię" path="name"/>

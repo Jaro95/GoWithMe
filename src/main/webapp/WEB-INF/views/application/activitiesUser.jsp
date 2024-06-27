@@ -47,8 +47,16 @@
                 <td>${activity.city}</td>
                 <td>${activity.location}</td>
                 <td>
-                    <c:forEach var="user" items="${activity.usersJoined}">
-                        <p>${user.firstName} ${user.lastName}</p>
+                    <c:forEach var="userJoined" items="${activity.usersJoined}">
+                        <c:if test="${not empty userAssigned}">
+                        <p>${userJoined.firstName} ${userJoined.lastName}</p>
+                        </c:if>
+                        <c:if test="${not empty user}">
+                        <a class="w3-button w3-light-grey w3-block"
+                           href="/gowithme/app/user/${userJoined.id}" target="_blank"><i
+                                class="fa fa-eye"></i> ${userJoined.firstName} ${userJoined.lastName}
+                        </a>
+                        </c:if>
                     </c:forEach>
                 </td>
                 <c:if test="${activity.enabled}">

@@ -11,6 +11,7 @@ import pl.coderslab.service.UserService;
 import pl.coderslab.model.*;
 import pl.coderslab.repository.*;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,9 +34,17 @@ public class AdminController {
             return "redirect:/gowithme/admin";
         }
         User god = User.builder().email("god@god")
-                .password("qwerty").build();
+                .password("qwerty")
+                .createdAccount(LocalDateTime.now())
+                .enabled(true)
+                .token("verified")
+                .build();
         User admin = User.builder().email("admin@admin")
-                .password("admin").build();
+                .password("admin")
+                .createdAccount(LocalDateTime.now())
+                .enabled(true)
+                .token("verified")
+                .build();
         Role adminRole = Role.builder().name("ROLE_SUPER_ADMIN").build();
         Role godRole = Role.builder().name("ROLE_ADMIN").build();
         Role userRole = Role.builder().name("ROLE_USER").build();
