@@ -67,37 +67,23 @@
      title="Close Sidemenu" id="myOverlay"></div>
 
 <!-- Page content -->
-<div class="w3-main chat-wrapper">
+<div class="w3-main chat-wrapper chat-box" id="chat-box">
     <i class="fa fa-bars w3-button w3-white w3-hide-large w3-xlarge w3-margin-left w3-margin-top"
        onclick="w3_open()"></i>
 
     <c:if test="${not empty userSenderMessage}">
         <div id="${userSenderMessage}" class="w3-container person chat-container">
             <c:forEach items="${userConversation}" var="message">
-                <c:if test="${message.senderMessage != currentUserMessage}">
-                    <div class="chat-bubble user1">
-                        <p>${message.content}</p>
-                    </div>
-                </c:if>
-                <c:if test="${message.senderMessage eq currentUserMessage}">
-                    <div class="chat-bubble user2">
-                        <p>${message.content}</p>
-                    </div>
-                </c:if>
-            </c:forEach>
-<%--Add send message--%>
-            <form:form modelAttribute="SendMessageDTO" action="/gowithme/app/sendMessage">
-                <div class="input-container">
-                <form:input path="userReceiver" type="hidden"/>
-                <input type="hidden" name="url" value="/gowithme/app/chat?userReceiverId=${userReceiverId}">
-
-                    <form:textarea path="content" class="chat-input"
-                                   placeholder="Napisz wiadomość..."></form:textarea>
-                    <button class="w3-button w3-black send-button" type="submit">
-                        <i class="fa fa-paper-plane"></i> Wyślij
-                    </button>
+                <div class="chat-bubble ${message.senderMessage == currentUserMessage ? 'user2' : 'user1'}">
+                    <p>${message.content}</p>
                 </div>
-            </form:form>
+            </c:forEach>
+            <form method="post">
+            <div class="input-container">
+                <textarea id="chat-input" class="chat-input" placeholder="Napisz wiadomość..."></textarea>
+                <button class="w3-button w3-black send-button" onclick="sendMessage()">Wyślij</button>
+            </div>
+            </form>
         </div>
     </c:if>
 
@@ -148,6 +134,34 @@
 <script>
     //var openTab = document.getElementById("firstTab");
     //openTab.click();
+    let socket;
+    const currentUser = "${currentUserMessage}";
+    window.onload = function () {
+        socket = new WebSocket("ws://" + window.location.host + "/gowithme/app/chat");
+        socket.onmessage = function (event) {
+            const chatContainer = document.querySelector(".chat-container");
+            const message = JSON.parse(event.data);
+
+            const messageBubble = document.createElement("div");
+            messageBubble.className = "chat-bubble " + (message.senderMessage === currentUser ? "user2" : "user1");
+            messageBubble.innerHTML = `<p>${message.content}</p>`;
+            chatContainer.appendChild(messageBubble);
+
+            const chatBox = document.querySelector(".chat-box");
+            chatBox.scrollTop = chatBox.scrollHeight;
+        };
+    };
+
+    function sendMessage() {
+        const input = document.getElementById("chat-input");
+        const message = {
+            senderMessage: currentUser,
+            content: input.value,
+            timestamp: new Date().toISOString()
+        };
+        socket.send(JSON.stringify(message));
+        input.value = "";
+    }
 </script>
 
 <jsp:include page="footer.jsp"/>

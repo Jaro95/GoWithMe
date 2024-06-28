@@ -116,9 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
 document.addEventListener('DOMContentLoaded', () => {
-    const inputCity = document.getElementById ('cityInput');
+    const inputCity = document.getElementById('cityInput');
     inputCity.addEventListener('input', function () {
         let prefix = this.value;
 
@@ -134,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         let li = document.createElement('li');
                         li.textContent = city.name;
 
-                        li.addEventListener('click', function() {
+                        li.addEventListener('click', function () {
                             document.getElementById('cityInput').value = city.name;
                             suggestions.innerHTML = ''; // Clear suggestions after selection
                         });
@@ -147,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
 
 
 $(document).ready(function () {
@@ -186,43 +184,47 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function() {
-    $(document).on('click', '.prev-button, .next-button', function(e) {
+$(document).ready(function () {
+    $(document).on('click', '.prev-button, .next-button', function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
-        $.get(url, function(data) {
+        $.get(url, function (data) {
             var newContent = $(data).find('.notification-list').html();
             var newNavigation = $(data).find('.navigation-buttons').html();
             $('.notification-list').html(newContent);
             $('.navigation-buttons').html(newNavigation);
-        }).fail(function() {
+        }).fail(function () {
             alert('Wystąpił błąd podczas ładowania danych.');
         });
     });
 });
 
-$(document).ready(function() {
-    $(document).on('click', '.prev-user, .next-user', function(e) {
+$(document).ready(function () {
+    $(document).on('click', '.prev-user, .next-user', function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
-        $.get(url, function(data) {
+        $.get(url, function (data) {
             var newContent = $(data).find('.user-list').html();
             var newNavigation = $(data).find('.user-buttons').html();
             $('.user-list').html(newContent);
             $('.user-buttons').html(newNavigation);
-        }).fail(function() {
+        }).fail(function () {
             alert('Wystąpił błąd podczas ładowania danych.');
         });
     });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const chatInput = document.getElementById('chatInput');
 
-    chatInput.addEventListener('input', function() {
+    chatInput.addEventListener('input', function () {
         // Reset textarea height to auto to correctly calculate the new height
         chatInput.style.height = 'auto';
         // Set the height according to the scroll height
         chatInput.style.height = chatInput.scrollHeight + 'px';
     });
 });
+document.addEventListener("DOMContentLoaded", function () {
+
+});
+
