@@ -53,6 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('#delete-category').forEach(link => {
+        link.addEventListener('click', event => {
+            if (!confirm('Czy na pewno chcesz usunąć kategorię?')) {
+                event.preventDefault();
+            }
+        });
+    });
+});
+
 // document.addEventListener('DOMContentLoaded', () => {
 //     const image = document.querySelector("#icon-user");
 //     image.addEventListener("click",function (e) {

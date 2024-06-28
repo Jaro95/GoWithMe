@@ -77,7 +77,7 @@ public class HomeController {
     @GetMapping("/contact")
     public String getContact(Model model) {
         List<Contact> contact = contactRepository.findAll();
-        model.addAttribute("address", contact.stream().map(Contact::getAddress).collect(Collectors.joining(";")));
+        model.addAttribute("address", contact.stream().map(Contact::getAddress).collect(Collectors.joining("; ")));
         model.addAttribute("phone", contact.stream().map(el -> el.getPhoneNumber()).map(el -> el.toString()).collect(Collectors.joining("; ")));
         model.addAttribute("email", contact.stream().map(Contact::getEmail).collect(Collectors.joining("; ")));
         model.addAttribute("contactForm", new ContactForm());

@@ -3,14 +3,15 @@ package pl.coderslab.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.model.chat.ChatMessages;
 import pl.coderslab.service.UserService;
 import pl.coderslab.model.*;
 import pl.coderslab.repository.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +31,7 @@ public class AdminController {
 
     @GetMapping("/create-start")
     public String createStart() {
-        if(!userRepository.findAll().isEmpty()){
+        if (!userRepository.findAll().isEmpty()) {
             return "redirect:/gowithme/admin";
         }
         User god = User.builder().email("god@god")
@@ -76,23 +77,86 @@ public class AdminController {
     }
 
 
-
     @GetMapping("")
     public String allUser(Model model) {
         model.addAttribute("userDetails", userDetailsRepository.findAll());
         return "admin/adminPanel";
     }
 
-    @GetMapping("/category")
-    public String getCategory(Model model) {
-        createCategories();
-        return "admin/adminPanel";
-    }
+
+
 
     @GetMapping("/contact")
-    public String getContact(Model model) {
+    public String getDeleteContact(Model model) {
+        model.addAttribute("contact", new Contact());
+        return "admin/newContact";
+    }
 
-        return "admin/adminPanel";
+    @PostMapping("/contact")
+    public String postContact(@Valid Contact contact, Model model,
+                              BindingResult result,
+                              RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            model.addAttribute("contact", contact);
+            model.addAttribute("errors", result.getAllErrors());
+            return "admin/newContact";
+        }
+        contactRepository.save(contact);
+        redirectAttributes.addFlashAttribute("message", "Dodano nowy kontakt");
+        return "redirect:/gowithme/admin/contact";
+    }
+
+    @GetMapping("/category")
+    public String getCategory(@RequestParam(required = false) Long updateId, Model model) {
+        if(updateId != null) {
+            model.addAttribute("updateId",updateId);
+        }
+        model.addAttribute("categoryList", categoryRepository.findAll());
+        return "admin/category";
+    }
+
+    @GetMapping("/categoryAdd")
+    public String getNewCategory(Model model) {
+        model.addAttribute("category", new Category());
+        return "admin/newCategory";
+    }
+
+    @PostMapping("/categoryAdd")
+    public String postNewCategory(@Valid Category category, Model model,
+                              BindingResult result,
+                              RedirectAttributes redirectAttributes) {
+        if(categoryRepository.findByName(category.getName()) != null) {
+            model.addAttribute("category", category);
+            model.addAttribute("messageError", "Podana kategoria już istnieje");
+            return "admin/newCategory";
+        }
+        if (result.hasErrors()) {
+            model.addAttribute("category", category);
+            model.addAttribute("errors", result.getAllErrors());
+            return "admin/newCategory";
+        }
+        categoryRepository.save(category);
+        redirectAttributes.addFlashAttribute("message", "Dodano nową kategorię");
+        return "redirect:/gowithme/admin/category";
+    }
+
+
+    @PostMapping("/category")
+    public String postUpdateCategory(@RequestParam long categoryId, @RequestParam String categoryName,
+                               RedirectAttributes redirectAttributes) {
+        Category category = categoryRepository.findById(categoryId).get();
+        category.setName(categoryName);
+        categoryRepository.save(category);
+        redirectAttributes.addFlashAttribute("message", "Zaktualizowano kategorię");
+        return "redirect:/gowithme/admin/category";
+    }
+
+    @GetMapping("/categoryDelete")
+    public String getDeleteCategory(@RequestParam(required = false) Long deleteId,
+                                    RedirectAttributes redirectAttributes) {
+        categoryRepository.deleteById(deleteId);
+        redirectAttributes.addFlashAttribute("message", "Usunięto kategorię");
+        return "redirect:/gowithme/admin/category";
     }
 
     @GetMapping("/delete")
@@ -110,12 +174,12 @@ public class AdminController {
     }
 
     public void createCategories() {
-        List<String> category = Arrays.asList("Relaks","Bieganie","Gotowanie","Spacer"
-                ,"Wycieczka","Pływanie","Jazda na rowerze","Nordic walking"
-                ,"Street workout i kalistenika", "Tenis" , "Badminton", "Joga", "Siłownia", "Jazda na rolkach"
+        List<String> category = Arrays.asList("Relaks", "Bieganie", "Gotowanie", "Spacer"
+                , "Wycieczka", "Pływanie", "Jazda na rowerze", "Nordic walking"
+                , "Street workout i kalistenika", "Tenis", "Badminton", "Joga", "Siłownia", "Jazda na rolkach"
                 , "Kajaki", "Jazda na deskorolce", "Kitesurfing"
-                ,"Golf", "Triathlon", "Spacer z psem", "Siatkówka", "Siatkówka plażowa", "Aerobik", "Park linowy"
-                ,"Piłka nożna", "Paintball");
+                , "Golf", "Triathlon", "Spacer z psem", "Siatkówka", "Siatkówka plażowa", "Aerobik", "Park linowy"
+                , "Piłka nożna", "Paintball");
         List<Category> categoryList = category.stream().map(Category::new).toList();
         categoryRepository.saveAll(categoryList);
     }

@@ -31,10 +31,11 @@
         <a href="/gowithme/admin" class="w3-bar-item w3-button w3-wide">GoWithME</a>
         <!-- Right-sided navbar links -->
         <div class="w3-right w3-hide-small">
+            <a href="/gowithme/admin" class="w3-bar-item w3-button"><i class="fa fa-jedi"></i> Users</a>
             <a href="/gowithme/home" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Home</a>
-            <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-phone"></i> App</a>
-            <a href="/gowithme/admin/contact" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Contact</a>
-            <a href="/gowithme/admin/category" class="w3-bar-item w3-button"><i class="fa fa-ball"></i> Category</a>
+            <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-mandalorian"></i> App</a>
+            <a href="/gowithme/admin/contact" class="w3-bar-item w3-button"><i class="fa fa-compass"></i> Contact</a>
+            <a href="/gowithme/admin/category" class="w3-bar-item w3-button"><i class="fa fa-grunt"></i> Category</a>
             <a href="/gowithme/app/logout" class="w3-bar-item w3-button"><i class="fa fa-pencil"></i> Logout</a>
         </div>
         <!-- Hide right-floated links on small screens and replace them with a menu icon -->
