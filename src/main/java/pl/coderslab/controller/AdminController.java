@@ -83,19 +83,50 @@ public class AdminController {
         return "admin/adminPanel";
     }
 
-
-
-
     @GetMapping("/contact")
-    public String getDeleteContact(Model model) {
+    public String getContact(@RequestParam(required = false) Long updateId, Model model) {
+        if(updateId != null) {
+            model.addAttribute("updateId",updateId);
+        }
+        model.addAttribute("contactList", contactRepository.findAll());
+        return "admin/contact";
+    }
+    @PostMapping("/contact")
+    public String postUpdateContact(@RequestParam long contactId, @RequestParam String address,
+                                    @RequestParam String email,@RequestParam int phoneNumber,
+                                     RedirectAttributes redirectAttributes) {
+        Contact contact = contactRepository.findById(contactId).get();
+        contact.setAddress(address);
+        contact.setEmail(email);
+        contact.setPhoneNumber(phoneNumber);
+        contactRepository.save(contact);
+        redirectAttributes.addFlashAttribute("message", "Zaktualizowano kontakt");
+        return "redirect:/gowithme/admin/contact";
+    }
+
+    @GetMapping("/contactDelete")
+    public String getDeleteContact(@RequestParam(required = false) Long deleteId,
+                                    RedirectAttributes redirectAttributes) {
+        contactRepository.deleteById(deleteId);
+        redirectAttributes.addFlashAttribute("message", "Usunięto kontakt");
+        return "redirect:/gowithme/admin/contact";
+    }
+
+    @GetMapping("/contactAdd")
+    public String getAddContact(Model model) {
         model.addAttribute("contact", new Contact());
         return "admin/newContact";
     }
 
-    @PostMapping("/contact")
-    public String postContact(@Valid Contact contact, Model model,
+    @PostMapping("/contactAdd")
+    public String postAddContact(@Valid Contact contact, Model model,
                               BindingResult result,
                               RedirectAttributes redirectAttributes) {
+        if(contactRepository.findByAddress(contact.getAddress()) != null) {
+            model.addAttribute("contact", contact);
+            model.addAttribute("messageError", "Podany kontakt już istnieje");
+            return "admin/newContact";
+        }
         if (result.hasErrors()) {
             model.addAttribute("contact", contact);
             model.addAttribute("errors", result.getAllErrors());

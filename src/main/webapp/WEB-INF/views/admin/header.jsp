@@ -31,7 +31,7 @@
         <a href="/gowithme/admin" class="w3-bar-item w3-button w3-wide">GoWithME</a>
         <!-- Right-sided navbar links -->
         <div class="w3-right w3-hide-small">
-            <a href="/gowithme/admin" class="w3-bar-item w3-button"><i class="fa fa-jedi"></i> Users</a>
+            <a href="/gowithme/admin" class="w3-bar-item w3-button"><i class="fa fa-users-gear"></i> Users</a>
             <a href="/gowithme/home" class="w3-bar-item w3-button"><i class="fa fa-home"></i> Home</a>
             <a href="/gowithme/app" class="w3-bar-item w3-button"><i class="fa fa-mandalorian"></i> App</a>
             <a href="/gowithme/admin/contact" class="w3-bar-item w3-button"><i class="fa fa-compass"></i> Contact</a>
