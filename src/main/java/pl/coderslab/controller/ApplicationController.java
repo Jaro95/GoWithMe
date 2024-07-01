@@ -3,6 +3,8 @@ package pl.coderslab.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -418,8 +420,26 @@ public class ApplicationController {
         return "application/communicator";
     }
 
+    @PostMapping("/chatMessage")
+    public ResponseEntity postChatMessage(SendMessageDTO sendMessageDTO, @AuthenticationPrincipal CurrentUser currentUser) {
+        messagesRepository.save(Messages.builder()
+                .senderMessage(userDetailsRepository.findByUser(currentUser.getUser()))
+                .content(sendMessageDTO.content())
+                .sendTime(LocalDateTime.now())
+                .chat(chatMessagesRepository.findByUserChat(sendMessageDTO.userReceiver()))
+                .build());
+        UserDetails sender = userDetailsRepository.findByUser(currentUser.getUser());
+        ChatMessages chatMessages = chatMessagesRepository.findByUserChat(sender);
+        List<Messages> messagesSender = chatMessages.getMessages();
+        messagesSender.add(messagesRepository.findFirstBySenderMessageOrderBySendTimeDesc(sender));
+        chatMessages.setMessages(messagesSender);
+        chatMessagesRepository.save(chatMessages);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
     @ModelAttribute
-    public void setConversationUser(@RequestParam(required = false) Integer userReceiverId, Model model, @AuthenticationPrincipal CurrentUser currentUser,
+    public void setConversationUser(@RequestParam(required = false) Integer userReceiverId, Model model,
+                                    @AuthenticationPrincipal CurrentUser currentUser,
                                     HttpServletRequest request) {
         if (request.getRequestURI().endsWith("/chat") && userReceiverId != null) {
             ChatMessages userChat = chatMessagesRepository

@@ -78,17 +78,22 @@
                     <p>${message.content}</p>
                 </div>
             </c:forEach>
-            <form method="post">
-            <div class="input-container">
+
+            <div class="w3-container input-container">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <textarea id="chat-input" class="chat-input" placeholder="Napisz wiadomość..."></textarea>
                 <button class="w3-button w3-black send-button" onclick="sendMessage()">Wyślij</button>
             </div>
-            </form>
         </div>
     </c:if>
 
 </div>
 
+<%--<div>--%>
+<%--    <button onclick="connectWebSocket()">Connect WebSocket</button>--%>
+<%--    <button onclick="sendMessage()">Send Message</button>--%>
+<%--</div>--%>
+<%--<div id="messages"></div>--%>
 <script>
     var openInbox = document.getElementById("myBtn");
     openInbox.click();
@@ -131,13 +136,53 @@
     }
 </script>
 
+
+<%--<script>--%>
+<%--    let socket;--%>
+
+<%--    function connectWebSocket() {--%>
+<%--        socket = new WebSocket("ws://" + window.location.host + "/test-websocket");--%>
+
+<%--        socket.onopen = function(event) {--%>
+<%--            console.log("WebSocket is open now.");--%>
+<%--            document.getElementById('messages').innerHTML += "<p>WebSocket connection opened.</p>";--%>
+<%--        };--%>
+
+<%--        socket.onmessage = function(event) {--%>
+<%--            console.log("WebSocket message received:", event.data);--%>
+<%--            document.getElementById('messages').innerHTML += "<p>Received: " + event.data + "</p>";--%>
+<%--        };--%>
+
+<%--        socket.onclose = function(event) {--%>
+<%--            console.log("WebSocket is closed now.");--%>
+<%--            document.getElementById('messages').innerHTML += "<p>WebSocket connection closed.</p>";--%>
+<%--        };--%>
+
+<%--        socket.onerror = function(error) {--%>
+<%--            console.log("WebSocket error:", error);--%>
+<%--            document.getElementById('messages').innerHTML += "<p>WebSocket error: " + error.message + "</p>";--%>
+<%--        };--%>
+<%--    }--%>
+
+<%--    function sendMessage() {--%>
+<%--        if (socket && socket.readyState === WebSocket.OPEN) {--%>
+<%--            const message = "Hello, server!";--%>
+<%--            socket.send(message);--%>
+<%--            console.log(message);--%>
+<%--            document.getElementById('messages').innerHTML += "<p>Sent: " + message + "</p>";--%>
+<%--        } else {--%>
+<%--            document.getElementById('messages').innerHTML += "<p>WebSocket is not open.</p>";--%>
+<%--        }--%>
+<%--    }--%>
+<%--</script>--%>
+
 <script>
     //var openTab = document.getElementById("firstTab");
     //openTab.click();
     let socket;
     const currentUser = "${currentUserMessage}";
     window.onload = function () {
-        socket = new WebSocket("ws://" + window.location.host + "/gowithme/app/chat");
+        socket = new WebSocket("ws://" + window.location.host + "/chatMessage");
         socket.onmessage = function (event) {
             const chatContainer = document.querySelector(".chat-container");
             const message = JSON.parse(event.data);

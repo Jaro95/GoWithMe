@@ -32,8 +32,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage textMessage) throws IOException {
         Messages message = objectMapper.readValue(textMessage.getPayload(), Messages.class);
-        System.out.println("tutaj masz wiadomość: " + message.toString());
-        messageRepository.save(message);
+       // System.out.println("tutaj masz wiadomość: " + message.toString());
+       // messageRepository.save(message);
+        System.out.println(textMessage.getPayload());
 
         for (WebSocketSession webSocketSession : sessions) {
             if (webSocketSession.isOpen()) {
