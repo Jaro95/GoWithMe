@@ -420,22 +420,22 @@ public class ApplicationController {
         return "application/communicator";
     }
 
-    @PostMapping("/chatMessage")
-    public ResponseEntity postChatMessage(SendMessageDTO sendMessageDTO, @AuthenticationPrincipal CurrentUser currentUser) {
-        messagesRepository.save(Messages.builder()
-                .senderMessage(userDetailsRepository.findByUser(currentUser.getUser()))
-                .content(sendMessageDTO.content())
-                .sendTime(LocalDateTime.now())
-                .chat(chatMessagesRepository.findByUserChat(sendMessageDTO.userReceiver()))
-                .build());
-        UserDetails sender = userDetailsRepository.findByUser(currentUser.getUser());
-        ChatMessages chatMessages = chatMessagesRepository.findByUserChat(sender);
-        List<Messages> messagesSender = chatMessages.getMessages();
-        messagesSender.add(messagesRepository.findFirstBySenderMessageOrderBySendTimeDesc(sender));
-        chatMessages.setMessages(messagesSender);
-        chatMessagesRepository.save(chatMessages);
-        return new ResponseEntity<>("Success", HttpStatus.OK);
-    }
+//    @PostMapping("/chatMessage")
+//    public ResponseEntity postChatMessage(SendMessageDTO sendMessageDTO, @AuthenticationPrincipal CurrentUser currentUser) {
+//        messagesRepository.save(Messages.builder()
+//                .senderMessage(userDetailsRepository.findByUser(currentUser.getUser()))
+//                .content(sendMessageDTO.content())
+//                .sendTime(LocalDateTime.now())
+//                .chat(chatMessagesRepository.findByUserChat(sendMessageDTO.userReceiver()))
+//                .build());
+//        UserDetails sender = userDetailsRepository.findByUser(currentUser.getUser());
+//        ChatMessages chatMessages = chatMessagesRepository.findByUserChat(sender);
+//        List<Messages> messagesSender = chatMessages.getMessages();
+//        messagesSender.add(messagesRepository.findFirstBySenderMessageOrderBySendTimeDesc(sender));
+//        chatMessages.setMessages(messagesSender);
+//        chatMessagesRepository.save(chatMessages);
+//        return new ResponseEntity<>("Success", HttpStatus.OK);
+//    }
 
     @ModelAttribute
     public void setConversationUser(@RequestParam(required = false) Integer userReceiverId, Model model,
@@ -453,6 +453,8 @@ public class ApplicationController {
             model.addAttribute("userConversation", messagesFromUser);
             model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(sender).build());
             model.addAttribute("userReceiverId", userReceiverId);
+            model.addAttribute("userSenderId", userChat.getUserChat().getId());
+            model.addAttribute("lastMessage", messagesFromUser.get(messagesFromUser.size()-1).getContent());
         }
     }
 }

@@ -74,7 +74,7 @@
     <c:if test="${not empty userSenderMessage}">
         <div id="${userSenderMessage}" class="w3-container person chat-container">
             <c:forEach items="${userConversation}" var="message">
-                <div class="chat-bubble ${message.senderMessage == currentUserMessage ? 'user2' : 'user1'}">
+                <div class="chat-bubble ${message.senderMessage.id == currentUserMessage.id ? 'user2' : 'user1'}">
                     <p>${message.content}</p>
                 </div>
             </c:forEach>
@@ -86,9 +86,7 @@
             </div>
         </div>
     </c:if>
-
 </div>
-
 <%--<div>--%>
 <%--    <button onclick="connectWebSocket()">Connect WebSocket</button>--%>
 <%--    <button onclick="sendMessage()">Send Message</button>--%>
@@ -177,19 +175,19 @@
 <%--</script>--%>
 
 <script>
+
     //var openTab = document.getElementById("firstTab");
     //openTab.click();
     let socket;
-    const currentUser = "${currentUserMessage}";
+    const currentUser = "${userSenderId}";
     window.onload = function () {
         socket = new WebSocket("ws://" + window.location.host + "/chatMessage");
         socket.onmessage = function (event) {
             const chatContainer = document.querySelector(".chat-container");
             const message = JSON.parse(event.data);
-
             const messageBubble = document.createElement("div");
-            messageBubble.className = "chat-bubble " + (message.senderMessage === currentUser ? "user2" : "user1");
-            messageBubble.innerHTML = `<p>${message.content}</p>`;
+            messageBubble.className = "chat-bubble " + (message.senderMessage.id === currentUser ? "user2" : "user1");
+            messageBubble.innerHTML = `<p>${lastMessage}</p>`;
             chatContainer.appendChild(messageBubble);
 
             const chatBox = document.querySelector(".chat-box");
@@ -200,13 +198,15 @@
     function sendMessage() {
         const input = document.getElementById("chat-input");
         const message = {
-            senderMessage: currentUser,
+            senderMessage: { id: `${userSenderId}` },
             content: input.value,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            receiverMessage: { id: `${userReceiverId}` }
         };
         socket.send(JSON.stringify(message));
         input.value = "";
     }
+
 </script>
 
 <jsp:include page="footer.jsp"/>
