@@ -71,6 +71,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('#confirm-delete-user').forEach(link => {
+        link.addEventListener('click', event => {
+            if (!confirm('Czy na pewno chcesz usunąć użytkownika?')) {
+                event.preventDefault();
+            }
+        });
+    });
+});
 // document.addEventListener('DOMContentLoaded', () => {
 //     const image = document.querySelector("#icon-user");
 //     image.addEventListener("click",function (e) {

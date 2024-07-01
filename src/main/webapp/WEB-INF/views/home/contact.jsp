@@ -18,9 +18,9 @@
         </div>
     </c:if>
     <div class="w3-center ">
-        <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>Addres: ${address}</p>
-        <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i>Telefon: +48 ${phone}</p>
-        <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"></i>Email: ${email}</p>
+        <p><i class="fa fa-map-marker fa-fw w3-xlarge w3-margin-right"></i>Addres: ${address}</p>
+        <p><i class="fa fa-phone fa-fw w3-xlarge w3-margin-right"></i>Telefon: +48 ${phone}</p>
+        <p><i class="fa fa-envelope fa-fw w3-xlarge w3-margin-right"></i>Email: ${email}</p>
         <form:form method="post" class="cantact-details" modelAttribute="contactForm">
             <p>
                 <form:input class="input-contact w3-border" type="text" placeholder="Imię" path="name"/>

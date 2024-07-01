@@ -14,6 +14,7 @@ import pl.coderslab.repository.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Controller
@@ -81,6 +82,45 @@ public class AdminController {
     public String allUser(Model model) {
         model.addAttribute("userDetails", userDetailsRepository.findAll());
         return "admin/adminPanel";
+    }
+
+    @GetMapping("/user/update")
+    public String getUpdateUser(@RequestParam long id, Model model) {
+        UserDetails updateUser = userDetailsRepository.findById(id).get();
+        model.addAttribute("userId", updateUser.getUser().getId());
+        model.addAttribute("userEmail", updateUser.getUser().getEmail());
+        model.addAttribute("roles", roleRepository.findAll());
+        model.addAttribute("userRole", updateUser.getUser().getRoles());
+        model.addAttribute("userDetails", updateUser);
+        return "admin/updateUser";
+    }
+
+    @PostMapping("/user/update")
+    public String postUpdateUser(@Valid UserDetails userDetails, BindingResult result,
+                                 Model model, RedirectAttributes redirectAttributes) {
+        if(result.hasErrors()) {
+            model.addAttribute("userId", userDetails.getUser().getId());
+            model.addAttribute("userEmail", userDetails.getUser().getEmail());
+            model.addAttribute("roles", roleRepository.findAll());
+            model.addAttribute("userRole", userDetails.getUser().getRoles());
+            model.addAttribute("userDetails", userDetails);
+            model.addAttribute("errors", result.getAllErrors());
+            return "admin/updateUser";
+        }
+        userRepository.save(userDetails.getUser());
+        userDetailsRepository.save(userDetails);
+        redirectAttributes.addFlashAttribute("message", "Użytkownik został zaaktualizowany");
+        return "redirect:/gowithme/admin/";
+    }
+
+    @GetMapping("/user/delete")
+    public String getDeleteUser(@RequestParam long id,RedirectAttributes redirectAttributes) {
+        User deleteUser = userRepository.findById(id).get();
+        deleteUser.getRoles().clear();
+        System.out.println(deleteUser);
+        userRepository.delete(deleteUser);
+        redirectAttributes.addFlashAttribute("message" , "Usunięto użytkownika");
+        return "redirect:/gowithme/admin/";
     }
 
     @GetMapping("/contact")
@@ -190,11 +230,7 @@ public class AdminController {
         return "redirect:/gowithme/admin/category";
     }
 
-    @GetMapping("/delete")
-    public String postAddUser(@RequestParam long id) {
-        userRepository.delete(userRepository.findById(id).get());
-        return "redirect:/gowithme/home/alluser";
-    }
+
 
     public void createContact() {
         Contact contact = Contact.builder().address("Konin, ul.bez ulicy")

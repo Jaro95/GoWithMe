@@ -12,6 +12,11 @@
 
 <div class="w3-display-container w3-light-grey contact" id="admin">
     <p class="w3-center w3-jumbo cantact-info">All users:</p>
+    <c:if test="${not empty message}">
+        <div class="alert alert-success">
+                ${message}
+        </div>
+    </c:if>
     <table id="adminTable" class="display">
         <thead>
         <tr>
@@ -39,12 +44,12 @@
                 <td>${userDetail.city}</td>
                 <td>
                     <button class="w3-button w3-black"
-                            onclick="location.href='/gowithme/admin/update?id=${userDetail.user.id}'">
+                            onclick="location.href='/gowithme/admin/user/update?id=${userDetail.user.id}'">
                         <i class="fa fa-pencil"></i> Edytuj
                     </button>
                     <sec:authorize access="hasRole('SUPER_ADMIN')">
-                        <a class="w3-button w3-black confirm-delete-user"
-                           href="${pageContext.request.contextPath}/gowithme/admin/delete?id=${userDetail.user.id}">
+                        <a class="w3-button w3-black" id="confirm-delete-user"
+                           href="${pageContext.request.contextPath}/gowithme/admin/user/delete?id=${userDetail.user.id}">
                             <i class="fa fa-trash"></i>Usuń</a>
                     </sec:authorize>
                 </td>
