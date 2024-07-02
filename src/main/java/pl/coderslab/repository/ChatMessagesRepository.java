@@ -11,4 +11,5 @@ import java.util.List;
 
 public interface ChatMessagesRepository extends JpaRepository<ChatMessages, Long> {
     ChatMessages findByUserChat(UserDetails user);
+    ChatMessages findByUserChatId(long id);
 }

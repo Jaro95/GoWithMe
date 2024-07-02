@@ -439,22 +439,27 @@ public class ApplicationController {
 
     @ModelAttribute
     public void setConversationUser(@RequestParam(required = false) Integer userReceiverId, Model model,
-                                    @AuthenticationPrincipal CurrentUser currentUser,
+                                    @AuthenticationPrincipal CurrentUser current,
                                     HttpServletRequest request) {
         if (request.getRequestURI().endsWith("/chat") && userReceiverId != null) {
-            ChatMessages userChat = chatMessagesRepository
-                    .findByUserChat(userDetailsRepository.findByUser(currentUser.getUser()));
-            UserDetails sender = userDetailsRepository.findByUserId(userReceiverId);
-            List<Messages> messagesFromUser = messagesRepository.allConversationWithUser(userChat, userReceiverId);
-            messagesFromUser.addAll(userChat.getMessages().stream().filter(el -> el.getChat().getUserChat().equals(sender)).toList());
-            messagesFromUser.sort(Comparator.comparing(Messages::getSendTime));
-            model.addAttribute("userSenderMessage", sender.getFirstName());
-            model.addAttribute("currentUserMessage", userChat.getUserChat());
-            model.addAttribute("userConversation", messagesFromUser);
-            model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(sender).build());
+//            ChatMessages userChat = chatMessagesRepository
+//                    .findByUserChat(userDetailsRepository.findByUser(currentUser.getUser()));
+
+            UserDetails otherUser = userDetailsRepository.findByUserId(userReceiverId);
+            UserDetails currentUser = userDetailsRepository.findByUser(current.getUser());
+            List<Messages> messagesFromOtherUser = messagesRepository.allConversationWhenOtherUserSender(currentUser,otherUser);
+            List<Messages> messagesFromCurrentUser = messagesRepository.allConversationWhenCurrentUserSender(otherUser,currentUser);
+            List<Messages> messagesUser = messagesFromOtherUser;
+            messagesUser.addAll(messagesFromCurrentUser);
+            messagesUser.sort(Comparator.comparing(Messages::getSendTime));
+            messagesUser.forEach(System.out::println);
+            model.addAttribute("userSenderMessage", otherUser.getFirstName());
+            model.addAttribute("currentUserMessage", currentUser.getId());
+            model.addAttribute("userConversation", messagesUser);
+            model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(otherUser).build());
             model.addAttribute("userReceiverId", userReceiverId);
-            model.addAttribute("userSenderId", userChat.getUserChat().getId());
-            model.addAttribute("lastMessage", messagesFromUser.get(messagesFromUser.size()-1).getContent());
+            model.addAttribute("userSenderId", currentUser.getId());
+
         }
     }
 }

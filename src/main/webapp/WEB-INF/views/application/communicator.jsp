@@ -74,7 +74,7 @@
     <c:if test="${not empty userSenderMessage}">
         <div id="${userSenderMessage}" class="w3-container person chat-container">
             <c:forEach items="${userConversation}" var="message">
-                <div class="chat-bubble ${message.senderMessage.id == currentUserMessage.id ? 'user2' : 'user1'}">
+                <div class="chat-bubble ${message.senderMessage.id == currentUserMessage ? 'user2' : 'user1'}">
                     <p>${message.content}</p>
                 </div>
             </c:forEach>
@@ -187,9 +187,11 @@
             const message = JSON.parse(event.data);
             const messageBubble = document.createElement("div");
             messageBubble.className = "chat-bubble " + (message.senderMessage.id === currentUser ? "user2" : "user1");
-            messageBubble.innerHTML = `<p>${lastMessage}</p>`;
+            const messageText = document.createElement("p");
             chatContainer.appendChild(messageBubble);
-
+            messageBubble.appendChild(messageText)
+            messageText.innerText = message.content;
+            console.log('Odebrana wiadomość:', event.data)
             const chatBox = document.querySelector(".chat-box");
             chatBox.scrollTop = chatBox.scrollHeight;
         };

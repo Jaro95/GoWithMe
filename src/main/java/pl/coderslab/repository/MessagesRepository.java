@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import pl.coderslab.model.UserDetails;
 import pl.coderslab.model.chat.ChatMessages;
 import pl.coderslab.model.chat.Messages;
+import pl.coderslab.service.CurrentUser;
 
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,8 @@ public interface MessagesRepository extends JpaRepository<Messages, Long> {
     Set<UserDetails> allUserMessages(ChatMessages chatMessages);
     Messages findFirstBySenderMessageOrderBySendTimeDesc(UserDetails userDetails);
     List<Messages> findByChat(ChatMessages chatMessages);
-    @Query("select m from Messages m where m.chat = ?1 and m.senderMessage.id = ?2 ")
-    List<Messages> allConversationWithUser(ChatMessages chatMessages,long id);
+    @Query("select m from Messages m where m.chat.userChat = ?1 and m.senderMessage = ?2 ")
+    List<Messages> allConversationWhenOtherUserSender(UserDetails currentUser, UserDetails otherUserSender);
+    @Query("select m from Messages m where m.chat.userChat = ?1 and m.senderMessage = ?2 ")
+    List<Messages> allConversationWhenCurrentUserSender(UserDetails otherUserSender,UserDetails currentUser);
 }

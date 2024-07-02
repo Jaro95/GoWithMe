@@ -10,12 +10,16 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import pl.coderslab.dto.MessagesDTO;
+import pl.coderslab.model.UserDetails;
+import pl.coderslab.model.chat.ChatMessages;
 import pl.coderslab.model.chat.Messages;
 import pl.coderslab.repository.ChatMessagesRepository;
 import pl.coderslab.repository.MessagesRepository;
 import pl.coderslab.repository.UserDetailsRepository;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -27,7 +31,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private final ObjectMapper objectMapper;
 
     @Autowired
-    private MessagesRepository messageRepository;
+    private MessagesRepository messagesRepository;
 
     @Autowired
     private UserDetailsRepository userDetailsRepository;
@@ -46,14 +50,16 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage textMessage) throws IOException {
-       MessagesDTO message = objectMapper.readValue(textMessage.getPayload(), MessagesDTO.class);
+    public void handleTextMessage(WebSocketSession session, TextMessage textMessage) throws IOException {
+       MessagesDTO messagesDTO = objectMapper.readValue(textMessage.getPayload(), MessagesDTO.class);
        // System.out.println("tutaj masz wiadomość: " + message.toString());
        // messageRepository.save(message);
-        System.out.println(textMessage.getPayload());
-        System.out.println("Class: " + message.toString());
-        System.out.println("wysłał" + message.getSenderMessage().getId());
-        System.out.println("odebrał" + message.getReceiverMessage().getId());
+        messagesRepository.save(Messages.builder()
+                .senderMessage(userDetailsRepository.findById(messagesDTO.getSenderMessage().getId()).get())
+                .content(messagesDTO.getContent())
+                .sendTime(LocalDateTime.now())
+                .chat(chatMessagesRepository.findByUserChatId(messagesDTO.getReceiverMessage().getId()))
+                .build());
         for (WebSocketSession webSocketSession : sessions) {
             if (webSocketSession.isOpen()) {
                 webSocketSession.sendMessage(textMessage);
