@@ -16,9 +16,6 @@
 
     <a href="javascript:void(0)" onclick="w3_close()" title="Close Sidemenu"
        class="w3-bar-item w3-button w3-hide-large w3-large">Close <i class="fa fa-remove"></i></a>
-    <%--    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"--%>
-    <%--       onclick="document.getElementById('id01').style.display='block'">New Message <i--%>
-    <%--            class="w3-padding fa fa-pencil"></i></a>--%>
     <a id="myBtn" onclick="myFunc('Demo1')" href="javascript:void(0)" class="w3-bar-item w3-button"><i
             class="fa fa-inbox w3-margin-right"></i>Inbox<i class="fa fa-caret-down w3-margin-left"></i></a>
     <div id="Demo1" class="w3-hide w3-animate-left user-list user-buttons">
@@ -87,11 +84,7 @@
         </div>
     </c:if>
 </div>
-<%--<div>--%>
-<%--    <button onclick="connectWebSocket()">Connect WebSocket</button>--%>
-<%--    <button onclick="sendMessage()">Send Message</button>--%>
-<%--</div>--%>
-<%--<div id="messages"></div>--%>
+
 <script>
     var openInbox = document.getElementById("myBtn");
     openInbox.click();
@@ -135,49 +128,10 @@
 </script>
 
 
-<%--<script>--%>
-<%--    let socket;--%>
 
-<%--    function connectWebSocket() {--%>
-<%--        socket = new WebSocket("ws://" + window.location.host + "/test-websocket");--%>
-
-<%--        socket.onopen = function(event) {--%>
-<%--            console.log("WebSocket is open now.");--%>
-<%--            document.getElementById('messages').innerHTML += "<p>WebSocket connection opened.</p>";--%>
-<%--        };--%>
-
-<%--        socket.onmessage = function(event) {--%>
-<%--            console.log("WebSocket message received:", event.data);--%>
-<%--            document.getElementById('messages').innerHTML += "<p>Received: " + event.data + "</p>";--%>
-<%--        };--%>
-
-<%--        socket.onclose = function(event) {--%>
-<%--            console.log("WebSocket is closed now.");--%>
-<%--            document.getElementById('messages').innerHTML += "<p>WebSocket connection closed.</p>";--%>
-<%--        };--%>
-
-<%--        socket.onerror = function(error) {--%>
-<%--            console.log("WebSocket error:", error);--%>
-<%--            document.getElementById('messages').innerHTML += "<p>WebSocket error: " + error.message + "</p>";--%>
-<%--        };--%>
-<%--    }--%>
-
-<%--    function sendMessage() {--%>
-<%--        if (socket && socket.readyState === WebSocket.OPEN) {--%>
-<%--            const message = "Hello, server!";--%>
-<%--            socket.send(message);--%>
-<%--            console.log(message);--%>
-<%--            document.getElementById('messages').innerHTML += "<p>Sent: " + message + "</p>";--%>
-<%--        } else {--%>
-<%--            document.getElementById('messages').innerHTML += "<p>WebSocket is not open.</p>";--%>
-<%--        }--%>
-<%--    }--%>
-<%--</script>--%>
 
 <script>
 
-    //var openTab = document.getElementById("firstTab");
-    //openTab.click();
     let socket;
     const currentUser = "${userSenderId}";
     window.onload = function () {

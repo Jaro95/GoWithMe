@@ -110,9 +110,7 @@ public class HomeController {
         return "home/registration";
     }
 
-    /**
-     * Leater must make create token and verification
-     */
+
     @PostMapping("/registration")
     public String postRegistration(@Valid RegistrationDTO wrapper, BindingResult bindingResult,
                                    Model model, RedirectAttributes redirectAttributes) {
