@@ -67,42 +67,31 @@
      title="Close Sidemenu" id="myOverlay"></div>
 
 <!-- Page content -->
-<div class="w3-main chat-wrapper">
+<div class="w3-main chat-wrapper chat-box" id="chat-box">
     <i class="fa fa-bars w3-button w3-white w3-hide-large w3-xlarge w3-margin-left w3-margin-top"
        onclick="w3_open()"></i>
 
     <c:if test="${not empty userSenderMessage}">
         <div id="${userSenderMessage}" class="w3-container person chat-container">
             <c:forEach items="${userConversation}" var="message">
-                <c:if test="${message.senderMessage != currentUserMessage}">
-                    <div class="chat-bubble user1">
-                        <p>${message.content}</p>
-                    </div>
-                </c:if>
-                <c:if test="${message.senderMessage eq currentUserMessage}">
-                    <div class="chat-bubble user2">
-                        <p>${message.content}</p>
-                    </div>
-                </c:if>
-            </c:forEach>
-<%--Add send message--%>
-            <form:form modelAttribute="SendMessageDTO" action="/gowithme/app/sendMessage">
-                <div class="input-container">
-                <form:input path="userReceiver" type="hidden"/>
-                <input type="hidden" name="url" value="/gowithme/app/chat?userReceiverId=${userReceiverId}">
-
-                    <form:textarea path="content" class="chat-input"
-                                   placeholder="Napisz wiadomość..."></form:textarea>
-                    <button class="w3-button w3-black send-button" type="submit">
-                        <i class="fa fa-paper-plane"></i> Wyślij
-                    </button>
+                <div class="chat-bubble ${message.senderMessage.id == currentUserMessage ? 'user2' : 'user1'}">
+                    <p>${message.content}</p>
                 </div>
-            </form:form>
+            </c:forEach>
+
+            <div class="w3-container input-container">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <textarea id="chat-input" class="chat-input" placeholder="Napisz wiadomość..."></textarea>
+                <button class="w3-button w3-black send-button" onclick="sendMessage()">Wyślij</button>
+            </div>
         </div>
     </c:if>
-
 </div>
-
+<%--<div>--%>
+<%--    <button onclick="connectWebSocket()">Connect WebSocket</button>--%>
+<%--    <button onclick="sendMessage()">Send Message</button>--%>
+<%--</div>--%>
+<%--<div id="messages"></div>--%>
 <script>
     var openInbox = document.getElementById("myBtn");
     openInbox.click();
@@ -145,9 +134,81 @@
     }
 </script>
 
+
+<%--<script>--%>
+<%--    let socket;--%>
+
+<%--    function connectWebSocket() {--%>
+<%--        socket = new WebSocket("ws://" + window.location.host + "/test-websocket");--%>
+
+<%--        socket.onopen = function(event) {--%>
+<%--            console.log("WebSocket is open now.");--%>
+<%--            document.getElementById('messages').innerHTML += "<p>WebSocket connection opened.</p>";--%>
+<%--        };--%>
+
+<%--        socket.onmessage = function(event) {--%>
+<%--            console.log("WebSocket message received:", event.data);--%>
+<%--            document.getElementById('messages').innerHTML += "<p>Received: " + event.data + "</p>";--%>
+<%--        };--%>
+
+<%--        socket.onclose = function(event) {--%>
+<%--            console.log("WebSocket is closed now.");--%>
+<%--            document.getElementById('messages').innerHTML += "<p>WebSocket connection closed.</p>";--%>
+<%--        };--%>
+
+<%--        socket.onerror = function(error) {--%>
+<%--            console.log("WebSocket error:", error);--%>
+<%--            document.getElementById('messages').innerHTML += "<p>WebSocket error: " + error.message + "</p>";--%>
+<%--        };--%>
+<%--    }--%>
+
+<%--    function sendMessage() {--%>
+<%--        if (socket && socket.readyState === WebSocket.OPEN) {--%>
+<%--            const message = "Hello, server!";--%>
+<%--            socket.send(message);--%>
+<%--            console.log(message);--%>
+<%--            document.getElementById('messages').innerHTML += "<p>Sent: " + message + "</p>";--%>
+<%--        } else {--%>
+<%--            document.getElementById('messages').innerHTML += "<p>WebSocket is not open.</p>";--%>
+<%--        }--%>
+<%--    }--%>
+<%--</script>--%>
+
 <script>
+
     //var openTab = document.getElementById("firstTab");
     //openTab.click();
+    let socket;
+    const currentUser = "${userSenderId}";
+    window.onload = function () {
+        socket = new WebSocket("ws://" + window.location.host + "/chatMessage");
+        socket.onmessage = function (event) {
+            const chatContainer = document.querySelector(".chat-container");
+            const message = JSON.parse(event.data);
+            const messageBubble = document.createElement("div");
+            messageBubble.className = "chat-bubble " + (message.senderMessage.id === currentUser ? "user2" : "user1");
+            const messageText = document.createElement("p");
+            chatContainer.appendChild(messageBubble);
+            messageBubble.appendChild(messageText)
+            messageText.innerText = message.content;
+            console.log('Odebrana wiadomość:', event.data)
+            const chatBox = document.querySelector(".chat-box");
+            chatBox.scrollTop = chatBox.scrollHeight;
+        };
+    };
+
+    function sendMessage() {
+        const input = document.getElementById("chat-input");
+        const message = {
+            senderMessage: { id: `${userSenderId}` },
+            content: input.value,
+            timestamp: new Date().toISOString(),
+            receiverMessage: { id: `${userReceiverId}` }
+        };
+        socket.send(JSON.stringify(message));
+        input.value = "";
+    }
+
 </script>
 
 <jsp:include page="footer.jsp"/>
