@@ -24,11 +24,13 @@
             <p>Kilka słów o mnie: </p>
             <p>${description}</p>
         </div>
-        <div class="user-information">
-            <p><a href="javascript:void(0)" class="w3-button w3-black"
-                  onclick="document.getElementById('user').style.display='block'">
-                <i class="fa fa-paper-plane"></i> Wiadomość</a></p>
-        </div>
+        <c:if test="${userCheck.id != currentUserCheck.id}">
+            <div class="user-information">
+                <p><a href="javascript:void(0)" class="w3-button w3-black"
+                      onclick="document.getElementById('user').style.display='block'">
+                    <i class="fa fa-paper-plane"></i> Wiadomość</a></p>
+            </div>
+        </c:if>
     </div>
 
 </div>
@@ -47,10 +49,12 @@
                                placeholder="What's on your mind?"></form:textarea>
                 <input type="hidden" name="url" value="/gowithme/app/user/${id}">
                 <div class="w3-section">
-                    <a class="w3-button w3-red" onclick="document.getElementById('user').style.display='none'"> Zamknij<i
+                    <a class="w3-button w3-red" onclick="document.getElementById('user').style.display='none'">
+                        Zamknij<i
                             class="fa fa-remove"></i>
                     </a>
-                    <button type="submit" class="w3-button w3-light-grey w3-right"> Wyślij<i class="fa fa-paper-plane"></i>
+                    <button type="submit" class="w3-button w3-light-grey w3-right"> Wyślij<i
+                            class="fa fa-paper-plane"></i>
                     </button>
                 </div>
             </form:form>
