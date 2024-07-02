@@ -139,7 +139,8 @@ public class ApplicationController {
     }
 
     @GetMapping("/activity/details")
-    public String getDetailsUserActivity(Model model, @RequestParam long id, @RequestParam long activityId) {
+    public String getDetailsUserActivity(Model model, @RequestParam long id, @RequestParam long activityId,
+                                         @AuthenticationPrincipal CurrentUser currentUser) {
 
         UserDetails userDetails = userDetailsRepository.findByUserId(id);
         model.addAttribute("firstName", userDetails.getFirstName());
@@ -151,6 +152,8 @@ public class ApplicationController {
         model.addAttribute("waitOnAccessToActivityDTO", new WaitingOnAccessToActivityDTO(activityId, id));
         model.addAttribute("id", id);
         model.addAttribute("activityId", activityId);
+        model.addAttribute("userCheck", userDetails.getUser());
+        model.addAttribute("currentUserCheck", currentUser.getUser());
         model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(userDetails).build());
         return "application/detailsUserActivity";
     }
@@ -359,7 +362,8 @@ public class ApplicationController {
     }
 
     @GetMapping("/user/{id}")
-    public String getUserDetails(@PathVariable long id, Model model) {
+    public String getUserDetails(@PathVariable long id, Model model,
+                                 @AuthenticationPrincipal CurrentUser currentUser) {
 
         UserDetails userDetails = userDetailsRepository.findByUserId(id);
         model.addAttribute("firstName", userDetails.getFirstName());
@@ -368,6 +372,8 @@ public class ApplicationController {
         model.addAttribute("age", userDetails.getAge());
         model.addAttribute("description", userDetails.getDescription());
         model.addAttribute("id", id);
+        model.addAttribute("userCheck", userDetails.getUser());
+        model.addAttribute("currentUserCheck", currentUser.getUser());
         model.addAttribute("SendMessageDTO", SendMessageDTO.builder().userReceiver(userDetails).build());
         return "application/detailsUser";
     }
