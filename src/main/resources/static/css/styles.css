@@ -354,9 +354,9 @@ a {
 
 .chat-wrapper {
 
-
     flex-direction: column;
-    overflow-y: auto;
+    height: 91%;
+
 }
 
 .chat-container {

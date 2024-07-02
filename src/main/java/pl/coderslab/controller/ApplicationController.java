@@ -54,7 +54,6 @@ public class ApplicationController {
         Page<Notification> notificationPage = notificationRepository.findAllByUserDetailsIdOrderByCreateDateTimeDesc
                 (userDetailsRepository.findByUser(currentUser.getUser()).getId(), PageRequest.of(currentPage - 1, pageSize));
         model.addAttribute("notificationsList", notificationPage);
-        // return notificationRepository.findAllByUserDetailsOrderByCreateDateTimeDesc(userDetailsRepository.findByUser(currentUser.getUser()));
     }
 
     @GetMapping("")
@@ -426,31 +425,14 @@ public class ApplicationController {
         return "application/communicator";
     }
 
-//    @PostMapping("/chatMessage")
-//    public ResponseEntity postChatMessage(SendMessageDTO sendMessageDTO, @AuthenticationPrincipal CurrentUser currentUser) {
-//        messagesRepository.save(Messages.builder()
-//                .senderMessage(userDetailsRepository.findByUser(currentUser.getUser()))
-//                .content(sendMessageDTO.content())
-//                .sendTime(LocalDateTime.now())
-//                .chat(chatMessagesRepository.findByUserChat(sendMessageDTO.userReceiver()))
-//                .build());
-//        UserDetails sender = userDetailsRepository.findByUser(currentUser.getUser());
-//        ChatMessages chatMessages = chatMessagesRepository.findByUserChat(sender);
-//        List<Messages> messagesSender = chatMessages.getMessages();
-//        messagesSender.add(messagesRepository.findFirstBySenderMessageOrderBySendTimeDesc(sender));
-//        chatMessages.setMessages(messagesSender);
-//        chatMessagesRepository.save(chatMessages);
-//        return new ResponseEntity<>("Success", HttpStatus.OK);
-//    }
+
+
 
     @ModelAttribute
     public void setConversationUser(@RequestParam(required = false) Integer userReceiverId, Model model,
                                     @AuthenticationPrincipal CurrentUser current,
                                     HttpServletRequest request) {
         if (request.getRequestURI().endsWith("/chat") && userReceiverId != null) {
-//            ChatMessages userChat = chatMessagesRepository
-//                    .findByUserChat(userDetailsRepository.findByUser(currentUser.getUser()));
-
             UserDetails otherUser = userDetailsRepository.findByUserId(userReceiverId);
             UserDetails currentUser = userDetailsRepository.findByUser(current.getUser());
             List<Messages> messagesFromOtherUser = messagesRepository.allConversationWhenOtherUserSender(currentUser,otherUser);

@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         chatMessagesRepository.save(ChatMessages.builder()
                 .userChat(userDetailsRepository.findByUserEmail(user.getEmail()))
                 .build());
-       // emailService.sendVerificationEmail(user.getEmail(),userRepository.findByEmail(user.getEmail()).getToken());
+        emailService.sendVerificationEmail(user.getEmail(),userRepository.findByEmail(user.getEmail()).getToken());
     }
 
     @Override
