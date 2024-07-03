@@ -4,7 +4,6 @@ import lombok.*;
 import pl.coderslab.model.UserDetails;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -20,6 +19,4 @@ public class ChatMessages {
     private long id;
     @OneToOne
     private UserDetails userChat;
-    @ManyToMany
-    private List<Messages> messages;
 }

@@ -80,23 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-// document.addEventListener('DOMContentLoaded', () => {
-//     const image = document.querySelector("#icon-user");
-//     image.addEventListener("click",function (e) {
-//         const buttonLogout = document.querySelector("#logoutButton")
-//         if(buttonLogout == null) {
-//             const logoutButton = document.createElement("a")
-//             logoutButton.id = "logoutButton"
-//             logoutButton.innerText = "Wyloguj";
-//             logoutButton.href = "/logout";
-//             logoutButton.className = "btn btn-danger";
-//             image.parentElement.parentElement.appendChild(logoutButton);
-//         } else {
-//             image.parentElement.parentElement.removeChild(buttonLogout)
-//         }
-//
-//     })
-// });
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('activities-navigation').addEventListener('click', function () {

@@ -3,8 +3,6 @@ package pl.coderslab.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -387,12 +385,6 @@ public class ApplicationController {
                 .sendTime(LocalDateTime.now())
                 .chat(chatMessagesRepository.findByUserChat(sendMessageDTO.userReceiver()))
                 .build());
-        UserDetails sender = userDetailsRepository.findByUser(currentUser.getUser());
-        ChatMessages chatMessages = chatMessagesRepository.findByUserChat(sender);
-        List<Messages> messagesSender = chatMessages.getMessages();
-        messagesSender.add(messagesRepository.findFirstBySenderMessageOrderBySendTimeDesc(sender));
-        chatMessages.setMessages(messagesSender);
-        chatMessagesRepository.save(chatMessages);
         redirectAttributes.addFlashAttribute("messageSend", "Wiadomość wysłana");
         return "redirect:" + url;
     }
@@ -403,12 +395,13 @@ public class ApplicationController {
                           Model model, @AuthenticationPrincipal CurrentUser currentUser) {
         ChatMessages userChat = chatMessagesRepository
                 .findByUserChat(userDetailsRepository.findByUser(currentUser.getUser()));
+        List<Messages> currentUserMessage = messagesRepository.findBySenderMessage(userChat.getUserChat());
         List<Messages> recipientMessage = messagesRepository.findByChat(userChat);
-        if (userChat.getMessages().isEmpty() && recipientMessage.isEmpty()) {
+        if (currentUserMessage.isEmpty() && recipientMessage.isEmpty()) {
             model.addAttribute("emptyChat", "Nie posiadasz żadnych konwersacji");
             return "application/communicator";
         }
-        Set<UserDetails> userSender = userChat.getMessages()
+        Set<UserDetails> userSender = currentUserMessage
                 .stream()
                 .map(el -> el.getChat().getUserChat())
                 .collect(Collectors.toSet());
