@@ -23,5 +23,4 @@ public class WebSocketConfig implements WebSocketConfigurer {
         registry.addHandler(chatWebSocketHandler,"/chatMessage")
                 .setAllowedOrigins("*");
     }
-
 }
