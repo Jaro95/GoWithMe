@@ -30,10 +30,6 @@ Web application that allows people with similar interests to meet
 
 ## Configuration
 
-### Database
-
-The application uses an embedded MySql database.
-
 ### Spring Security
 
 Spring Security is configured to protect application resources. Users and roles are defined in the database.
